@@ -1,0 +1,433 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ONE ROOT | Product Editor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&amp;family=Hanken+Grotesk:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#cfc4c5",
+                        "tertiary-fixed-dim": "#c6c6cb",
+                        "tertiary-fixed": "#e3e2e7",
+                        "surface-variant": "#e2e2e7",
+                        "secondary": "#5d5f5f",
+                        "primary": "#000000",
+                        "on-background": "#1a1c1f",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#1b1b1b",
+                        "background": "#f9f9fe",
+                        "on-primary-container": "#848484",
+                        "tertiary-container": "#1a1b1f",
+                        "on-surface": "#1a1c1f",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2e3034",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#e2e2e2",
+                        "tertiary": "#000000",
+                        "surface-bright": "#f9f9fe",
+                        "surface-tint": "#5e5e5e",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-tertiary-fixed-variant": "#46464b",
+                        "primary-fixed": "#e2e2e2",
+                        "surface-container": "#ededf2",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "inverse-primary": "#c6c6c6",
+                        "surface-container-low": "#f3f3f8",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#474747",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e8e8ed",
+                        "primary-container": "#1b1b1b",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#4c4546",
+                        "on-secondary-fixed-variant": "#454747",
+                        "secondary-container": "#dfe0e0",
+                        "outline": "#7e7576",
+                        "on-tertiary-container": "#838388",
+                        "surface-container-highest": "#e2e2e7",
+                        "surface-dim": "#d9dade",
+                        "on-secondary-container": "#616363",
+                        "surface": "#f9f9fe",
+                        "on-tertiary-fixed": "#1a1b1f",
+                        "inverse-on-surface": "#f0f0f5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "48px",
+                        "xs": "8px",
+                        "base": "4px",
+                        "sm": "16px",
+                        "gutter": "24px",
+                        "container-max": "1440px",
+                        "md": "24px",
+                        "xl": "80px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Montserrat"],
+                        "body-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-xl": ["Montserrat"],
+                        "display-lg": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"]
+                    },
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none !important;
+            border-bottom: 2px solid #000000 !important;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #000;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden h-screen flex">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col bg-surface h-screen w-64 border-r border-primary z-50">
+<div class="p-sm flex items-center gap-xs">
+<img alt="ONE ROOT Logo" class="w-12 h-auto" src="/logo/screen.png" onerror="this.style.display='none'"/>
+<div class="flex flex-col">
+<span class="font-headline-lg text-headline-lg font-bold tracking-tighter text-primary">ONE ROOT</span>
+<span class="font-label-caps text-[10px] text-secondary uppercase">Admin Terminal</span>
+</div>
+</div>
+<nav class="mt-lg flex-1">
+<!-- Dashboard -->
+<a class="flex items-center gap-xs px-sm py-base text-secondary hover:bg-secondary-container transition-colors" href="/admin/dashboard">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<!-- Catalog (Active) -->
+<a class="flex items-center gap-xs px-sm py-base bg-primary text-on-primary rounded-0" href="/admin/catalog">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-body-md">Catalog</span>
+</a>
+<!-- Orders -->
+<a class="flex items-center gap-xs px-sm py-base text-secondary hover:bg-secondary-container transition-colors" href="/admin/catalog">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-body-md">Orders</span>
+</a>
+<!-- Customers -->
+<a class="flex items-center gap-xs px-sm py-base text-secondary hover:bg-secondary-container transition-colors" href="/admin/dashboard">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-body-md">Customers</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant py-sm">
+<a class="flex items-center gap-xs px-sm py-base text-secondary hover:bg-secondary-container transition-colors" href="/admin/catalog">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+<a id="edit-logout" class="flex items-center gap-xs px-sm py-base text-secondary hover:bg-secondary-container transition-colors cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-body-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Content Area -->
+<main class="flex-1 ml-64 flex flex-col h-screen overflow-hidden">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-lg w-full sticky top-0 z-40 h-20 bg-surface border-b border-primary">
+<div class="flex items-center gap-md">
+<h1 class="font-headline-lg text-headline-lg font-bold tracking-tighter">EDIT PRODUCT</h1>
+<nav class="hidden md:flex gap-sm ml-lg">
+<a class="text-secondary hover:text-primary font-medium" href="#">Analytics</a>
+<a class="text-secondary hover:text-primary font-medium" href="#">Reports</a>
+<a class="text-secondary hover:text-primary font-medium" href="#">Logs</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-secondary scale-75" data-icon="search">search</span>
+<input class="pl-8 pr-4 py-1 bg-transparent border-b border-outline focus:border-primary text-sm font-label-caps uppercase" placeholder="Search terminal..." type="text"/>
+</div>
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined text-primary" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined text-primary" data-icon="account_circle">account_circle</button>
+</div>
+</div>
+</header>
+<!-- Main Product Form -->
+<div class="flex-1 overflow-y-auto custom-scrollbar bg-surface-container-low p-lg">
+<div class="max-w-6xl mx-auto space-y-md">
+<!-- Header Actions (Fixed-like behavior inside scroll) -->
+<div class="flex justify-between items-end mb-xl">
+<div>
+<p class="font-label-caps text-secondary text-xs mb-2">CATALOG / PRODUCTS / VANGUARD-01</p>
+<h2 class="font-headline-xl text-primary uppercase">Vanguard Parka 01</h2>
+</div>
+<div class="flex gap-md">
+<button class="px-lg py-sm border border-primary text-primary font-label-caps uppercase hover:bg-primary hover:text-on-primary transition-all">Cancel</button>
+<button class="px-xl py-sm bg-primary text-on-primary font-label-caps uppercase hover:bg-white hover:text-primary border border-primary transition-all">Save Changes</button>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Left Column: Details -->
+<div class="col-span-12 lg:col-span-8 space-y-gutter">
+<!-- Product Information -->
+<section class="bg-white p-lg border border-primary">
+<h3 class="font-label-caps text-lg border-b border-primary pb-base mb-md uppercase">Product Information</h3>
+<div class="grid grid-cols-2 gap-md">
+<div class="col-span-2">
+<label class="font-label-caps text-xs text-secondary block mb-2 uppercase">Product Title</label>
+<input class="w-full border-0 border-b border-outline-variant py-2 font-body-lg" type="text" value="VANGUARD PARKA 01"/>
+</div>
+<div class="col-span-1">
+<label class="font-label-caps text-xs text-secondary block mb-2 uppercase">SKU</label>
+<input class="w-full border-0 border-b border-outline-variant py-2 font-label-caps" type="text" value="OR-VNG-PRK-BLK-01"/>
+</div>
+<div class="col-span-1">
+<label class="font-label-caps text-xs text-secondary block mb-2 uppercase">Category</label>
+<select class="w-full border-0 border-b border-outline-variant py-2 appearance-none">
+<option>Outerwear</option>
+<option>Essentials</option>
+<option>Footwear</option>
+<option>Accessories</option>
+</select>
+</div>
+<div class="col-span-2">
+<label class="font-label-caps text-xs text-secondary block mb-2 uppercase">Description</label>
+<textarea class="w-full border border-outline-variant p-4 font-body-md resize-none" rows="6">Constructed from high-density nylon with a water-repellent finish. The Vanguard Parka 01 features modular utility pockets, an adjustable structural hood, and internal carry straps. 
+
+Designed for the urban explorer, this piece bridges the gap between high-fashion silhouette and tactical functionality. Monochrome hardware throughout.</textarea>
+</div>
+</div>
+</section>
+<!-- Media Gallery -->
+<section class="bg-white p-lg border border-primary">
+<div class="flex justify-between items-center border-b border-primary pb-base mb-md">
+<h3 class="font-label-caps text-lg uppercase">Media Gallery</h3>
+<button class="text-xs font-label-caps border border-primary px-2 py-1 hover:bg-primary hover:text-white transition-all uppercase">Add Media</button>
+</div>
+<div class="grid grid-cols-4 gap-sm">
+<div class="aspect-[3/4] relative border border-outline-variant group">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="High-fashion studio photography of a black techwear parka on a faceless model. The background is a stark, minimalist white gallery. High contrast lighting emphasizes the technical textures of the nylon fabric. Exclusive streetwear aesthetic with sharp architectural lines." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA9mR3q5br7XXSWznXhCRB_0rJQA75ioOtQDFzOTn_x-LIF2e_uOdRloXBqv2wlis3MzDOAR_Y8LVNJbD9rY5kkF5XwoMrK_c8OFOmCci8ZtOdVcipNgzu60Ss417Rmf5UORNaJ10DItUhUwe1ga9l4IH_qZf4AVJP0ayvB81LNIJZaamfrlclm0k6vpDAqpckWkTJt4jtBCD938SsZ271P6QzCHoR7OOTv8dJFDEzsFifemoNbcNgX-qJmKwf70hCqrqHs1LvC_6Be')"></div>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-xs">
+<button class="material-symbols-outlined text-white" data-icon="delete">delete</button>
+<button class="material-symbols-outlined text-white" data-icon="visibility">visibility</button>
+</div>
+<span class="absolute top-2 left-2 bg-primary text-on-primary font-label-caps text-[8px] px-1 uppercase">Main</span>
+</div>
+<div class="aspect-[3/4] relative border border-outline-variant group">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Close-up detail shot of a heavy-duty tactical zipper and modular pocket on a black parka. The lighting is dramatic, casting sharp shadows and highlighting the metallic sheen of the hardware. Minimalist urban aesthetic with a focus on structural integrity and luxury materials." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD8Jkk_RR2IOhNOlGp63cuzujIGLr-9nOG0kiy2u6lmOdKjakYlzChYku53frFPL6754PC6LCHwsfhQCS3Ys61yYQQeu8hiM-HKm80maDQ-zzcsjwvruBUndo4LADCRLttUUrIhubr5HtqtvGDFF_uizAFPVRropMRtr-fzRD4cAd47crZtc1Z-rOZy4XDhSTlwPYNeO1gGBTl3N6HXO6tsGNemYjKeNhyqbuMFg2Eam39xJkzndOU7CuaOWLopq5wVsjQE5nAz4cEs')"></div>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="material-symbols-outlined text-white" data-icon="delete">delete</button>
+</div>
+</div>
+<div class="aspect-[3/4] relative border border-outline-variant group">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Atmospheric low-angle shot of a model wearing a voluminous black parka, standing in a brutalist concrete environment. The composition is off-center, echoing lookbook asymmetry. Soft overcast lighting creates a muted, premium monochrome mood. Professional streetwear catalog style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsk40lwk3mUn6_Eeank8I_DF-iU53RVb_O5DlyxgkbaD753ml3mM0Xz3e_J5cYd3YEAvVF9m0C2aTwyb16O07AMYjasTRSB6xQc7iGow6Z7oqpJtN3F6PnA5zMuLbweJDJShBVCwtw3uiMzghbUXa0ByTTVljrr6KGgY4_qiZh29sB4VgAXB1BkwNDT1CbnXuX2dw9YyA1vWcWuMLKs0yT9jfYNcW0w37OdiHmpzWvj7X3ZqOCXC269JlLK7_JEmPVsG_MPK46Yp27')"></div>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="material-symbols-outlined text-white" data-icon="delete">delete</button>
+</div>
+</div>
+<div class="aspect-[3/4] border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-secondary hover:border-primary hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined text-3xl mb-2" data-icon="add_a_photo">add_a_photo</span>
+<span class="font-label-caps text-[10px] uppercase">Upload</span>
+</div>
+</div>
+</section>
+<!-- Variants -->
+<section class="bg-white p-lg border border-primary">
+<h3 class="font-label-caps text-lg border-b border-primary pb-base mb-md uppercase">Variants &amp; Options</h3>
+<div class="space-y-md">
+<div>
+<label class="font-label-caps text-xs text-secondary block mb-3 uppercase">Sizes</label>
+<div class="flex gap-sm">
+<button class="w-12 h-12 border border-primary bg-primary text-white font-label-caps">S</button>
+<button class="w-12 h-12 border border-outline-variant hover:border-primary font-label-caps">M</button>
+<button class="w-12 h-12 border border-outline-variant hover:border-primary font-label-caps">L</button>
+<button class="w-12 h-12 border border-outline-variant hover:border-primary font-label-caps">XL</button>
+<button class="w-12 h-12 border border-dashed border-outline-variant flex items-center justify-center"><span class="material-symbols-outlined" data-icon="add">add</span></button>
+</div>
+</div>
+<div>
+<label class="font-label-caps text-xs text-secondary block mb-3 uppercase">Colorways</label>
+<div class="flex gap-sm items-center">
+<div class="group relative">
+<div class="w-10 h-10 bg-black border border-primary ring-2 ring-offset-2 ring-primary"></div>
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[8px] font-label-caps uppercase opacity-0 group-hover:opacity-100 transition-opacity">Obsidian</span>
+</div>
+<div class="group relative">
+<div class="w-10 h-10 bg-[#2A2A2A] border border-outline-variant hover:border-primary"></div>
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[8px] font-label-caps uppercase opacity-0 group-hover:opacity-100 transition-opacity">Asphalt</span>
+</div>
+<div class="group relative">
+<div class="w-10 h-10 bg-[#E8E8E8] border border-outline-variant hover:border-primary"></div>
+<span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[8px] font-label-caps uppercase opacity-0 group-hover:opacity-100 transition-opacity">Ghost</span>
+</div>
+<button class="w-10 h-10 border border-dashed border-outline-variant flex items-center justify-center"><span class="material-symbols-outlined" data-icon="palette">palette</span></button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Sidebar Stats -->
+<div class="col-span-12 lg:col-span-4 space-y-gutter">
+<!-- Status & Visibility -->
+<section class="bg-white p-lg border border-primary">
+<h3 class="font-label-caps text-lg border-b border-primary pb-base mb-md uppercase">Visibility</h3>
+<div class="space-y-md">
+<div class="flex items-center justify-between">
+<span class="font-body-md font-medium uppercase tracking-tight">Status</span>
+<div class="flex bg-surface-container-high p-1">
+<button class="px-4 py-1 text-[10px] font-label-caps uppercase transition-all bg-white shadow-sm">Active</button>
+<button class="px-4 py-1 text-[10px] font-label-caps uppercase transition-all text-secondary hover:text-primary">Draft</button>
+</div>
+</div>
+<div class="p-sm bg-surface-container-low border border-outline-variant">
+<p class="text-xs text-secondary mb-2 uppercase">Scheduled Release</p>
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-xs">NO DATE SET</span>
+<button class="material-symbols-outlined scale-75" data-icon="calendar_today">calendar_today</button>
+</div>
+</div>
+<button class="w-full py-base border border-error text-error font-label-caps text-xs uppercase hover:bg-error hover:text-white transition-all flex items-center justify-center gap-xs mt-lg">
+<span class="material-symbols-outlined text-sm" data-icon="delete_forever">delete_forever</span>
+                                    Delete Product
+                                </button>
+</div>
+</section>
+<!-- Inventory & Pricing -->
+<section class="bg-white p-lg border border-primary">
+<h3 class="font-label-caps text-lg border-b border-primary pb-base mb-md uppercase">Inventory</h3>
+<div class="space-y-md">
+<div>
+<label class="font-label-caps text-xs text-secondary block mb-2 uppercase">Price (USD)</label>
+<div class="flex items-center border-b border-outline-variant">
+<span class="font-label-caps text-primary">$</span>
+<input class="w-full border-0 py-2 font-label-caps text-xl" type="number" value="450.00"/>
+</div>
+</div>
+<div>
+<label class="font-label-caps text-xs text-secondary block mb-2 uppercase">Stock Level</label>
+<div class="flex items-center gap-md">
+<input class="flex-1 border-0 border-b border-outline-variant py-2 font-label-caps text-xl" type="number" value="124"/>
+<span class="px-2 py-1 bg-green-50 text-green-700 font-label-caps text-[10px] border border-green-200">IN STOCK</span>
+</div>
+</div>
+<div class="pt-sm space-y-sm">
+<div class="flex justify-between text-xs font-label-caps uppercase">
+<span class="text-secondary">Low Stock Threshold</span>
+<span class="text-primary">10</span>
+</div>
+<div class="w-full bg-outline-variant h-px"></div>
+<div class="flex justify-between text-xs font-label-caps uppercase">
+<span class="text-secondary">Warehouse Loc.</span>
+<span class="text-primary">A4-12-G</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Activity -->
+<section class="bg-white p-lg border border-primary">
+<h3 class="font-label-caps text-lg border-b border-primary pb-base mb-md uppercase">History</h3>
+<div class="space-y-md">
+<div class="flex gap-sm">
+<div class="w-px bg-outline-variant relative ml-2">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-primary"></div>
+</div>
+<div>
+<p class="text-xs font-medium">Price updated to $450.00</p>
+<p class="text-[10px] font-label-caps text-secondary uppercase">2 hours ago by admin_jt</p>
+</div>
+</div>
+<div class="flex gap-sm">
+<div class="w-px bg-outline-variant relative ml-2">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-outline"></div>
+</div>
+<div>
+<p class="text-xs font-medium">Restocked: +50 units</p>
+<p class="text-[10px] font-label-caps text-secondary uppercase">Yesterday by system</p>
+</div>
+</div>
+<a class="block text-center text-[10px] font-label-caps uppercase text-secondary hover:text-primary transition-colors mt-md" href="#">View Full Audit Log</a>
+</div>
+</section>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Action Bar (Sticky/Floating Bottom) -->
+<footer class="h-20 bg-white border-t border-primary flex items-center px-lg justify-between">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="info">info</span>
+<span class="font-label-caps text-[10px] text-secondary uppercase">Last saved: 14 Dec 2023 at 11:20 PM</span>
+</div>
+<div class="flex gap-md">
+<button class="px-lg py-base border border-outline-variant text-secondary font-label-caps text-xs uppercase hover:border-primary hover:text-primary transition-all">Preview Store</button>
+<div class="h-8 w-px bg-outline-variant mx-sm"></div>
+<button class="px-xl py-base bg-primary text-on-primary font-label-caps text-xs uppercase hover:bg-white hover:text-primary border border-primary transition-all">Save Changes</button>
+</div>
+</footer>
+</main>
+<!-- Micro-interaction Scripts -->
+<script>
+    // Auth guard
+    (async function checkSession() {
+        const r = await fetch('/api/auth/me', { credentials: 'include' }).catch(() => null);
+        if (!r || !r.ok) { localStorage.removeItem('one-root-logged'); window.location.href = '/admin/login'; }
+    })();
+
+    // Logout
+    document.getElementById('edit-logout').addEventListener('click', async e => {
+        e.preventDefault();
+        await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
+        localStorage.removeItem('one-root-logged');
+        localStorage.removeItem('one-root-admin');
+        window.location.href = '/admin/login';
+    });
+
+    // Cancel button → back to catalog
+    document.querySelectorAll('button').forEach(btn => {
+        if (btn.textContent.trim() === 'Cancel') btn.addEventListener('click', () => window.location.href = '/admin/catalog');
+        if (btn.textContent.trim() === 'Save Changes') btn.addEventListener('click', () => window.location.href = '/admin/catalog');
+    });
+
+    // Toggle logic for status buttons
+    const statusButtons = document.querySelectorAll('.bg-surface-container-high button');
+    statusButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            statusButtons.forEach(b => { b.classList.remove('bg-white', 'shadow-sm'); b.classList.add('text-secondary'); });
+            btn.classList.add('bg-white', 'shadow-sm'); btn.classList.remove('text-secondary');
+        });
+    });
+
+    // Size button selection
+    const sizeButtons = document.querySelectorAll('.flex.gap-sm button:not(.flex)');
+    sizeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            sizeButtons.forEach(b => { b.classList.remove('bg-primary', 'text-white'); b.classList.add('border-outline-variant'); });
+            btn.classList.add('bg-primary', 'text-white'); btn.classList.remove('border-outline-variant');
+        });
+    });
+</script>
+</body></html>

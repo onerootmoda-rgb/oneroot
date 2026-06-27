@@ -1,0 +1,382 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ONE ROOT | Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode:"class",
+  theme:{ extend:{
+    colors:{"primary":"#000","secondary":"#5d5f5f","background":"#f9f9fe","surface":"#f9f9fe","surface-container-lowest":"#fff","surface-container-low":"#f3f3f8","surface-container":"#ededf2","surface-dim":"#d9dade","on-primary":"#fff","on-background":"#1a1c1f"},
+    spacing:{"xs":"8px","sm":"16px","md":"24px","lg":"48px","xl":"80px","gutter":"24px"},
+    fontFamily:{"body-md":["Hanken Grotesk"],"label-caps":["JetBrains Mono"],"headline-lg":["Montserrat"]},
+    fontSize:{"label-caps":["12px",{"lineHeight":"16px","letterSpacing":"0.1em","fontWeight":"500"}]}
+  }}
+}
+</script>
+<style>
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;}
+  html.dark,html.dark body{background:#0e0e10;color:#e4e4e7;}
+  html.dark aside{background:#0e0e10!important;border-color:rgba(244,244,245,.15)!important;}
+  html.dark .bg-white,html.dark .bg-surface-container-lowest{background-color:#0e0e10!important;}
+  html.dark .bg-surface-container-low{background-color:#18181b!important;}
+  html.dark .bg-surface-container{background-color:#1e1e21!important;}
+  html.dark .text-secondary{color:#a1a1aa!important;}
+  html.dark .text-primary{color:#f4f4f5!important;}
+  html.dark .border-primary{border-color:rgba(244,244,245,.4)!important;}
+  html.dark .bg-primary{background-color:#f4f4f5!important;}
+  html.dark .text-on-primary{color:#0e0e10!important;}
+</style>
+<script>if(localStorage.getItem('one-root-theme')==='dark')document.documentElement.classList.replace('light','dark');</script>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md">
+
+<!-- Sidebar -->
+<!-- Admin Sidebar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest border-r border-primary flex flex-col py-md px-sm z-40">
+<div class="mb-xl px-sm"><h1 class="font-headline-lg text-headline-lg font-black text-primary tracking-tighter">ONE ROOT</h1><p class="font-label-caps text-label-caps text-secondary mt-1">ADMIN CONSOLE</p></div>
+<nav class="flex-grow space-y-xs">
+<a data-nav="/admin/dashboard" href="/admin/dashboard" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+<a data-nav="/admin/catalog" href="/admin/catalog" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Catalog</a>
+<a data-nav="/admin/orders" href="/admin/orders" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Pedidos<span id="orders-badge" class="ml-auto hidden bg-error text-on-error text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none"></span></a>
+<a data-nav="/admin/home" href="/admin/home" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">home</span>Editor Landing</a>
+<a data-nav="/admin/analytics" href="/admin/analytics" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">bar_chart</span>Analytics</a>
+<a href="/admin/collections" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">collections</span>Colecciones</a>
+<a href="/admin/designs" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">style</span>Diseños & Prendas</a>
+<a href="/admin/users" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">manage_accounts</span>Usuarios & Log</a>
+<a href="/" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">storefront</span>Ver Tienda</a>
+</nav>
+<div class="mt-auto border-t border-primary/10 pt-md">
+<a id="admin-logout" href="#" class="flex items-center gap-sm px-sm py-md text-secondary hover:text-primary transition-all font-label-caps text-label-caps"><span class="material-symbols-outlined text-[20px]">logout</span>Logout</a>
+</div>
+</aside>
+
+<!-- Main -->
+<main class="ml-64 p-12 min-h-screen">
+
+  <!-- Header -->
+  <div class="flex justify-between items-end mb-10 border-b border-primary pb-6">
+    <div>
+      <h2 class="font-headline-lg text-3xl font-black uppercase tracking-tighter">Marketing Analytics</h2>
+      <p class="text-secondary font-label-caps text-label-caps mt-1">Rendimiento de la tienda en tiempo real</p>
+    </div>
+    <div class="flex gap-2">
+      <button onclick="load(7)"  data-days="7"  class="day-btn px-4 py-2 border border-primary bg-primary text-on-primary font-label-caps text-label-caps">7D</button>
+      <button onclick="load(30)" data-days="30" class="day-btn px-4 py-2 border border-primary text-primary font-label-caps text-label-caps hover:bg-surface-container">30D</button>
+      <button onclick="load(90)" data-days="90" class="day-btn px-4 py-2 border border-primary text-primary font-label-caps text-label-caps hover:bg-surface-container">90D</button>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div class="bg-surface-container-low border border-primary/10 p-5 flex flex-col gap-2">
+      <span class="font-label-caps text-label-caps text-secondary flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px]">visibility</span>VISUALIZACIONES
+      </span>
+      <span id="kpi-views" class="font-headline-lg text-4xl font-black leading-none">—</span>
+      <span id="kpi-views-sub" class="font-label-caps text-[10px] text-secondary">últimos N días</span>
+    </div>
+    <div class="bg-surface-container-low border border-primary/10 p-5 flex flex-col gap-2">
+      <span class="font-label-caps text-label-caps text-secondary flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px]">person</span>USUARIOS ÚNICOS
+      </span>
+      <span id="kpi-unique" class="font-headline-lg text-4xl font-black leading-none">—</span>
+      <span id="kpi-unique-sub" class="font-label-caps text-[10px] text-secondary">visitantes distintos</span>
+    </div>
+    <div class="bg-surface-container-low border border-primary/10 p-5 flex flex-col gap-2">
+      <span class="font-label-caps text-label-caps text-secondary flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px]">person_add</span>NUEVOS VS RECURRENTES
+      </span>
+      <span id="kpi-new" class="font-headline-lg text-4xl font-black leading-none">—</span>
+      <span id="kpi-returning" class="font-label-caps text-[10px] text-secondary">— recurrentes</span>
+    </div>
+    <div class="bg-surface-container-low border border-primary/10 p-5 flex flex-col gap-2">
+      <span class="font-label-caps text-label-caps text-secondary flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px]">timer</span>DURACIÓN MEDIA
+      </span>
+      <span id="kpi-duration" class="font-headline-lg text-4xl font-black leading-none">—</span>
+      <span class="font-label-caps text-[10px] text-secondary">por visita</span>
+    </div>
+  </div>
+
+  <!-- Funnel KPI Cards -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div class="bg-surface-container-low border border-primary/10 p-5 flex flex-col gap-2">
+      <span class="font-label-caps text-label-caps text-secondary flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px]">pageview</span>VISTAS DE PRODUCTO
+      </span>
+      <span id="kpi-product-views" class="font-headline-lg text-4xl font-black leading-none">—</span>
+      <span class="font-label-caps text-[10px] text-secondary">páginas de producto abiertas</span>
+    </div>
+    <div class="bg-surface-container-low border border-primary/10 p-5 flex flex-col gap-2">
+      <span class="font-label-caps text-label-caps text-secondary flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px]">shopping_cart</span>AÑADIERON AL CARRITO
+      </span>
+      <span id="kpi-add-cart" class="font-headline-lg text-4xl font-black leading-none">—</span>
+      <span id="kpi-add-cart-sub" class="font-label-caps text-[10px] text-secondary">usuarios únicos</span>
+    </div>
+    <div class="bg-surface-container-low border border-primary/10 p-5 flex flex-col gap-2">
+      <span class="font-label-caps text-label-caps text-secondary flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px]">chat</span>CLICKS A WHATSAPP
+      </span>
+      <span id="kpi-whatsapp" class="font-headline-lg text-4xl font-black leading-none">—</span>
+      <span class="font-label-caps text-[10px] text-secondary">intenciones de compra</span>
+    </div>
+    <div class="bg-surface-container-low border border-primary/10 p-5 flex flex-col gap-2">
+      <span class="font-label-caps text-label-caps text-secondary flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px]">conversion_path</span>CONVERSIÓN
+      </span>
+      <span id="kpi-conversion" class="font-headline-lg text-4xl font-black leading-none">—</span>
+      <span class="font-label-caps text-[10px] text-secondary">carrito / vistas producto</span>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+    <!-- Line chart -->
+    <div class="lg:col-span-2 bg-surface-container-low border border-primary/10 p-6">
+      <p class="font-label-caps text-label-caps text-secondary mb-4">VISITAS POR DÍA</p>
+      <div style="height:220px"><canvas id="chart-daily"></canvas></div>
+    </div>
+    <!-- Donut sources -->
+    <div class="bg-surface-container-low border border-primary/10 p-6">
+      <p class="font-label-caps text-label-caps text-secondary mb-4">PROCEDENCIA DE TRÁFICO</p>
+      <div style="height:180px"><canvas id="chart-sources"></canvas></div>
+      <div id="sources-legend" class="mt-4 space-y-1"></div>
+    </div>
+  </div>
+
+  <!-- Pages + CPC -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Top pages -->
+    <div class="bg-surface-container-low border border-primary/10 p-6">
+      <p class="font-label-caps text-label-caps text-secondary mb-4">PÁGINAS MÁS VISITADAS</p>
+      <table class="w-full text-left">
+        <thead>
+          <tr class="border-b border-primary/20">
+            <th class="font-label-caps text-[10px] text-secondary pb-2">PÁGINA</th>
+            <th class="font-label-caps text-[10px] text-secondary pb-2 text-right">VISTAS</th>
+            <th class="font-label-caps text-[10px] text-secondary pb-2 text-right">USUARIOS</th>
+            <th class="font-label-caps text-[10px] text-secondary pb-2 text-right">T. MEDIO</th>
+          </tr>
+        </thead>
+        <tbody id="pages-tbody" class="font-label-caps text-[11px]"></tbody>
+      </table>
+    </div>
+
+    <!-- CPC editor -->
+    <div class="bg-surface-container-low border border-primary/10 p-6">
+      <div class="flex justify-between items-center mb-4">
+        <p class="font-label-caps text-label-caps text-secondary">COSTE POR CLIC (COP)</p>
+        <button id="save-cpc" class="bg-primary text-on-primary font-label-caps text-[10px] px-4 py-2 hover:opacity-80 transition-all flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px]">save</span>GUARDAR
+        </button>
+      </div>
+      <p class="font-label-caps text-[10px] text-secondary mb-4">Ingresa el CPC manual por canal para calcular el gasto estimado.</p>
+      <table class="w-full text-left">
+        <thead>
+          <tr class="border-b border-primary/20">
+            <th class="font-label-caps text-[10px] text-secondary pb-2">FUENTE</th>
+            <th class="font-label-caps text-[10px] text-secondary pb-2 text-right">VISITAS</th>
+            <th class="font-label-caps text-[10px] text-secondary pb-2 text-right">CPC ($)</th>
+            <th class="font-label-caps text-[10px] text-secondary pb-2 text-right">GASTO EST.</th>
+          </tr>
+        </thead>
+        <tbody id="cpc-tbody" class="font-label-caps text-[11px]"></tbody>
+      </table>
+      <p id="cpc-msg" class="font-label-caps text-[10px] text-secondary mt-3"></p>
+    </div>
+  </div>
+</main>
+
+<script>
+(async function checkSession() {
+    const r = await fetch('/api/auth/me', { credentials: 'include' }).catch(() => null);
+    if (!r || !r.ok) { localStorage.removeItem('one-root-logged'); window.location.href = '/admin/login'; }
+})();
+
+let currentDays = 7;
+let sourcesData = [];
+let dailyChart, sourcesChart;
+
+const PALETTE = ['#000000','#4a4a4a','#888888','#b0b0b0','#d0d0d0','#e8e8e8'];
+
+function fmtDuration(s) {
+    if (!s || s < 1) return '—';
+    const m = Math.floor(s / 60), sec = s % 60;
+    return m > 0 ? `${m}m ${sec}s` : `${sec}s`;
+}
+function fmtNum(n) { return (n || 0).toLocaleString('es-CO'); }
+function fmtCOP(n) { return '$ ' + Math.round(n || 0).toLocaleString('es-CO'); }
+
+async function load(days) {
+    currentDays = days;
+    document.querySelectorAll('.day-btn').forEach(b => {
+        const active = b.dataset.days == days;
+        b.className = `day-btn px-4 py-2 border border-primary font-label-caps text-label-caps transition-all ${active ? 'bg-primary text-on-primary' : 'text-primary hover:bg-surface-container'}`;
+    });
+
+    const res = await fetch(`/api/analytics/summary?days=${days}`, {
+        credentials: 'include'
+    });
+    if (res.status === 401) { localStorage.removeItem('one-root-logged'); window.location.href = '/admin/login'; return; }
+    const d = await res.json();
+
+    // KPI cards
+    document.getElementById('kpi-views').textContent = fmtNum(d.totalViews);
+    document.getElementById('kpi-views-sub').textContent = `últimos ${days} días`;
+    document.getElementById('kpi-unique').textContent = fmtNum(d.uniqueVisitors);
+    document.getElementById('kpi-new').textContent = fmtNum(d.newVisitors) + ' nuevos';
+    document.getElementById('kpi-returning').textContent = fmtNum(d.returningVisitors) + ' recurrentes';
+    document.getElementById('kpi-duration').textContent = fmtDuration(d.avgDuration);
+
+    // Funnel KPI cards
+    document.getElementById('kpi-product-views').textContent = fmtNum(d.productViews || 0);
+    document.getElementById('kpi-add-cart').textContent = fmtNum(d.addToCarts || 0);
+    document.getElementById('kpi-add-cart-sub').textContent = fmtNum(d.uniqueCart || 0) + ' usuarios únicos';
+    document.getElementById('kpi-whatsapp').textContent = fmtNum(d.whatsappClicks || 0);
+    const conv = d.productViews > 0 ? Math.round((d.addToCarts || 0) / d.productViews * 100) : 0;
+    document.getElementById('kpi-conversion').textContent = conv + '%';
+
+    // Daily chart
+    const labels = d.byDay.map(r => r.day);
+    const views   = d.byDay.map(r => r.views);
+    const visitors = d.byDay.map(r => r.visitors);
+
+    if (dailyChart) dailyChart.destroy();
+    dailyChart = new Chart(document.getElementById('chart-daily'), {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [
+                { label: 'Vistas', data: views, borderColor: '#000', backgroundColor: 'rgba(0,0,0,0.06)', tension: 0.3, fill: true, pointRadius: 3 },
+                { label: 'Visitantes', data: visitors, borderColor: '#888', borderDash: [4,4], backgroundColor: 'transparent', tension: 0.3, pointRadius: 3 }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { labels: { font: { family: 'JetBrains Mono', size: 10 }, color: '#5d5f5f' } } },
+            scales: {
+                x: { ticks: { font: { family: 'JetBrains Mono', size: 9 }, color: '#888' }, grid: { display: false } },
+                y: { ticks: { font: { family: 'JetBrains Mono', size: 9 }, color: '#888' }, grid: { color: 'rgba(0,0,0,0.06)' }, beginAtZero: true }
+            }
+        }
+    });
+
+    // Sources donut
+    sourcesData = d.sources;
+    const srcLabels = d.sources.map(s => s.source);
+    const srcValues = d.sources.map(s => s.visits);
+    if (sourcesChart) sourcesChart.destroy();
+    sourcesChart = new Chart(document.getElementById('chart-sources'), {
+        type: 'doughnut',
+        data: { labels: srcLabels, datasets: [{ data: srcValues, backgroundColor: PALETTE, borderWidth: 0 }] },
+        options: {
+            responsive: true, maintainAspectRatio: false, cutout: '65%',
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // Sources legend
+    document.getElementById('sources-legend').innerHTML = d.sources.map((s, i) => `
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span style="width:10px;height:10px;background:${PALETTE[i] || '#ccc'};display:inline-block;border-radius:2px"></span>
+                <span class="font-label-caps text-[10px]">${s.source}</span>
+            </div>
+            <span class="font-label-caps text-[10px] text-secondary">${fmtNum(s.visits)} (${d.totalViews > 0 ? Math.round(s.visits / d.totalViews * 100) : 0}%)</span>
+        </div>`).join('');
+
+    // Top pages
+    document.getElementById('pages-tbody').innerHTML = d.topPages.length
+        ? d.topPages.map(p => `
+            <tr class="border-b border-primary/5 hover:bg-surface-container transition-all">
+                <td class="py-2 pr-2 text-primary font-medium" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${p.page}">${p.page}</td>
+                <td class="py-2 text-right">${fmtNum(p.views)}</td>
+                <td class="py-2 text-right text-secondary">${fmtNum(p.visitors)}</td>
+                <td class="py-2 text-right text-secondary">${fmtDuration(p.avgDuration)}</td>
+            </tr>`).join('')
+        : '<tr><td colspan="4" class="py-6 text-center text-secondary">Sin datos aún</td></tr>';
+
+    // CPC table
+    const cpcMap = {};
+    d.costs.forEach(c => { cpcMap[c.source] = c.cpc; });
+    const allSources = d.sources.length ? d.sources : [{ source: 'Directo', visits: 0 }, { source: 'Google', visits: 0 }, { source: 'Instagram', visits: 0 }];
+
+    document.getElementById('cpc-tbody').innerHTML = allSources.map(s => {
+        const cpc = cpcMap[s.source] || 0;
+        const spend = cpc * s.visits;
+        return `
+        <tr class="border-b border-primary/5">
+            <td class="py-2">${s.source}</td>
+            <td class="py-2 text-right text-secondary">${fmtNum(s.visits)}</td>
+            <td class="py-2 text-right">
+                <input type="number" min="0" step="100" value="${cpc}"
+                    data-source="${s.source}"
+                    class="cpc-input w-24 bg-transparent border-b border-outline text-right font-label-caps text-[11px] focus:outline-none focus:border-primary px-1"/>
+            </td>
+            <td class="py-2 text-right text-secondary" id="spend-${s.source.replace(/\s/g,'_')}">${spend > 0 ? fmtCOP(spend) : '—'}</td>
+        </tr>`;
+    }).join('');
+
+    // Live CPC preview
+    document.querySelectorAll('.cpc-input').forEach(inp => {
+        inp.addEventListener('input', function() {
+            const source = this.dataset.source;
+            const src = allSources.find(s => s.source === source);
+            const spend = (parseFloat(this.value) || 0) * (src ? src.visits : 0);
+            const cell = document.getElementById('spend-' + source.replace(/\s/g, '_'));
+            if (cell) cell.textContent = spend > 0 ? fmtCOP(spend) : '—';
+        });
+    });
+}
+
+document.getElementById('save-cpc').addEventListener('click', async () => {
+    const costs = Array.from(document.querySelectorAll('.cpc-input')).map(inp => ({
+        source: inp.dataset.source,
+        cpc: parseFloat(inp.value) || 0
+    }));
+    const res = await fetch('/api/analytics/costs', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ costs })
+    });
+    const msg = document.getElementById('cpc-msg');
+    msg.textContent = res.ok ? 'CPC guardado ✓' : 'Error al guardar';
+    setTimeout(() => msg.textContent = '', 2500);
+});
+
+document.querySelectorAll('a[data-nav]').forEach(function(a) {
+    if (a.getAttribute('data-nav') === window.location.pathname) {
+        a.classList.remove('text-secondary', 'hover:bg-surface-container');
+        a.classList.add('bg-primary', 'text-on-primary', 'font-bold', 'translate-x-1');
+    }
+});
+document.getElementById('admin-logout').addEventListener('click', async function(e) {
+    e.preventDefault();
+    await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
+    localStorage.removeItem('one-root-logged');
+    localStorage.removeItem('one-root-admin');
+    window.location.href = '/admin/login';
+});
+(function pollOrders() {
+    if (!localStorage.getItem('one-root-logged')) return;
+    fetch('/api/orders/stats', { credentials: 'include' })
+        .then(r => r.json()).then(function(d) {
+            const b = document.getElementById('orders-badge');
+            if (b) { if (d.pending > 0) { b.textContent = d.pending; b.classList.remove('hidden'); } else b.classList.add('hidden'); }
+        }).catch(function(){});
+    setTimeout(pollOrders, 30000);
+})();
+
+load(7);
+</script>
+</body>
+</html>
+

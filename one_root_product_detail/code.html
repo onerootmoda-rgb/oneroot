@@ -1,0 +1,583 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ONE ROOT | Oversized Hoodie</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&amp;family=Hanken+Grotesk:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#1a1b1f",
+                        "outline-variant": "#cfc4c5",
+                        "surface-container-highest": "#e2e2e7",
+                        "primary-fixed": "#e2e2e2",
+                        "primary": "#000000",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#dfe0e0",
+                        "on-primary": "#ffffff",
+                        "secondary": "#5d5f5f",
+                        "inverse-primary": "#c6c6c6",
+                        "surface-bright": "#f9f9fe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-container": "#ededf2",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface": "#f9f9fe",
+                        "surface-dim": "#d9dade",
+                        "on-primary-fixed-variant": "#474747",
+                        "on-background": "#1a1c1f",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "inverse-on-surface": "#f0f0f5",
+                        "outline": "#7e7576",
+                        "on-surface-variant": "#4c4546",
+                        "on-primary-fixed": "#1b1b1b",
+                        "tertiary-fixed-dim": "#c6c6cb",
+                        "tertiary": "#000000",
+                        "surface-variant": "#e2e2e7",
+                        "surface-tint": "#5e5e5e",
+                        "on-tertiary-container": "#838388",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1a1c1f",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-tertiary-fixed": "#1a1b1f",
+                        "surface-container-low": "#f3f3f8",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-secondary-container": "#616363",
+                        "on-tertiary-fixed-variant": "#46464b",
+                        "surface-container-high": "#e8e8ed",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-primary-container": "#848484",
+                        "inverse-surface": "#2e3034",
+                        "primary-container": "#1b1b1b",
+                        "background": "#f9f9fe",
+                        "tertiary-fixed": "#e3e2e7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "8px",
+                        "gutter": "24px",
+                        "base": "4px",
+                        "lg": "48px",
+                        "sm": "16px",
+                        "xl": "80px",
+                        "container-max": "1440px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-lg": ["Montserrat"],
+                        "body-md": ["Hanken Grotesk"],
+                        "display-lg": ["Montserrat"],
+                        "headline-xl": ["Montserrat"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Montserrat"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "38px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["80px", {"lineHeight": "80px", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                        "headline-xl": ["48px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #f9f9fe; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #f3f3f8; }
+        ::-webkit-scrollbar-thumb { background: #000; }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Dark mode */
+        html.dark,html.dark body{background:#0e0e10;color:#e4e4e7;}
+        html.dark header{background:#0e0e10!important;border-color:rgba(244,244,245,.15)!important;}
+        html.dark footer{background:#0e0e10!important;}
+        html.dark .bg-white,html.dark .bg-background,html.dark .bg-surface,html.dark .bg-surface-bright,html.dark .bg-surface-container-lowest{background-color:#0e0e10!important;}
+        html.dark .bg-surface-container-low{background-color:#18181b!important;}
+        html.dark .bg-surface-container,html.dark .bg-surface-container-high,html.dark .bg-surface-container-highest{background-color:#1e1e21!important;}
+        html.dark .bg-surface-dim{background-color:#27272a!important;}
+        html.dark .text-on-background,html.dark .text-on-surface{color:#e4e4e7!important;}
+        html.dark .text-on-surface-variant{color:#a1a1aa!important;}
+        html.dark .text-on-primary-fixed-variant{color:#c4c4c4!important;}
+        html.dark .border-outline-variant{border-color:rgba(255,255,255,.12)!important;}
+        html.dark .text-secondary{color:#a1a1aa!important;}
+        html.dark .text-primary{color:#f4f4f5!important;}
+        html.dark .bg-primary{background-color:#f4f4f5!important;}
+        html.dark .text-on-primary{color:#0e0e10!important;}
+        html.dark .border-primary{border-color:rgba(244,244,245,.6)!important;}
+        html.dark .border-outline{border-color:rgba(255,255,255,.2)!important;}
+    </style>
+<style>body{opacity:0;transition:opacity .15s ease-in}</style><script>document.addEventListener('DOMContentLoaded',function(){requestAnimationFrame(function(){document.body.style.opacity='1'})});</script>
+<script>if(localStorage.getItem('one-root-theme')==='dark')document.documentElement.classList.replace('light','dark');</script>
+</head>
+<body class="font-body-md text-on-background selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface-container-lowest border-b border-primary">
+<div class="flex justify-between items-center px-gutter py-sm w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<h1 class="font-display-lg text-headline-lg tracking-tighter text-primary">ONE ROOT</h1>
+<div class="hidden md:flex gap-sm">
+<a class="font-body-md text-body-md text-secondary hover:text-primary transition-colors duration-200" href="/" data-i18n="nav.home">INICIO</a>
+<a class="font-body-md text-body-md text-primary border-b-2 border-primary pb-1" href="/catalog" data-i18n="nav.shop">CATÁLOGO</a>
+<a class="font-body-md text-body-md text-secondary hover:text-primary transition-colors duration-200" href="/about" data-i18n="nav.about">NOSOTROS</a>
+<a class="font-body-md text-body-md text-secondary hover:text-primary transition-colors duration-200" href="/personalizar" data-i18n="nav.design">CREA TU DISEÑO</a>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button id="lang-toggle" class="font-label-caps text-[11px] border border-primary px-xs py-[3px] text-primary hover:bg-primary hover:text-on-primary transition-all">EN</button>
+<button id="theme-toggle" class="p-xs hover:opacity-80 transition-opacity" title="Cambiar tema">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<button id="search-btn" class="p-xs hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<a href="/cart" class="p-xs hover:opacity-80 transition-opacity relative">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full"></span>
+</a>
+<a href="/admin/login" class="p-xs hover:opacity-80 transition-opacity md:flex hidden">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</a>
+<button id="mobile-menu-btn" class="md:hidden p-xs hover:opacity-80 transition-opacity text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Mobile menu dropdown -->
+<div id="mobile-menu" class="hidden md:hidden border-t border-primary bg-surface-container-lowest fixed top-[53px] left-0 w-full z-40">
+<div class="px-gutter py-md flex flex-col">
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-colors py-md border-b border-primary/20" href="/">INICIO</a>
+<a class="font-label-caps text-label-caps text-primary py-md border-b border-primary/20" href="/catalog">CATÁLOGO</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-colors py-md border-b border-primary/20" href="/about">NOSOTROS</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-colors py-md" href="/personalizar">CREA TU DISEÑO</a>
+</div>
+</div>
+<main class="pt-xl md:pt-[120px] max-w-container-max mx-auto px-gutter mb-xl">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
+<!-- Left: Product Image Gallery -->
+<div class="lg:col-span-7 space-y-md">
+<div class="relative group overflow-hidden bg-surface-container">
+<img id="product-main-img" class="w-full aspect-[3/4] object-cover hover:scale-105 transition-transform duration-700" src="" alt="Product" style="background:#f3f3f8"/>
+<div id="product-badge-wrap" class="absolute top-md left-md">
+<span id="product-badge" class="bg-primary text-on-primary font-label-caps text-label-caps px-sm py-xs">LIMITED EDITION</span>
+</div>
+</div>
+<div id="product-thumbnails" class="grid grid-cols-4 gap-xs"></div>
+</div>
+<!-- Right: Product Information -->
+<div class="lg:col-span-5 sticky top-[140px] space-y-lg">
+<header class="space-y-sm">
+<p id="product-breadcrumb" class="font-label-caps text-label-caps text-secondary">ESSENTIALS / AW24</p>
+<h2 id="product-name" class="font-headline-xl text-headline-xl text-primary leading-tight">ONE ROOT OVERSIZED HOODIE</h2>
+<p id="product-price" class="font-label-caps text-headline-lg text-primary">$185.00</p>
+</header>
+<div class="space-y-md">
+<p id="product-description" class="font-body-lg text-body-lg text-on-surface-variant max-w-prose">
+                        Constructed from 500GSM heavy-weight French Terry cotton. This piece features an architectural boxy fit, dropped shoulders, and a double-layered hood for structural permanence. Finished with tonal matte embroidery.
+                    </p>
+<div id="product-tags" class="flex flex-wrap gap-xs">
+<span class="font-label-caps text-[10px] border border-outline-variant px-xs py-1">500GSM COTTON</span>
+<span class="font-label-caps text-[10px] border border-outline-variant px-xs py-1">BOXY FIT</span>
+<span class="font-label-caps text-[10px] border border-outline-variant px-xs py-1">ETHICALLY SOURCED</span>
+</div>
+</div>
+<!-- Color Selector -->
+<div id="color-selector" class="space-y-sm hidden">
+<label class="font-label-caps text-label-caps">COLOR</label>
+<div id="color-swatches" class="flex flex-wrap gap-sm mt-xs"></div>
+<p id="color-name-display" class="font-label-caps text-[10px] text-secondary mt-1"></p>
+</div>
+<!-- Size Selector -->
+<div class="space-y-sm">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps">SELECCIONA TALLA</label>
+<button class="text-[10px] font-label-caps underline hover:text-primary transition-colors" data-i18n="product.size-guide">Guía de tallas</button>
+</div>
+<div id="size-grid" class="grid grid-cols-4 gap-xs">
+<button class="border border-primary py-sm font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-all duration-200">S</button>
+<button class="bg-primary text-on-primary py-sm font-label-caps text-label-caps">M</button>
+<button class="border border-primary py-sm font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-all duration-200">L</button>
+<button class="border border-outline-variant py-sm font-label-caps text-label-caps text-outline-variant cursor-not-allowed">XL</button>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="space-y-sm pt-md">
+<button id="add-to-bag" class="w-full bg-primary text-on-primary py-md font-label-caps text-label-caps hover:bg-white hover:text-primary border border-primary transition-all duration-300 flex justify-center items-center gap-sm" data-i18n="product.add">
+                        AÑADIR AL CARRITO
+                        <span class="material-symbols-outlined text-[18px]" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button class="w-full border border-primary text-primary py-md font-label-caps text-label-caps hover:bg-surface-container transition-all duration-300">
+                        LISTA DE DESEOS
+                    </button>
+</div>
+<!-- Product Meta -->
+<div class="pt-lg space-y-md border-t border-surface-container">
+<details class="group">
+<summary class="flex justify-between items-center cursor-pointer list-none py-sm">
+<span class="font-label-caps text-label-caps" data-i18n="product.delivery">Envío y devoluciones</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180" data-icon="expand_more">expand_more</span>
+</summary>
+<div class="pb-sm font-body-md text-secondary text-sm" data-i18n="product.delivery-text">
+                            Envío en todo el país. Devoluciones aceptadas dentro de los 14 días en condición original.
+                        </div>
+</details>
+<details class="group border-t border-surface-container">
+<summary class="flex justify-between items-center cursor-pointer list-none py-sm">
+<span class="font-label-caps text-label-caps">SOSTENIBILIDAD</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180" data-icon="expand_more">expand_more</span>
+</summary>
+<div class="pb-sm font-body-md text-secondary text-sm">
+                            Producimos en tiradas limitadas para minimizar el desperdicio. Usamos algodón orgánico 100% certificado GOTS y empaques reciclados.
+                        </div>
+</details>
+</div>
+</div>
+</div>
+<!-- Recommendations Section -->
+<section class="mt-xl pt-xl border-t-2 border-primary">
+<div class="flex justify-between items-end mb-lg">
+<h3 class="font-headline-lg text-headline-lg tracking-tighter">COMPLETA EL LOOK</h3>
+<a class="font-label-caps text-label-caps border-b border-primary pb-1 hover:opacity-60 transition-opacity" href="/catalog">VER TODO</a>
+</div>
+<div id="recommendations-grid" class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<!-- Rec Card 1 -->
+<div class="group cursor-pointer">
+<div class="relative overflow-hidden bg-surface-container mb-sm">
+<img class="w-full aspect-[4/5] object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A pair of wide-leg black streetwear trousers with structural paneling and utility pockets. The fabric has a heavy canvas texture. Photographed in a minimalist studio with clean, hard-edge shadows that match the architectural streetwear aesthetic. The palette is strictly black and white." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ2sjYOz-_vEwDtjW_hyCrds2HLhi0rvO54DQFm4WyI1cyt3mjeTa-ihoiH4WQwybVBA2ETF5-W8cBPA92nfFdB2JJgszpsOnyVRnQNKavISDLxgJ7CVGCydkGaB_hyztXuDNeU3IYoq1Rp2JGGP3cgxSG78FhEv06p5qYPmM9yvDV6tFYBq2kB2pQrLpqekEEzaRj_1wOpOIp7OhrSJtYW3bTkBi025cw6EcKUsj29mclSz8nqZ6NSHGxA4zbSyLSmjT3NlqErWrj"/>
+<button class="absolute bottom-0 left-0 w-full bg-primary text-on-primary py-sm translate-y-full group-hover:translate-y-0 transition-transform font-label-caps text-[10px]" data-i18n="product.quick-add">AGREGAR</button>
+</div>
+<p class="font-label-caps text-[11px] text-secondary">TROUSERS</p>
+<h4 class="font-body-md font-bold mt-1">STRUCTURAL PANEL PANT</h4>
+<p class="font-label-caps text-sm mt-2">$210.00</p>
+</div>
+<!-- Rec Card 2 -->
+<div class="group cursor-pointer">
+<div class="relative overflow-hidden bg-surface-container mb-sm">
+<img class="w-full aspect-[4/5] object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of a heavy-knit black beanie with a small minimalist white woven label. The texture of the knit is chunky and premium. The background is a stark white void, emphasizing the shape and craftsmanship of the streetwear accessory. Lighting is soft yet directional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpugOEa9BTMzBH9BMdgj2ZJ6YQ4eA6s4aAz-S3g_NZgEhdFjFAyqvgE3QMl5hqSEIgaScLOHG4XA-QlK4PTX0_0Xz5gRdkFwYRYK3te-Cetf-B8k4DHWDNbkFNqibSDzsOiH-1qdXL4fyVrLeIiyEM72WVkGlARdwi_AeiPDjgjJFd85MzUm_yr08nmnEwiodVKd27lLNVblVp_MURJ-4mkYHoUIzchjwLpeZXy4l4xxnsP7-LZG6r2rTotwadAlQDzGKHrOH6KDZ6"/>
+<button class="absolute bottom-0 left-0 w-full bg-primary text-on-primary py-sm translate-y-full group-hover:translate-y-0 transition-transform font-label-caps text-[10px]" data-i18n="product.quick-add">AGREGAR</button>
+</div>
+<p class="font-label-caps text-[11px] text-secondary">ACCESSORIES</p>
+<h4 class="font-body-md font-bold mt-1">HEAVY KNIT BEANIE</h4>
+<p class="font-label-caps text-sm mt-2">$55.00</p>
+</div>
+<!-- Rec Card 3 -->
+<div class="group cursor-pointer">
+<div class="relative overflow-hidden bg-surface-container mb-sm">
+<img class="w-full aspect-[4/5] object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A minimalist white streetwear t-shirt with an oversized silhouette and dropped shoulders. The fabric appears thick and high-quality. The garment is displayed against a dark charcoal concrete wall, creating a stark brutalist contrast. Clean lines and professional fashion photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsDzzSWTXNLdshSwFlLwyrHNIB4Qvdw83tb8SfLeQMKoKHZV_CWz9_JELMYHivgJIhDavOB2mauSpueBrXuMobTYEfcj9ehdezAtdy4oiABh-nYmETbK-gWgl5sWdrjmAjmPZOArXo_x77bs-7r9dYGIaXN7EAmTnk_iDeR9p0yanbBxjcRZZ8ifNR2s7pdv_KjqaoAnpCA-dI4z2PgUzTDW5qxgsxqceBGBjw-MhQ6ukt388u0_2prXVQjfYXY9CRTvIypiYhdrz_"/>
+<button class="absolute bottom-0 left-0 w-full bg-primary text-on-primary py-sm translate-y-full group-hover:translate-y-0 transition-transform font-label-caps text-[10px]" data-i18n="product.quick-add">AGREGAR</button>
+</div>
+<p class="font-label-caps text-[11px] text-secondary">TOPS</p>
+<h4 class="font-body-md font-bold mt-1">ARCHIVE BOX TEE</h4>
+<p class="font-label-caps text-sm mt-2">$75.00</p>
+</div>
+<!-- Rec Card 4 -->
+<div class="group cursor-pointer">
+<div class="relative overflow-hidden bg-surface-container mb-sm">
+<img class="w-full aspect-[4/5] object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High-top technical sneakers in matte black with reflective accents and a chunky architectural sole. The shoes are set in a futuristic, minimalist environment with soft neon white lighting strips. The style is aggressive yet refined streetwear. High contrast fashion shot." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbtcrbyBcz1DgtDmg8YGK5ttgQwhgcovEnwRHC385-81GisyGnHXd6k6YEYPLnfzp3XOLU-oFjUuaM7yLLuUeByv6ECGMTpw9Xcoo0Rlz7JvMveme_uvBmlIwkPbg72dOh1cQYQVM61MGyND6LsUs4WMyig8aFFUtUzaiac1w7pS0lx1YgD_6CuIL1fkQs6D1MsoC8VgdXJV37iOMdZtB6EY81LWsjJb682JjMy1axvGMpIX128wonS9e-TVWdNr_--oxfonxMuMzL"/>
+<button class="absolute bottom-0 left-0 w-full bg-primary text-on-primary py-sm translate-y-full group-hover:translate-y-0 transition-transform font-label-caps text-[10px]" data-i18n="product.quick-add">AGREGAR</button>
+</div>
+<p class="font-label-caps text-[11px] text-secondary">FOOTWEAR</p>
+<h4 class="font-body-md font-bold mt-1">ROOT RUNNER V1</h4>
+<p class="font-label-caps text-sm mt-2">$340.00</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-surface-container-lowest border-t border-primary mt-xl">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center px-gutter py-lg w-full max-w-container-max mx-auto gap-md">
+<div class="flex flex-col gap-sm">
+<h2 class="font-display-lg text-headline-lg-mobile text-primary">ONE ROOT</h2>
+<p class="font-label-caps text-label-caps text-secondary">© 2024 ONE ROOT. ALL RIGHTS RESERVED.</p>
+</div>
+<div class="flex flex-wrap gap-md">
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-opacity" href="/terminos" data-i18n="footer.terms">Términos</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-opacity" href="/devoluciones" data-i18n="footer.shipping">Envíos</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-opacity" href="https://www.instagram.com/onerootco/" target="_blank">Instagram</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-opacity" href="https://wa.me/573118064799" target="_blank">WhatsApp</a>
+</div>
+</div>
+</footer>
+<script src="/i18n.js"></script>
+<script>
+    const sessionId = (() => {
+        let id = localStorage.getItem('one-root-session');
+        if (!id) { id = Date.now().toString(36) + Math.random().toString(36).slice(2); localStorage.setItem('one-root-session', id); }
+        return id;
+    })();
+
+    function fmtCOP(n) { return '$ ' + Math.round(n).toLocaleString('es-CO'); }
+
+    const productId = new URLSearchParams(window.location.search).get('id');
+    let currentProduct = null;
+    let selectedSize = null;
+    let selectedColor = null;
+
+    function setMainImage(url, thumb) {
+        document.getElementById('product-main-img').src = url;
+        document.querySelectorAll('#product-thumbnails > div').forEach(t => t.classList.replace('border-primary','border-transparent'));
+        if (thumb && thumb.classList) thumb.classList.replace('border-transparent','border-primary');
+    }
+
+    async function loadProduct() {
+        if (!productId) { document.getElementById('product-name').textContent = 'PRODUCT NOT FOUND'; return; }
+        const res = await fetch(`/api/products/${productId}`);
+        if (!res.ok) { document.getElementById('product-name').textContent = 'PRODUCT NOT FOUND'; return; }
+        currentProduct = await res.json();
+        renderProduct(currentProduct);
+        loadRecommendations();
+    }
+
+    function renderProduct(p) {
+        document.title = `ONE ROOT | ${p.name.toUpperCase()}`;
+        const images = p.images && p.images.length > 0 ? p.images : [];
+        if (images[0]) document.getElementById('product-main-img').src = images[0];
+        // Thumbnail strip
+        const thumbContainer = document.getElementById('product-thumbnails');
+        if (thumbContainer) {
+            thumbContainer.innerHTML = images.map((url, i) => `
+                <div class="bg-surface-container overflow-hidden border-2 ${i === 0 ? 'border-primary' : 'border-transparent'} cursor-pointer" onclick="setMainImage('${url}',this)">
+                    <img class="w-full aspect-square object-cover hover:opacity-90 transition-opacity" src="${url}" alt="view ${i+1}"/>
+                </div>`).join('');
+        }
+        document.getElementById('product-breadcrumb').textContent = `${p.category.toUpperCase()} / AW24`;
+        document.getElementById('product-name').textContent = p.name.toUpperCase();
+        document.getElementById('product-price').textContent = fmtCOP(p.price);
+        document.getElementById('product-description').textContent = p.description || '';
+        document.getElementById('product-tags').innerHTML = (p.tags || []).map(t =>
+            `<span class="font-label-caps text-[10px] border border-outline-variant px-xs py-1">${t}</span>`).join('');
+
+        const wrap = document.getElementById('product-badge-wrap');
+        if (p.badge) { document.getElementById('product-badge').textContent = p.badge; wrap.classList.remove('hidden'); }
+        else wrap.classList.add('hidden');
+
+        // Color swatches
+        const colorSel = document.getElementById('color-selector');
+        const swatchContainer = document.getElementById('color-swatches');
+        const colorNameDisplay = document.getElementById('color-name-display');
+        if (p.colors && p.colors.length > 0) {
+            colorSel.classList.remove('hidden');
+            selectedColor = p.colors[0].name;
+            colorNameDisplay.textContent = p.colors[0].name.toUpperCase();
+            if (p.colors[0].image) setMainImage(p.colors[0].image, null);
+            // Apply first color's stock if defined, else use aggregate stock
+            const firstStock = p.colors[0].stock && Object.keys(p.colors[0].stock).length > 0 ? p.colors[0].stock : null;
+            renderSizes(p, firstStock);
+            swatchContainer.innerHTML = p.colors.map((c, i) => {
+                const img = (c.image || '').replace(/'/g, '&apos;');
+                const name = c.name.replace(/'/g, '&apos;');
+                return `<button onclick="selectColor('${name}','${c.hex}',this,'${img}')"
+                    class="w-8 h-8 border-2 ${i === 0 ? 'border-primary' : 'border-transparent'} hover:border-primary transition-all rounded-full relative group"
+                    style="background-color:${c.hex}" title="${c.name}">
+                    <span class="absolute -bottom-5 left-1/2 -translate-x-1/2 font-label-caps text-[8px] text-secondary whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">${c.name}</span>
+                </button>`;
+            }).join('');
+        } else {
+            colorSel.classList.add('hidden');
+            selectedColor = p.color || null;
+            renderSizes(p);
+        }
+
+        if (p.status === 'sold-out') {
+            const btn = document.getElementById('add-to-bag');
+            btn.innerHTML = t('product.soldout');
+            btn.disabled = true;
+            btn.classList.add('opacity-50','cursor-not-allowed');
+        }
+        if (window.oneRootTrack) window.oneRootTrack('view_product', { id: p.id, name: p.name });
+    }
+
+    function renderSizes(p, stockOverride) {
+        const stock = stockOverride || p.stock;
+        selectedSize = null;
+        document.getElementById('size-grid').innerHTML = p.sizes.map(size => {
+            const qty = stock[size];
+            const inStock = qty === undefined ? true : qty > 0;
+            return inStock
+                ? `<button data-size="${size}" onclick="selectSize('${size}',this)" class="border border-primary py-sm font-label-caps text-label-caps hover:bg-primary hover:text-on-primary transition-all duration-200">${size}</button>`
+                : `<button disabled data-size="${size}" class="border border-outline-variant py-sm font-label-caps text-label-caps text-outline-variant cursor-not-allowed line-through">${size}</button>`;
+        }).join('');
+    }
+
+    function selectColor(name, hex, btn, image) {
+        selectedColor = name;
+        document.getElementById('color-name-display').textContent = name.toUpperCase();
+        document.querySelectorAll('#color-swatches button').forEach(b => b.classList.replace('border-primary','border-transparent'));
+        btn.classList.replace('border-transparent','border-primary');
+        if (image) setMainImage(image, image);
+        // Update size availability with this color's stock
+        if (currentProduct) {
+            const colorData = currentProduct.colors && currentProduct.colors.find(c => c.name === name);
+            const hasColorStock = colorData && colorData.stock && Object.keys(colorData.stock).length > 0;
+            renderSizes(currentProduct, hasColorStock ? colorData.stock : null);
+        }
+    }
+
+    function selectSize(size, btn) {
+        selectedSize = size;
+        document.querySelectorAll('#size-grid button[data-size]').forEach(b => {
+            if ((currentProduct.stock[b.dataset.size] || 0) > 0) {
+                b.classList.remove('bg-primary','text-on-primary');
+                b.classList.add('border-primary');
+            }
+        });
+        btn.classList.add('bg-primary','text-on-primary');
+        btn.classList.remove('border-primary');
+    }
+
+    document.getElementById('add-to-bag').addEventListener('click', async function() {
+        if (!selectedSize) {
+            const grid = document.getElementById('size-grid');
+            grid.classList.add('ring-2','ring-error','rounded');
+            setTimeout(() => grid.classList.remove('ring-2','ring-error','rounded'), 1500);
+            return;
+        }
+        const orig = this.innerHTML;
+        this.innerHTML = t('product.adding');
+        this.disabled = true;
+        const res = await fetch('/api/cart/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-session-id': sessionId },
+            body: JSON.stringify({ productId: currentProduct.id, size: selectedSize, quantity: 1, color: selectedColor })
+        });
+        if (res.ok) {
+            if (window.oneRootTrack) window.oneRootTrack('add_to_cart', { id: currentProduct.id, name: currentProduct.name });
+            this.innerHTML = t('product.added');
+            setTimeout(() => { this.innerHTML = orig; this.disabled = false; }, 2000);
+        } else {
+            this.innerHTML = 'ERROR — INTENTA DE NUEVO';
+            this.disabled = false;
+        }
+    });
+
+    async function loadRecommendations() {
+        const res = await fetch('/api/products');
+        const { products } = await res.json();
+        const recs = products.filter(p => p.id !== productId && p.status !== 'sold-out').slice(0, 4);
+        document.getElementById('recommendations-grid').innerHTML = recs.map(p => `
+            <div class="group cursor-pointer" onclick="window.location='/product?id=${p.id}'">
+                <div class="relative overflow-hidden bg-surface-container mb-sm">
+                    ${p.images && p.images[0] ? `<img class="w-full aspect-[4/5] object-cover group-hover:scale-105 transition-transform duration-500" src="${p.images[0]}" alt="${p.name}"/>` : '<div class="w-full aspect-[4/5] bg-surface-container-high"></div>'}
+                    <button onclick="event.stopPropagation();quickRecAdd('${p.id}')" class="absolute bottom-0 left-0 w-full bg-primary text-on-primary py-sm translate-y-full group-hover:translate-y-0 transition-transform font-label-caps text-[10px]">${t('product.quick-add')}</button>
+                </div>
+                <p class="font-label-caps text-[11px] text-secondary">${p.category.toUpperCase()}</p>
+                <h4 class="font-body-md font-bold mt-1">${p.name.toUpperCase()}</h4>
+                <p class="font-label-caps text-sm mt-2">${fmtCOP(p.price)}</p>
+            </div>`).join('');
+    }
+
+    async function quickRecAdd(pid) {
+        const res = await fetch(`/api/products/${pid}`);
+        const p = await res.json();
+        const size = p.sizes.find(s => (p.stock[s] || 0) > 0);
+        if (!size) return;
+        await fetch('/api/cart/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-session-id': sessionId },
+            body: JSON.stringify({ productId: pid, size, quantity: 1 })
+        });
+    }
+
+    // Accordion (solo uno abierto a la vez)
+    document.querySelectorAll('details').forEach(d => {
+        d.addEventListener('toggle', () => {
+            if (d.open) document.querySelectorAll('details').forEach(o => { if (o !== d) o.open = false; });
+        });
+    });
+
+    loadProduct();
+</script>
+<script>
+(function(){
+    const btn  = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    if (btn && menu) {
+        btn.addEventListener('click', function() {
+            const open = menu.classList.toggle('hidden') === false;
+            const icon = btn.querySelector('.material-symbols-outlined');
+            if (icon) icon.textContent = open ? 'close' : 'menu';
+        });
+        document.addEventListener('click', function(e) {
+            if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.add('hidden');
+                const icon = btn.querySelector('.material-symbols-outlined');
+                if (icon) icon.textContent = 'menu';
+            }
+        });
+    }
+})();
+</script>
+<script>
+(function(){
+    const html = document.documentElement;
+    const toggle = document.getElementById('theme-toggle');
+    function applyTheme(dark) {
+        html.classList.toggle('dark', dark); html.classList.toggle('light', !dark);
+        if (toggle) { const sp = toggle.querySelector('span'); if(sp) sp.textContent = dark ? 'light_mode' : 'dark_mode'; }
+    }
+    applyTheme(localStorage.getItem('one-root-theme') === 'dark');
+    if (toggle) toggle.addEventListener('click', function() {
+        const isDark = !html.classList.contains('dark');
+        localStorage.setItem('one-root-theme', isDark ? 'dark' : 'light');
+        applyTheme(isDark);
+    });
+})();
+</script>
+<!-- Search Overlay -->
+<div id="search-overlay" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;">
+    <div style="width:100%;max-width:640px;padding:0 24px">
+        <div style="display:flex;align-items:center;gap:16px;border-bottom:2px solid white;padding-bottom:12px">
+            <span class="material-symbols-outlined" style="color:white;font-size:32px">search</span>
+            <input id="search-input" type="text" placeholder="BUSCAR..." autocomplete="off"
+                style="flex:1;background:transparent;border:none;outline:none;color:white;font-family:'JetBrains Mono',monospace;font-size:20px;letter-spacing:0.1em;"/>
+            <button id="search-close" class="material-symbols-outlined" style="color:white;font-size:32px;cursor:pointer;background:none;border:none">close</button>
+        </div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.4);margin-top:12px">ENTER PARA BUSCAR · ESC PARA CERRAR</p>
+    </div>
+</div>
+<script>
+(function(){
+    const ov = document.getElementById('search-overlay');
+    const inp = document.getElementById('search-input');
+    const trigger = document.getElementById('search-btn') || document.querySelector('[data-icon="search"]');
+    if (trigger) trigger.addEventListener('click', function() { ov.style.display='flex'; inp.focus(); });
+    document.getElementById('search-close').addEventListener('click', function() { ov.style.display='none'; });
+    inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && inp.value.trim()) window.location.href = '/catalog?search=' + encodeURIComponent(inp.value.trim());
+        if (e.key === 'Escape') ov.style.display = 'none';
+    });
+    ov.addEventListener('click', function(e) { if (e.target === ov) ov.style.display = 'none'; });
+})();
+</script>
+<script src="/analytics-tracker.js" defer></script>
+<script src="/cookie-banner.js" defer></script></body></html>
+
+

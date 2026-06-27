@@ -1,0 +1,884 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ONE ROOT | Catalog Management</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&amp;family=Montserrat:wght@700;800;900&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Design System Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "tertiary-container": "#1a1b1f",
+                "outline-variant": "#cfc4c5",
+                "surface-container-highest": "#e2e2e7",
+                "primary-fixed": "#e2e2e2",
+                "primary": "#000000",
+                "on-tertiary": "#ffffff",
+                "secondary-container": "#dfe0e0",
+                "on-primary": "#ffffff",
+                "secondary": "#5d5f5f",
+                "inverse-primary": "#c6c6c6",
+                "surface-bright": "#f9f9fe",
+                "surface-container-lowest": "#ffffff",
+                "on-error": "#ffffff",
+                "error": "#ba1a1a",
+                "surface-container": "#ededf2",
+                "on-secondary-fixed-variant": "#454747",
+                "surface": "#f9f9fe",
+                "surface-dim": "#d9dade",
+                "on-primary-fixed-variant": "#474747",
+                "on-background": "#1a1c1f",
+                "on-error-container": "#93000a",
+                "primary-fixed-dim": "#c6c6c6",
+                "inverse-on-surface": "#f0f0f5",
+                "outline": "#7e7576",
+                "on-surface-variant": "#4c4546",
+                "on-primary-fixed": "#1b1b1b",
+                "tertiary-fixed-dim": "#c6c6cb",
+                "tertiary": "#000000",
+                "surface-variant": "#e2e2e7",
+                "surface-tint": "#5e5e5e",
+                "on-tertiary-container": "#838388",
+                "on-secondary": "#ffffff",
+                "on-surface": "#1a1c1f",
+                "secondary-fixed-dim": "#c6c6c7",
+                "on-tertiary-fixed": "#1a1b1f",
+                "surface-container-low": "#f3f3f8",
+                "secondary-fixed": "#e2e2e2",
+                "on-secondary-container": "#616363",
+                "on-tertiary-fixed-variant": "#46464b",
+                "surface-container-high": "#e8e8ed",
+                "error-container": "#ffdad6",
+                "on-secondary-fixed": "#1a1c1c",
+                "on-primary-container": "#848484",
+                "inverse-surface": "#2e3034",
+                "primary-container": "#1b1b1b",
+                "background": "#f9f9fe",
+                "tertiary-fixed": "#e3e2e7"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "xs": "8px",
+                "gutter": "24px",
+                "base": "4px",
+                "lg": "48px",
+                "sm": "16px",
+                "xl": "80px",
+                "container-max": "1440px",
+                "md": "24px"
+            },
+            "fontFamily": {
+                "body-lg": ["Hanken Grotesk"],
+                "headline-lg": ["Montserrat"],
+                "body-md": ["Hanken Grotesk"],
+                "display-lg": ["Montserrat"],
+                "headline-xl": ["Montserrat"],
+                "label-caps": ["JetBrains Mono"],
+                "headline-lg-mobile": ["Montserrat"]
+            },
+            "fontSize": {
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "headline-lg": ["32px", {"lineHeight": "38px", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "display-lg": ["80px", {"lineHeight": "80px", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                "headline-xl": ["48px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                "headline-lg-mobile": ["28px", {"lineHeight": "32px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        
+        /* Brutalist Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f3f3f8; }
+        ::-webkit-scrollbar-thumb { background: #000000; border-radius: 0; }
+
+        /* Smooth UI transitions */
+        .transition-brutal { transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        /* Dark mode */
+        html.dark,html.dark body{background:#0e0e10;color:#e4e4e7;}
+        html.dark header{background:#0e0e10!important;border-color:rgba(244,244,245,.15)!important;}
+        html.dark aside{background:#0e0e10!important;border-color:rgba(244,244,245,.15)!important;}
+        html.dark footer{background:#0e0e10!important;}
+        html.dark .bg-white,html.dark .bg-background,html.dark .bg-surface,html.dark .bg-surface-bright,html.dark .bg-surface-container-lowest{background-color:#0e0e10!important;}
+        html.dark .bg-surface-container-low{background-color:#18181b!important;}
+        html.dark .bg-surface-container,html.dark .bg-surface-container-high,html.dark .bg-surface-container-highest{background-color:#1e1e21!important;}
+        html.dark .bg-surface-dim{background-color:#27272a!important;}
+        html.dark .text-on-background,html.dark .text-on-surface{color:#e4e4e7!important;}
+        html.dark .text-secondary{color:#a1a1aa!important;}
+        html.dark .text-primary{color:#f4f4f5!important;}
+        html.dark .bg-primary{background-color:#f4f4f5!important;}
+        html.dark .text-on-primary{color:#0e0e10!important;}
+        html.dark .border-primary{border-color:rgba(244,244,245,.6)!important;}
+        html.dark .border-outline{border-color:rgba(255,255,255,.2)!important;}
+    </style>
+<script>if(localStorage.getItem('one-root-theme')==='dark')document.documentElement.classList.replace('light','dark');</script>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- Admin Sidebar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest border-r border-primary flex flex-col py-md px-sm z-40">
+<div class="mb-xl px-sm"><h1 class="font-headline-lg text-headline-lg font-black text-primary tracking-tighter">ONE ROOT</h1><p class="font-label-caps text-label-caps text-secondary mt-1">ADMIN CONSOLE</p></div>
+<nav class="flex-grow space-y-xs">
+<a data-nav="/admin/dashboard" href="/admin/dashboard" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+<a data-nav="/admin/catalog" href="/admin/catalog" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Catalog</a>
+<a data-nav="/admin/orders" href="/admin/orders" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Pedidos<span id="orders-badge" class="ml-auto hidden bg-error text-on-error text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none"></span></a>
+<a data-nav="/admin/home" href="/admin/home" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">home</span>Editor Landing</a>
+<a data-nav="/admin/analytics" href="/admin/analytics" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">bar_chart</span>Analytics</a>
+<a href="/admin/collections" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">collections</span>Colecciones</a>
+<a href="/admin/designs" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">style</span>Diseños & Prendas</a>
+<a href="/admin/users" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">manage_accounts</span>Usuarios & Log</a>
+<a href="/" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">storefront</span>Ver Tienda</a>
+</nav>
+<div class="mt-auto border-t border-primary/10 pt-md">
+<a id="admin-logout" href="#" class="flex items-center gap-sm px-sm py-md text-secondary hover:text-primary transition-all font-label-caps text-label-caps"><span class="material-symbols-outlined text-[20px]">logout</span>Logout</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-lg max-w-container-max mx-auto min-h-screen">
+<!-- Header Section -->
+<header class="flex justify-between items-end mb-xl border-b border-primary pb-md">
+<div>
+<h2 class="font-headline-xl text-headline-xl uppercase tracking-tighter">Catalog</h2>
+<p class="font-body-md text-body-md text-secondary mt-xs">Managing 124 curated items in active inventory.</p>
+</div>
+<div class="flex gap-sm">
+    <button id="excel-export-btn" class="border border-primary text-primary px-md py-sm font-label-caps text-label-caps uppercase hover:bg-primary hover:text-on-primary transition-brutal flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[16px]">download</span>EXPORT EXCEL
+    </button>
+    <button id="add-product-btn" class="bg-primary text-on-primary px-lg py-sm font-label-caps text-label-caps uppercase hover:bg-white hover:text-primary border border-primary transition-brutal">
+        Add New Product
+    </button>
+</div>
+</header>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md mb-xl">
+<div class="bg-surface-container-low p-md border border-primary/10 flex flex-col justify-between h-32">
+<span class="font-label-caps text-label-caps text-secondary">Total Products</span>
+<span id="stat-total" class="font-display-lg text-[40px] leading-none">—</span>
+</div>
+<div class="bg-surface-container-low p-md border border-primary/10 flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-secondary">Low Stock</span>
+<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+</div>
+<span id="stat-low" class="font-display-lg text-[40px] leading-none text-error">—</span>
+</div>
+<div class="bg-surface-container-low p-md border border-primary/10 flex flex-col justify-between h-32">
+<span class="font-label-caps text-label-caps text-secondary">New This Week</span>
+<span id="stat-new" class="font-display-lg text-[40px] leading-none">—</span>
+</div>
+<div class="bg-surface-container-low p-md border border-primary/10 flex flex-col justify-between h-32">
+<span class="font-label-caps text-label-caps text-secondary">Sold Out</span>
+<span id="stat-archive" class="font-display-lg text-[40px] leading-none">—</span>
+</div>
+</div>
+<!-- Table Filters -->
+<div class="flex gap-sm mb-md overflow-x-auto pb-xs">
+<button data-filter="all" class="px-sm py-xs border border-primary bg-primary text-on-primary font-label-caps text-[10px] uppercase">All Items</button>
+<button data-filter="outerwear" class="px-sm py-xs border border-primary/20 hover:border-primary font-label-caps text-[10px] uppercase transition-brutal">Outerwear</button>
+<button data-filter="footwear" class="px-sm py-xs border border-primary/20 hover:border-primary font-label-caps text-[10px] uppercase transition-brutal">Footwear</button>
+<button data-filter="accessories" class="px-sm py-xs border border-primary/20 hover:border-primary font-label-caps text-[10px] uppercase transition-brutal">Accessories</button>
+<div class="ml-auto relative group">
+<input id="catalog-search" class="bg-transparent border-b border-primary/20 focus:border-primary outline-none py-xs px-sm font-label-caps text-[10px] w-48 transition-brutal" placeholder="SEARCH CATALOG" type="text"/>
+<span class="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 text-secondary scale-75" data-icon="search">search</span>
+</div>
+</div>
+<!-- Catalog Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b-2 border-primary">
+<th class="py-md font-label-caps text-label-caps uppercase text-secondary">Product</th>
+<th class="py-md font-label-caps text-label-caps uppercase text-secondary">Category</th>
+<th class="py-md font-label-caps text-label-caps uppercase text-secondary text-right">Price</th>
+<th class="py-md font-label-caps text-label-caps uppercase text-secondary text-center">Stock</th>
+<th class="py-md font-label-caps text-label-caps uppercase text-secondary">Status</th>
+<th class="py-md font-label-caps text-label-caps uppercase text-secondary text-right">Actions</th>
+</tr>
+</thead>
+<tbody id="product-tbody" class="font-body-md text-body-md">
+<!-- Row 1 -->
+<tr class="border-b border-primary/10 hover:bg-surface-container-low transition-brutal group">
+<td class="py-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-16 bg-surface-dim overflow-hidden border border-primary/5">
+<img class="w-full h-full object-cover" data-alt="A high-fashion studio photograph of a structured black streetwear oversized hoodie displayed on a minimalist grey concrete pedestal. The lighting is dramatic and directional, casting sharp architectural shadows that emphasize the heavy cotton texture. The overall aesthetic is monochromatic and premium, fitting an elevated street culture brand's digital lookbook." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe1eMB0OGTFxPPfDGlGjQf0Au5rYn3YCSDJeLPANecCw_okqeC29mUuMmbmbWkZJpLCji2PMtORvGyySQQSS8T5CD_FW9or7YkneF9lDWPIPxALsYESnJ1CbzWuKvJjqdhb2SvKbrkvdAEfuLU1NZGmiwBnHanmvTqUKn2kLTyW_HRqv8lWpQ7QUfchcjrwXeKSvPv8gthUb_HOmGLI1DycGEMMddlrJK_5tG7OSg4oUPlF6PNG_mIHhliuOn7uZTPC5Qb6EN48T4s"/>
+</div>
+<div>
+<p class="font-bold uppercase leading-none">Vanguard Parka 01</p>
+<p class="text-[10px] font-label-caps text-secondary mt-1">SKU: OR-JKT-001</p>
+</div>
+</div>
+</td>
+<td class="py-md font-label-caps text-[11px] uppercase">Outerwear</td>
+<td class="py-md text-right font-label-caps">$450.00</td>
+<td class="py-md text-center">
+<span class="font-label-caps">24</span>
+</td>
+<td class="py-md">
+<span class="px-sm py-1 border border-primary text-[10px] font-label-caps uppercase">Active</span>
+</td>
+<td class="py-md text-right">
+<div class="flex justify-end gap-sm opacity-0 group-hover:opacity-100 transition-brutal">
+<button class="hover:scale-110 transition-transform" title="Edit"><span class="material-symbols-outlined text-primary scale-90" data-icon="edit">edit</span></button>
+<button class="hover:scale-110 transition-transform" title="Delete"><span class="material-symbols-outlined text-error scale-90" data-icon="delete">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 (Low Stock) -->
+<tr class="border-b border-primary/10 hover:bg-surface-container-low transition-brutal group">
+<td class="py-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-16 bg-surface-dim overflow-hidden border border-primary/5">
+<img class="w-full h-full object-cover" data-alt="A close-up product shot of sleek matte black high-top sneakers with architectural sole details. The shoes are placed on a reflective black surface in a stark white studio environment. High-contrast lighting highlights the premium leather and technical fabric textures. Minimalist and futuristic vibe consistent with luxury streetwear aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdEBlM-d7e2y-epktOREPC_UHPBSd1FNtYTF1wzAq1kxQvfSiB8jMI8uezo_FBZr0UZvt1XwM2wppOFnX7LAZ6cQdg2Tl_cqAAV9KwoGwhQ5_4L7-BkxjrSylXOxilK97HbP1H9OpbG7vRynXvh9VJc_qKIBIVyJzaUNZlkeQ_edR2MFNuKe9tIZQkYQLXdOCooCRVbYaVZs9KqohQtLH5DUIVt9jWBykqzClBEWcTErEbbvH8liQJbwou6QU53Wra3VSOdzt65LNQ"/>
+</div>
+<div>
+<p class="font-bold uppercase leading-none">Apex Runner Stealth</p>
+<p class="text-[10px] font-label-caps text-secondary mt-1">SKU: OR-FTW-042</p>
+</div>
+</div>
+</td>
+<td class="py-md font-label-caps text-[11px] uppercase">Footwear</td>
+<td class="py-md text-right font-label-caps">$280.00</td>
+<td class="py-md text-center">
+<span class="font-label-caps text-error font-bold">03</span>
+</td>
+<td class="py-md">
+<span class="px-sm py-1 border border-error text-error text-[10px] font-label-caps uppercase">Low Stock</span>
+</td>
+<td class="py-md text-right">
+<div class="flex justify-end gap-sm opacity-0 group-hover:opacity-100 transition-brutal">
+<button class="hover:scale-110 transition-transform" title="Edit"><span class="material-symbols-outlined text-primary scale-90" data-icon="edit">edit</span></button>
+<button class="hover:scale-110 transition-transform" title="Delete"><span class="material-symbols-outlined text-error scale-90" data-icon="delete">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b border-primary/10 hover:bg-surface-container-low transition-brutal group">
+<td class="py-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-16 bg-surface-dim overflow-hidden border border-primary/5">
+<img class="w-full h-full object-cover" data-alt="Minimalist design of a heavy black cotton graphic t-shirt with a sharp white architectural logo centered on the chest. The shirt is draped elegantly over a black industrial metal rack. Crisp studio lighting creates a professional e-commerce feel with deep shadows and high-key highlights. Clean, urban, and modern branding style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbMEX9a3XEKKsQH1UKN2b7as19f97Zd0TROw8Lep-a0V0r92WAjCP8tINAggMnL6r6NkN2k_0bKBNt1WoOuGAiTdTKffUmvCS99QAmZxb62AJNHnSRmqRvSjcDNij81Cwr7UKW1iATRweKRY2Iq2L9zfouK7aLXNKK6L1LizVhojppYr6SxLwKjF8UxI2FkrQfETKj5MzjKKzLknMUIZESE7eaWBwjR1E2yifyX7H0l5SZUqbIMu4xOi0J351MnS84cLrk7IQDGU1x"/>
+</div>
+<div>
+<p class="font-bold uppercase leading-none">Monolith Graphic Tee</p>
+<p class="text-[10px] font-label-caps text-secondary mt-1">SKU: OR-TEE-088</p>
+</div>
+</div>
+</td>
+<td class="py-md font-label-caps text-[11px] uppercase">T-Shirts</td>
+<td class="py-md text-right font-label-caps">$85.00</td>
+<td class="py-md text-center">
+<span class="font-label-caps">56</span>
+</td>
+<td class="py-md">
+<span class="px-sm py-1 border border-primary text-[10px] font-label-caps uppercase">Active</span>
+</td>
+<td class="py-md text-right">
+<div class="flex justify-end gap-sm opacity-0 group-hover:opacity-100 transition-brutal">
+<button class="hover:scale-110 transition-transform" title="Edit"><span class="material-symbols-outlined text-primary scale-90" data-icon="edit">edit</span></button>
+<button class="hover:scale-110 transition-transform" title="Delete"><span class="material-symbols-outlined text-error scale-90" data-icon="delete">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 4 (Sold Out) -->
+<tr class="border-b border-primary/10 hover:bg-surface-container-low transition-brutal group">
+<td class="py-md">
+<div class="flex items-center gap-md opacity-40">
+<div class="w-12 h-16 bg-surface-dim overflow-hidden border border-primary/5 grayscale">
+<img class="w-full h-full object-cover" data-alt="Architectural black tactical backpack with numerous nylon straps and matte metal buckles. The bag is shown from a three-quarter view against a dark, moody urban backdrop with wet pavement reflections. The lighting is low-key with sharp silver highlights on the hardware, emphasizing the rugged technical design and premium durability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdX05958LoijoHWpyCcHuc_zWO_WciF_IHJB3t6t6gsvWm__rLztldMVxI8kbbt7JQ_BCITc3nQGxJ6Rwo4oBtJCGhT_Qq49ulhvkEUaj89T31Q6bTf0NTYjLNltIYBFn8E5cDzQvPN8cF9VPTtG5zDig5L7aEApAMWbYSJ2Ixto18SBZf_EUfjy9tjuPk7G7CQMabMd3CjvaSGwYayDtMsKspvi5SEwX0g3hniN1L-IIjqeTTvyNpTZb5RbfbsIrMr3c_rMPqmWv6"/>
+</div>
+<div>
+<p class="font-bold uppercase leading-none">Null Space Backpack</p>
+<p class="text-[10px] font-label-caps text-secondary mt-1">SKU: OR-ACC-015</p>
+</div>
+</div>
+</td>
+<td class="py-md font-label-caps text-[11px] uppercase opacity-40">Accessories</td>
+<td class="py-md text-right font-label-caps opacity-40">$320.00</td>
+<td class="py-md text-center">
+<span class="font-label-caps opacity-40">00</span>
+</td>
+<td class="py-md">
+<span class="px-sm py-1 border border-secondary text-secondary text-[10px] font-label-caps uppercase">Sold Out</span>
+</td>
+<td class="py-md text-right">
+<div class="flex justify-end gap-sm opacity-0 group-hover:opacity-100 transition-brutal">
+<button class="hover:scale-110 transition-transform" title="Edit"><span class="material-symbols-outlined text-primary scale-90" data-icon="edit">edit</span></button>
+<button class="hover:scale-110 transition-transform" title="Delete"><span class="material-symbols-outlined text-error scale-90" data-icon="delete">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<footer class="flex justify-between items-center mt-xl border-t border-primary/20 pt-md">
+<p id="product-count" class="font-label-caps text-[10px] text-secondary uppercase">Loading...</p>
+<div class="flex gap-xs">
+<button class="w-10 h-10 border border-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-brutal">
+<span class="material-symbols-outlined scale-75" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-10 h-10 border border-primary flex items-center justify-center bg-primary text-on-primary font-label-caps text-[10px]">1</button>
+<button class="w-10 h-10 border border-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-brutal font-label-caps text-[10px]">2</button>
+<button class="w-10 h-10 border border-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-brutal font-label-caps text-[10px]">3</button>
+<button class="w-10 h-10 border border-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-brutal">
+<span class="material-symbols-outlined scale-75" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</footer>
+</main>
+<!-- Product Modal -->
+<div id="product-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+    <div class="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto p-lg relative shadow-2xl">
+        <div class="flex justify-between items-center mb-lg border-b border-primary pb-md">
+            <h3 id="modal-title" class="font-headline-lg text-headline-lg uppercase tracking-tighter">ADD PRODUCT</h3>
+            <button id="modal-close" class="material-symbols-outlined text-secondary hover:text-primary transition-standard">close</button>
+        </div>
+        <form id="product-form" class="space-y-md">
+            <input type="hidden" id="modal-product-id"/>
+            <div class="grid grid-cols-2 gap-md">
+                <div>
+                    <label class="font-label-caps text-[10px] text-secondary block mb-xs">PRODUCT NAME *</label>
+                    <input id="modal-name" type="text" required class="w-full bg-transparent border-b border-outline py-xs font-body-md text-body-md focus:outline-none focus:border-primary transition-standard"/>
+                </div>
+                <div>
+                    <label class="font-label-caps text-[10px] text-secondary block mb-xs">COLOR (base)</label>
+                    <input id="modal-color" type="text" class="w-full bg-transparent border-b border-outline py-xs font-body-md text-body-md focus:outline-none focus:border-primary transition-standard"/>
+                </div>
+                <div>
+                    <label class="font-label-caps text-[10px] text-secondary block mb-xs">PRICE (COP) *</label>
+                    <input id="modal-price" type="number" step="1" min="0" required class="w-full bg-transparent border-b border-outline py-xs font-body-md text-body-md focus:outline-none focus:border-primary transition-standard"/>
+                </div>
+                <div>
+                    <label class="font-label-caps text-[10px] text-secondary block mb-xs">CATEGORY *</label>
+                    <input id="modal-category" type="text" required list="cat-list" class="w-full bg-transparent border-b border-outline py-xs font-body-md text-body-md focus:outline-none focus:border-primary transition-standard"/>
+                    <datalist id="cat-list">
+                        <option value="Oversized Tees"/><option value="Heavy Hoodies"/>
+                        <option value="Cargo Systems"/><option value="Technical Outerwear"/>
+                        <option value="Outerwear"/><option value="Footwear"/>
+                        <option value="Accessories"/><option value="T-Shirts"/><option value="Trousers"/>
+                    </datalist>
+                </div>
+            </div>
+            <div>
+                <label class="font-label-caps text-[10px] text-secondary block mb-xs">SIZES (comma separated)</label>
+                <input id="modal-sizes" type="text" value="S, M, L, XL" class="w-full bg-transparent border-b border-outline py-xs font-body-md text-body-md focus:outline-none focus:border-primary transition-standard"/>
+            </div>
+            <div>
+                <label class="font-label-caps text-[10px] text-secondary block mb-xs">STOCK PER SIZE</label>
+                <div id="modal-stock-grid" class="grid grid-cols-4 gap-md mt-xs"></div>
+            </div>
+            <div>
+                <label class="font-label-caps text-[10px] text-secondary block mb-xs">DESCRIPTION</label>
+                <textarea id="modal-description" rows="3" class="w-full bg-transparent border border-outline p-xs font-body-md text-body-md focus:outline-none focus:border-primary resize-none transition-standard"></textarea>
+            </div>
+            <div class="grid grid-cols-2 gap-md">
+                <div>
+                    <label class="font-label-caps text-[10px] text-secondary block mb-xs">BADGE (optional)</label>
+                    <input id="modal-badge" type="text" placeholder="NEW ARRIVAL, LIMITED..." class="w-full bg-transparent border-b border-outline py-xs font-body-md text-body-md focus:outline-none focus:border-primary transition-standard"/>
+                </div>
+                <div>
+                    <label class="font-label-caps text-[10px] text-secondary block mb-xs">TAGS (comma separated)</label>
+                    <input id="modal-tags" type="text" placeholder="500GSM COTTON, BOXY FIT..." class="w-full bg-transparent border-b border-outline py-xs font-body-md text-body-md focus:outline-none focus:border-primary transition-standard"/>
+                </div>
+            </div>
+            <!-- Color Variants Section -->
+            <div class="col-span-2 space-y-xs border-t border-surface-container pt-md">
+                <label class="font-label-caps text-[10px] text-secondary block mb-xs">VARIANTES DE COLOR</label>
+                <div id="modal-colors-list" class="flex flex-wrap gap-xs min-h-[32px]"></div>
+                <div class="flex gap-sm items-center mt-xs">
+                    <input id="modal-color-name" type="text" placeholder="Nombre del color" class="flex-1 bg-transparent border-b border-outline py-xs font-body-md text-body-md focus:outline-none focus:border-primary transition-standard"/>
+                    <input id="modal-color-hex" type="color" value="#000000" class="w-10 h-8 cursor-pointer border border-outline rounded"/>
+                    <button type="button" onclick="addColorVariant()" class="font-label-caps text-[10px] border border-primary px-sm py-xs hover:bg-primary hover:text-white transition-all whitespace-nowrap">+ AGREGAR</button>
+                </div>
+            </div>
+            <div class="flex gap-sm pt-md border-t border-surface-container">
+                <button id="modal-save" type="submit" class="flex-1 bg-primary text-on-primary py-md font-label-caps text-label-caps hover:bg-white hover:text-primary border border-primary transition-all duration-300">SAVE PRODUCT</button>
+                <button id="modal-cancel" type="button" class="px-lg border border-primary text-primary font-label-caps text-label-caps hover:bg-surface-container transition-all duration-300">CANCEL</button>
+            </div>
+        </form>
+
+        <!-- Image Management Section (shown after saving) -->
+        <div id="modal-images-section" class="hidden mt-lg border-t border-primary/20 pt-md">
+            <div class="flex justify-between items-center mb-md">
+                <span class="font-label-caps text-[10px] text-secondary">PRODUCT IMAGES</span>
+                <label class="cursor-pointer border border-primary text-primary font-label-caps text-[10px] px-sm py-xs hover:bg-primary hover:text-white transition-brutal flex items-center gap-xs">
+                    <span class="material-symbols-outlined text-[14px]">add_photo_alternate</span> UPLOAD
+                    <input type="file" id="modal-image-upload" accept="image/jpeg,image/png,image/webp" multiple class="hidden"/>
+                </label>
+            </div>
+            <div id="modal-images-grid" class="grid grid-cols-3 gap-sm min-h-[80px]"></div>
+            <p id="modal-images-msg" class="font-label-caps text-[10px] text-secondary mt-xs"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Auth guard
+    (async function checkSession() {
+        const r = await fetch('/api/auth/me', { credentials: 'include' }).catch(() => null);
+        if (!r || !r.ok) { localStorage.removeItem('one-root-logged'); window.location.href = '/admin/login'; }
+    })();
+
+    function fmtCOP(n) { return '$ ' + Math.round(n).toLocaleString('es-CO'); }
+
+    let currentColors = [];
+    let currentEditProductId = null;
+
+    function getProductImages() {
+        if (!currentEditProductId) return [];
+        const p = allProducts.find(x => x.id === currentEditProductId);
+        return (p && p.images) ? p.images : [];
+    }
+
+    function renderColorsModal() {
+        const list = document.getElementById('modal-colors-list');
+        if (!list) return;
+        const imgs = getProductImages();
+        const sizes = (document.getElementById('modal-sizes').value || '')
+            .split(',').map(s => s.trim()).filter(Boolean);
+
+        if (currentColors.length === 0) {
+            list.innerHTML = '<span class="font-label-caps text-[10px] text-secondary italic">Sin variantes de color</span>';
+            return;
+        }
+        list.innerHTML = currentColors.map((c, i) => {
+            const hasImg = c.image && c.image !== '';
+            const cStock = c.stock || {};
+
+            // Image picker button + dropdown
+            const imgPicker = imgs.length > 0 ? `
+                <div style="position:relative">
+                    <button type="button" onclick="toggleImgPicker(${i})" title="Asignar imagen"
+                        style="width:28px;height:28px;border:1px solid #ccc;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;${hasImg ? `background:url('${c.image}') center/cover;` : ''}"
+                        class="hover:border-primary transition-all">
+                        ${!hasImg ? '<span class="material-symbols-outlined text-secondary" style="font-size:14px">image</span>' : ''}
+                    </button>
+                    <div id="img-picker-${i}" style="display:none;position:absolute;bottom:32px;left:0;z-index:100;background:white;border:1px solid black;padding:4px;box-shadow:0 4px 16px rgba(0,0,0,.2)">
+                        <div style="display:grid;grid-template-columns:repeat(3,40px);gap:4px">
+                            <button type="button" onclick="assignColorImage(${i},'')"
+                                style="width:40px;height:40px;border:1px solid #ccc;display:flex;align-items:center;justify-content:center" title="Sin imagen">
+                                <span class="material-symbols-outlined text-secondary" style="font-size:14px">hide_image</span>
+                            </button>
+                            ${imgs.map(url => `
+                            <button type="button" onclick="assignColorImage(${i},'${url}')"
+                                style="width:40px;height:40px;overflow:hidden;border:1px solid #ccc" class="hover:border-primary transition-all">
+                                <img src="${url}" style="width:100%;height:100%;object-fit:cover"/>
+                            </button>`).join('')}
+                        </div>
+                    </div>
+                </div>` : '';
+
+            // Stock per size row
+            const stockRow = sizes.length > 0 ? `
+                <div style="display:flex;align-items:center;gap:8px;margin-top:6px;padding-left:4px;border-left:2px solid #e0e0e0">
+                    <span class="font-label-caps text-secondary" style="font-size:9px;flex-shrink:0">STOCK:</span>
+                    ${sizes.map(s => `
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+                        <span class="font-label-caps text-secondary" style="font-size:8px">${s}</span>
+                        <input type="number" min="0" value="${cStock[s] !== undefined ? cStock[s] : 0}"
+                            oninput="updateColorStock(${i},'${s}',this.value)"
+                            class="font-label-caps focus:outline-none focus:border-primary"
+                            style="width:36px;text-align:center;background:transparent;border-bottom:1px solid #ccc;font-size:10px;padding:0"/>
+                    </div>`).join('')}
+                </div>` : '';
+
+            return `
+            <div style="border:1px solid #e0e0e0;padding:6px;margin-bottom:6px;width:100%">
+                <div style="display:flex;align-items:center;gap:6px">
+                    <span style="width:14px;height:14px;background:${c.hex};border:1px solid #ccc;border-radius:50%;flex-shrink:0;display:inline-block"></span>
+                    ${imgPicker}
+                    <span class="font-label-caps" style="font-size:10px;flex:1">${c.name}</span>
+                    ${hasImg ? '<span class="material-symbols-outlined text-secondary" style="font-size:11px" title="Imagen asignada">linked_camera</span>' : ''}
+                    <button type="button" onclick="removeColorVariant(${i})"
+                        class="text-error hover:opacity-70 font-label-caps" style="font-size:14px;line-height:1;margin-left:4px">×</button>
+                </div>
+                ${stockRow}
+            </div>`;
+        }).join('');
+    }
+
+    function toggleImgPicker(i) {
+        const picker = document.getElementById(`img-picker-${i}`);
+        const isVisible = picker.style.display === 'grid' || picker.style.display === 'block';
+        document.querySelectorAll('[id^="img-picker-"]').forEach(el => el.style.display = 'none');
+        if (!isVisible) picker.style.display = 'block';
+    }
+
+    function assignColorImage(i, url) {
+        currentColors[i].image = url;
+        document.getElementById(`img-picker-${i}`).style.display = 'none';
+        renderColorsModal();
+    }
+
+    function updateColorStock(colorIdx, size, value) {
+        if (!currentColors[colorIdx].stock) currentColors[colorIdx].stock = {};
+        currentColors[colorIdx].stock[size] = parseInt(value) || 0;
+    }
+
+    function addColorVariant() {
+        const name = document.getElementById('modal-color-name').value.trim();
+        const hex = document.getElementById('modal-color-hex').value;
+        if (!name) return;
+        if (currentColors.find(c => c.name.toLowerCase() === name.toLowerCase())) return;
+        currentColors.push({ name, hex, image: '', stock: {} });
+        document.getElementById('modal-color-name').value = '';
+        renderColorsModal();
+    }
+
+    function removeColorVariant(i) {
+        currentColors.splice(i, 1);
+        renderColorsModal();
+    }
+
+    let _authFailed = false;
+    async function apiFetch(path, opts = {}) {
+        const res = await fetch(path, {
+            ...opts,
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) }
+        });
+        if (res.status === 401) {
+            if (_authFailed) return res; // ya se está redirigiendo
+            _authFailed = true;
+            localStorage.removeItem('one-root-logged');
+            window.location.href = '/admin/login';
+        }
+        return res;
+    }
+
+    let allProducts = [];
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    async function loadProducts() {
+        const res = await apiFetch('/api/products');
+        const data = await res.json();
+        allProducts = data.products || [];
+        renderStats();
+        renderTable();
+    }
+
+    function renderStats() {
+        const total = allProducts.length;
+        const low = allProducts.filter(p => p.totalStock > 0 && p.totalStock <= 5).length;
+        const soldOut = allProducts.filter(p => p.status === 'sold-out').length;
+        const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+        const fresh = allProducts.filter(p => new Date(p.createdAt) > weekAgo).length;
+        document.getElementById('stat-total').textContent = String(total).padStart(3, '0');
+        document.getElementById('stat-low').textContent = String(low).padStart(2, '0');
+        document.getElementById('stat-new').textContent = String(fresh).padStart(2, '0');
+        document.getElementById('stat-archive').textContent = String(soldOut).padStart(2, '0');
+    }
+
+    function getFiltered() {
+        let list = [...allProducts];
+        if (currentFilter !== 'all') list = list.filter(p => p.category.toLowerCase().includes(currentFilter));
+        if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            list = list.filter(p => p.name.toLowerCase().includes(q) || (p.sku || '').toLowerCase().includes(q));
+        }
+        return list;
+    }
+
+    function renderTable() {
+        const products = getFiltered();
+        const tbody = document.getElementById('product-tbody');
+        document.getElementById('product-count').textContent = `Showing 1-${products.length} of ${allProducts.length} products`;
+
+        if (!products.length) {
+            tbody.innerHTML = `<tr><td colspan="6" class="py-xl text-center font-label-caps text-label-caps text-secondary">NO PRODUCTS FOUND</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = products.map(p => {
+            const low = p.totalStock > 0 && p.totalStock <= 5;
+            const badge = p.status === 'sold-out'
+                ? `<span class="px-sm py-1 border border-secondary text-secondary text-[10px] font-label-caps uppercase">Sold Out</span>`
+                : low
+                ? `<span class="px-sm py-1 border border-error text-error text-[10px] font-label-caps uppercase">Low Stock</span>`
+                : `<span class="px-sm py-1 border border-primary text-[10px] font-label-caps uppercase">Active</span>`;
+            const stockClass = (p.totalStock === 0 || low) ? 'text-error font-bold' : '';
+            const img = (p.images && p.images[0]) ? `<img class="w-full h-full object-cover" src="${p.images[0]}" alt="${p.name}"/>` : '<div class="w-full h-full bg-surface-container"></div>';
+            return `
+            <tr class="border-b border-primary/10 hover:bg-surface-container-low group" style="transition:transform 0.2s cubic-bezier(0.16,1,0.3,1)">
+                <td class="py-md">
+                    <div class="flex items-center gap-md">
+                        <div class="w-12 h-16 bg-surface-dim overflow-hidden border border-primary/5">${img}</div>
+                        <div>
+                            <p class="font-bold uppercase leading-none">${p.name}</p>
+                            <p class="text-[10px] font-label-caps text-secondary mt-1">${p.sku || ''}</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="py-md font-label-caps text-[11px] uppercase">${p.category}</td>
+                <td class="py-md text-right font-label-caps">${fmtCOP(p.price)}</td>
+                <td class="py-md text-center"><span class="font-label-caps ${stockClass}">${String(p.totalStock).padStart(2,'0')}</span></td>
+                <td class="py-md">${badge}</td>
+                <td class="py-md text-right">
+                    <div class="flex justify-end gap-sm opacity-0 group-hover:opacity-100" style="transition:opacity 0.2s">
+                        <button onclick="openEditModal('${p.id}')" title="Edit" class="hover:scale-110 transition-transform"><span class="material-symbols-outlined text-primary scale-90">edit</span></button>
+                        <button onclick="deleteProduct('${p.id}','${p.name.replace(/'/g,"\\'")}')" title="Delete" class="hover:scale-110 transition-transform"><span class="material-symbols-outlined text-error scale-90">delete</span></button>
+                    </div>
+                </td>
+            </tr>`;
+        }).join('');
+
+        document.querySelectorAll('#product-tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', () => row.style.transform = 'translateX(4px)');
+            row.addEventListener('mouseleave', () => row.style.transform = 'translateX(0)');
+        });
+    }
+
+    // Filters
+    document.querySelectorAll('[data-filter]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            currentFilter = this.dataset.filter;
+            document.querySelectorAll('[data-filter]').forEach(b => {
+                b.classList.remove('bg-primary','text-on-primary');
+                b.classList.add('border-primary/20');
+            });
+            this.classList.add('bg-primary','text-on-primary');
+            this.classList.remove('border-primary/20');
+            renderTable();
+        });
+    });
+
+    document.getElementById('catalog-search').addEventListener('input', function() {
+        searchQuery = this.value.trim().toLowerCase();
+        renderTable();
+    });
+
+    // --- Modal ---
+    function buildStockGrid(sizes, stock = {}) {
+        return sizes.map(s => `
+            <div class="flex items-center gap-xs">
+                <label class="font-label-caps text-[10px] w-8 flex-shrink-0">${s}</label>
+                <input type="number" min="0" name="stock-${s}" value="${stock[s] || 0}"
+                    class="w-full bg-transparent border-b border-outline py-1 font-label-caps text-[12px] focus:outline-none focus:border-primary"/>
+            </div>`).join('');
+    }
+
+    function renderImagesSection(productId, images) {
+        const section = document.getElementById('modal-images-section');
+        const grid = document.getElementById('modal-images-grid');
+        section.classList.remove('hidden');
+        if (!images || images.length === 0) {
+            grid.innerHTML = `<div class="col-span-3 font-label-caps text-[10px] text-secondary py-md text-center">NO IMAGES YET — UPLOAD BELOW</div>`;
+        } else {
+            grid.innerHTML = images.map(url => `
+                <div class="relative group bg-surface-container border border-primary/5 aspect-square overflow-hidden">
+                    <img src="${url}" class="w-full h-full object-cover"/>
+                    <button onclick="deleteProductImage('${productId}','${url}')" class="absolute top-1 right-1 bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity rounded-full w-6 h-6 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[14px]">close</span>
+                    </button>
+                </div>`).join('');
+        }
+        // Re-render colors so image picker picks up the new images list
+        renderColorsModal();
+        // Wire up the upload input to this product
+        const uploadInput = document.getElementById('modal-image-upload');
+        uploadInput.onchange = () => uploadProductImages(productId, uploadInput.files);
+    }
+
+    function openAddModal() {
+        currentEditProductId = null;
+        document.getElementById('modal-title').textContent = 'ADD NEW PRODUCT';
+        document.getElementById('product-form').reset();
+        document.getElementById('modal-product-id').value = '';
+        document.getElementById('modal-sizes').value = 'S, M, L, XL';
+        document.getElementById('modal-stock-grid').innerHTML = buildStockGrid(['S','M','L','XL']);
+        document.getElementById('modal-images-section').classList.add('hidden');
+        currentColors = [];
+        renderColorsModal();
+        document.getElementById('product-modal').classList.remove('hidden');
+    }
+
+    function openEditModal(id) {
+        const p = allProducts.find(x => x.id === id);
+        if (!p) return;
+        document.getElementById('modal-title').textContent = 'EDIT PRODUCT';
+        document.getElementById('modal-product-id').value = p.id;
+        document.getElementById('modal-name').value = p.name;
+        document.getElementById('modal-color').value = p.color || '';
+        document.getElementById('modal-price').value = p.price;
+        document.getElementById('modal-category').value = p.category;
+        document.getElementById('modal-description').value = p.description || '';
+        document.getElementById('modal-badge').value = p.badge || '';
+        document.getElementById('modal-tags').value = (p.tags || []).join(', ');
+        document.getElementById('modal-sizes').value = (p.sizes || []).join(', ');
+        document.getElementById('modal-stock-grid').innerHTML = buildStockGrid(p.sizes || [], p.stock || {});
+        currentEditProductId = p.id;
+        currentColors = Array.isArray(p.colors) ? p.colors.map(c => ({...c})) : [];
+        renderColorsModal();
+        document.getElementById('product-modal').classList.remove('hidden');
+        renderImagesSection(p.id, p.images || []);
+    }
+
+    async function uploadProductImages(productId, files) {
+        if (!files || files.length === 0) return;
+        const msg = document.getElementById('modal-images-msg');
+        msg.textContent = 'UPLOADING...';
+        const formData = new FormData();
+        Array.from(files).forEach(f => formData.append('images', f));
+        const res = await fetch(`/api/products/${productId}/images`, {
+            method: 'POST', credentials: 'include', body: formData
+        });
+        if (res.ok) {
+            const data = await res.json();
+            msg.textContent = `${data.images.length} IMAGES SAVED`;
+            renderImagesSection(productId, data.images);
+            await loadProducts();
+        } else { msg.textContent = 'UPLOAD FAILED'; }
+        document.getElementById('modal-image-upload').value = '';
+    }
+
+    async function deleteProductImage(productId, imageUrl) {
+        if (!confirm('Delete this image?')) return;
+        const res = await fetch(`/api/products/${productId}/images`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ imageUrl })
+        });
+        if (res.ok) {
+            const data = await res.json();
+            renderImagesSection(productId, data.images);
+            await loadProducts();
+        } else { alert('Delete failed.'); }
+    }
+
+    document.getElementById('add-product-btn').addEventListener('click', openAddModal);
+    document.getElementById('modal-close').addEventListener('click', () => document.getElementById('product-modal').classList.add('hidden'));
+    document.getElementById('modal-cancel').addEventListener('click', () => document.getElementById('product-modal').classList.add('hidden'));
+
+    document.getElementById('modal-sizes').addEventListener('blur', function() {
+        const sizes = this.value.split(',').map(s => s.trim()).filter(Boolean);
+        document.getElementById('modal-stock-grid').innerHTML = buildStockGrid(sizes);
+        renderColorsModal();
+    });
+
+    document.getElementById('product-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const id = document.getElementById('modal-product-id').value;
+        const sizes = document.getElementById('modal-sizes').value.split(',').map(s => s.trim()).filter(Boolean);
+        const stock = {};
+        sizes.forEach(s => { const el = document.querySelector(`input[name="stock-${s}"]`); stock[s] = el ? parseInt(el.value) || 0 : 0; });
+
+        const payload = {
+            name: document.getElementById('modal-name').value,
+            color: document.getElementById('modal-color').value,
+            price: parseFloat(document.getElementById('modal-price').value),
+            category: document.getElementById('modal-category').value,
+            description: document.getElementById('modal-description').value,
+            badge: document.getElementById('modal-badge').value || null,
+            tags: document.getElementById('modal-tags').value.split(',').map(t => t.trim()).filter(Boolean),
+            sizes, stock,
+            colors: currentColors
+        };
+
+        const saveBtn = document.getElementById('modal-save');
+        saveBtn.textContent = 'SAVING...';
+        saveBtn.disabled = true;
+
+        const res = id
+            ? await apiFetch(`/api/products/${id}`, { method: 'PUT', body: JSON.stringify(payload) })
+            : await apiFetch('/api/products', { method: 'POST', body: JSON.stringify(payload) });
+
+        saveBtn.disabled = false;
+
+        if (res.ok) {
+            const saved = await res.json();
+            saveBtn.textContent = 'SAVED ✓';
+            setTimeout(() => { saveBtn.textContent = 'SAVE PRODUCT'; }, 2000);
+            await loadProducts();
+            // Stay in edit mode so images can be uploaded
+            openEditModal(saved.id);
+        } else {
+            saveBtn.textContent = 'SAVE PRODUCT';
+            const err = await res.json().catch(() => ({}));
+            alert(err.error || 'Save failed. Check required fields.');
+        }
+    });
+
+    async function deleteProduct(id, name) {
+        if (!confirm(`DELETE "${name}"?\nThis cannot be undone.`)) return;
+        const res = await apiFetch(`/api/products/${id}`, { method: 'DELETE' });
+        if (res.ok) loadProducts();
+        else alert('Delete failed.');
+    }
+
+    document.querySelectorAll('a[data-nav]').forEach(function(a) {
+        if (a.getAttribute('data-nav') === window.location.pathname) {
+            a.classList.remove('text-secondary', 'hover:bg-surface-container');
+            a.classList.add('bg-primary', 'text-on-primary', 'font-bold', 'translate-x-1');
+        }
+    });
+    document.getElementById('admin-logout').addEventListener('click', async function(e) {
+        e.preventDefault();
+        await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
+        localStorage.removeItem('one-root-logged');
+        localStorage.removeItem('one-root-admin');
+        window.location.href = '/admin/login';
+    });
+    (function pollOrders() {
+        if (!localStorage.getItem('one-root-logged')) return;
+        fetch('/api/orders/stats', { credentials: 'include' })
+            .then(r => r.json()).then(function(d) {
+                const b = document.getElementById('orders-badge');
+                if (b) { if (d.pending > 0) { b.textContent = d.pending; b.classList.remove('hidden'); } else b.classList.add('hidden'); }
+            }).catch(function(){});
+        setTimeout(pollOrders, 30000);
+    })();
+
+    document.getElementById('excel-export-btn').addEventListener('click', async () => {
+        const btn = document.getElementById('excel-export-btn');
+        btn.textContent = 'GENERATING...';
+        btn.disabled = true;
+        try {
+            const res = await fetch('/api/products/export/excel', {
+                credentials: 'include'
+            });
+            if (!res.ok) { alert('Export failed.'); return; }
+            const blob = await res.blob();
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `one-root-catalog-${Date.now()}.xlsx`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } finally {
+            btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">download</span>EXPORT EXCEL';
+            btn.disabled = false;
+        }
+    });
+
+    loadProducts();
+</script>
+</body></html>

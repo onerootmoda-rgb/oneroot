@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ONE ROOT | Editor Landing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode:"class",
+  theme:{ extend:{
+    colors:{"primary":"#000000","secondary":"#5d5f5f","background":"#f9f9fe","surface":"#f9f9fe","surface-container-lowest":"#ffffff","surface-container-low":"#f3f3f8","surface-container":"#ededf2","surface-dim":"#d9dade","on-primary":"#ffffff","on-background":"#1a1c1f","on-surface":"#1a1c1f","outline":"#7e7576"},
+    spacing:{"xs":"8px","sm":"16px","md":"24px","lg":"48px","xl":"80px","gutter":"24px","container-max":"1440px"},
+    fontFamily:{"body-md":["Hanken Grotesk"],"headline-lg":["Montserrat"],"display-lg":["Montserrat"],"label-caps":["JetBrains Mono"]},
+    fontSize:{"body-md":["16px",{"lineHeight":"24px"}],"headline-lg":["32px",{"lineHeight":"38px","fontWeight":"700"}],"headline-xl":["48px",{"lineHeight":"52px","fontWeight":"800"}],"label-caps":["12px",{"lineHeight":"16px","letterSpacing":"0.1em","fontWeight":"500"}]}
+  }}
+}
+</script>
+<style>
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;}
+  .transition-brutal{transition:all .2s cubic-bezier(.16,1,.3,1);}
+  html.dark,html.dark body{background:#0e0e10;color:#e4e4e7;}
+  html.dark header{background:#0e0e10!important;}
+  html.dark aside{background:#0e0e10!important;border-color:rgba(244,244,245,.15)!important;}
+  html.dark .bg-white,html.dark .bg-background,html.dark .bg-surface,html.dark .bg-surface-container-lowest{background-color:#0e0e10!important;}
+  html.dark .bg-surface-container-low{background-color:#18181b!important;}
+  html.dark .bg-surface-container{background-color:#1e1e21!important;}
+  html.dark .text-secondary{color:#a1a1aa!important;}
+  html.dark .text-primary{color:#f4f4f5!important;}
+  html.dark .bg-primary{background-color:#f4f4f5!important;}
+  html.dark .text-on-primary{color:#0e0e10!important;}
+  html.dark .border-primary{border-color:rgba(244,244,245,.6)!important;}
+  html.dark .border-outline{border-color:rgba(255,255,255,.2)!important;}
+</style>
+<script>if(localStorage.getItem('one-root-theme')==='dark')document.documentElement.classList.replace('light','dark');</script>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+
+<!-- Sidebar -->
+<!-- Admin Sidebar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest border-r border-primary flex flex-col py-md px-sm z-40">
+<div class="mb-xl px-sm"><h1 class="font-headline-lg text-headline-lg font-black text-primary tracking-tighter">ONE ROOT</h1><p class="font-label-caps text-label-caps text-secondary mt-1">ADMIN CONSOLE</p></div>
+<nav class="flex-grow space-y-xs">
+<a data-nav="/admin/dashboard" href="/admin/dashboard" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+<a data-nav="/admin/catalog" href="/admin/catalog" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Catalog</a>
+<a data-nav="/admin/orders" href="/admin/orders" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Pedidos<span id="orders-badge" class="ml-auto hidden bg-error text-on-error text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none"></span></a>
+<a data-nav="/admin/home" href="/admin/home" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">home</span>Editor Landing</a>
+<a data-nav="/admin/analytics" href="/admin/analytics" class="admin-link flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">bar_chart</span>Analytics</a>
+<a href="/admin/collections" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">collections</span>Colecciones</a>
+<a href="/admin/designs" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">style</span>Diseños & Prendas</a>
+<a href="/admin/users" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">manage_accounts</span>Usuarios & Log</a>
+<a href="/" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">storefront</span>Ver Tienda</a>
+</nav>
+<div class="mt-auto border-t border-primary/10 pt-md">
+<a id="admin-logout" href="#" class="flex items-center gap-sm px-sm py-md text-secondary hover:text-primary transition-all font-label-caps text-label-caps"><span class="material-symbols-outlined text-[20px]">logout</span>Logout</a>
+</div>
+</aside>
+
+<!-- Main -->
+<main class="ml-64 p-lg max-w-container-max mx-auto min-h-screen">
+  <header class="flex justify-between items-end mb-xl border-b border-primary pb-md">
+    <div>
+      <h2 class="font-headline-xl tracking-tighter uppercase" style="font-size:48px;font-weight:800;">Editor Landing Page</h2>
+      <p class="font-body-md text-secondary mt-xs">Edita el contenido visible en la página principal.</p>
+    </div>
+    <div class="flex gap-sm items-center">
+      <a href="/" target="_blank" class="border border-primary text-primary px-md py-sm font-label-caps text-label-caps uppercase hover:bg-primary hover:text-on-primary transition-brutal flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[16px]">open_in_new</span>Ver Live
+      </a>
+    </div>
+  </header>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-xl">
+
+    <!-- HERO SECTION -->
+    <section class="space-y-md">
+      <div class="border-b border-primary/20 pb-xs mb-md">
+        <h3 class="font-label-caps text-label-caps uppercase tracking-widest">Sección Hero</h3>
+        <p class="font-body-md text-secondary text-sm mt-1">La primera sección que ven los visitantes.</p>
+      </div>
+
+      <div>
+        <label class="font-label-caps text-[10px] text-secondary block mb-xs">BADGE (texto pequeño encima del título)</label>
+        <input id="f-heroBadge" type="text" class="w-full bg-transparent border-b border-outline py-xs font-body-md text-body-md focus:outline-none focus:border-primary transition-brutal"/>
+      </div>
+
+      <div>
+        <label class="font-label-caps text-[10px] text-secondary block mb-xs">TÍTULO PRINCIPAL</label>
+        <textarea id="f-heroTitle" rows="2" class="w-full bg-transparent border border-outline p-xs font-body-md text-body-md focus:outline-none focus:border-primary resize-none transition-brutal" placeholder="URBAN&#10;STRUCTURE"></textarea>
+        <p class="font-label-caps text-[10px] text-secondary mt-1">Usa Enter para salto de línea en el título.</p>
+      </div>
+
+      <div>
+        <label class="font-label-caps text-[10px] text-secondary block mb-xs">SUBTÍTULO</label>
+        <textarea id="f-heroSubtitle" rows="3" class="w-full bg-transparent border border-outline p-xs font-body-md text-body-md focus:outline-none focus:border-primary resize-none transition-brutal"></textarea>
+      </div>
+
+      <div>
+        <label class="font-label-caps text-[10px] text-secondary block mb-xs">IMAGEN DE FONDO DEL HERO</label>
+        <div id="hero-img-preview" class="w-full h-40 bg-surface-container border border-outline overflow-hidden mb-sm">
+          <img id="hero-img-thumb" src="" alt="" class="w-full h-full object-cover hidden"/>
+          <div id="hero-img-empty" class="w-full h-full flex items-center justify-center text-secondary font-label-caps text-[10px]">SIN IMAGEN — USA URL EXTERNA</div>
+        </div>
+        <label class="cursor-pointer border border-primary text-primary font-label-caps text-[10px] px-sm py-xs hover:bg-primary hover:text-on-primary transition-brutal flex items-center gap-xs w-fit">
+          <span class="material-symbols-outlined text-[14px]">add_photo_alternate</span>SUBIR IMAGEN
+          <input type="file" id="hero-upload" accept="image/jpeg,image/png,image/webp" class="hidden"/>
+        </label>
+        <div class="flex items-center gap-xs mt-xs">
+          <span class="font-label-caps text-[10px] text-secondary">O URL externa:</span>
+          <input id="f-heroBg" type="text" placeholder="https://..." class="flex-1 bg-transparent border-b border-outline py-xs font-label-caps text-[10px] focus:outline-none focus:border-primary"/>
+        </div>
+        <p id="hero-upload-msg" class="font-label-caps text-[10px] text-secondary mt-1"></p>
+      </div>
+    </section>
+
+    <!-- OTHER SECTIONS -->
+    <section class="space-y-md">
+      <div class="border-b border-primary/20 pb-xs mb-md">
+        <h3 class="font-label-caps text-label-caps uppercase tracking-widest">Otras Secciones</h3>
+        <p class="font-body-md text-secondary text-sm mt-1">Títulos y textos de secciones adicionales.</p>
+      </div>
+
+      <div>
+        <label class="font-label-caps text-[10px] text-secondary block mb-xs">TÍTULO "NOVEDADES"</label>
+        <input id="f-arrivalsTitle" type="text" class="w-full bg-transparent border-b border-outline py-xs font-body-md text-body-md focus:outline-none focus:border-primary transition-brutal"/>
+      </div>
+
+      <div>
+        <label class="font-label-caps text-[10px] text-secondary block mb-xs">TÍTULO "COLLECTIONS"</label>
+        <input id="f-collectionsTitle" type="text" class="w-full bg-transparent border-b border-outline py-xs font-body-md text-body-md focus:outline-none focus:border-primary transition-brutal"/>
+      </div>
+
+      <div>
+        <label class="font-label-caps text-[10px] text-secondary block mb-xs">SUBTÍTULO "COLLECTIONS"</label>
+        <input id="f-collectionsSubtitle" type="text" class="w-full bg-transparent border-b border-outline py-xs font-body-md text-body-md focus:outline-none focus:border-primary transition-brutal"/>
+      </div>
+
+      <!-- Preview Panel -->
+      <div class="mt-lg border border-primary/20 p-md bg-surface-container-low">
+        <p class="font-label-caps text-[10px] text-secondary mb-sm uppercase">Vista previa del Hero</p>
+        <div id="preview-hero" class="relative h-48 bg-surface-dim overflow-hidden flex items-end">
+          <div id="preview-bg" class="absolute inset-0 bg-cover bg-center opacity-60"></div>
+          <div class="relative z-10 p-sm">
+            <p id="preview-badge" class="font-label-caps text-[10px] text-primary mb-1"></p>
+            <h1 id="preview-title" class="font-headline-lg text-headline-lg text-primary leading-tight"></h1>
+            <p id="preview-subtitle" class="font-body-md text-secondary text-sm mt-1 max-w-xs"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Save button -->
+  <div class="mt-xl pt-lg border-t border-primary flex justify-end gap-sm">
+    <button id="reset-btn" class="px-lg border border-primary text-primary font-label-caps text-label-caps hover:bg-surface-container transition-brutal py-sm">RESTABLECER</button>
+    <button id="save-btn" class="bg-primary text-on-primary px-lg py-sm font-label-caps text-label-caps hover:bg-white hover:text-primary border border-primary transition-brutal flex items-center gap-xs">
+      <span class="material-symbols-outlined text-[16px]">save</span>GUARDAR CAMBIOS
+    </button>
+  </div>
+  <p id="save-msg" class="font-label-caps text-[10px] text-secondary text-right mt-sm"></p>
+</main>
+
+<script>
+(async function checkSession() {
+    const r = await fetch('/api/auth/me', { credentials: 'include' }).catch(() => null);
+    if (!r || !r.ok) { localStorage.removeItem('one-root-logged'); window.location.href = '/admin/login'; }
+})();
+
+let _authFailed = false;
+async function apiFetch(path, opts = {}) {
+    const res = await fetch(path, {
+        ...opts,
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) }
+    });
+    if (res.status === 401) {
+        if (_authFailed) return res;
+        _authFailed = true;
+        localStorage.removeItem('one-root-logged');
+        window.location.href = '/admin/login';
+    }
+    return res;
+}
+
+const fields = ['heroBadge','heroTitle','heroSubtitle','heroBg','arrivalsTitle','collectionsTitle','collectionsSubtitle'];
+
+function setField(key, val) {
+    const el = document.getElementById('f-' + key);
+    if (el) el.value = val || '';
+}
+function getField(key) {
+    const el = document.getElementById('f-' + key);
+    return el ? el.value : '';
+}
+
+function updatePreview() {
+    const badge = getField('heroBadge');
+    const title = getField('heroTitle');
+    const subtitle = getField('heroSubtitle');
+    const bg = getField('heroBg');
+    document.getElementById('preview-badge').textContent = badge;
+    document.getElementById('preview-title').innerHTML = title.replace(/\n/g, '<br>');
+    document.getElementById('preview-subtitle').textContent = subtitle;
+    const bgEl = document.getElementById('preview-bg');
+    bgEl.style.backgroundImage = bg ? `url('${bg}')` : '';
+}
+
+function updateHeroThumb(url) {
+    const thumb = document.getElementById('hero-img-thumb');
+    const empty = document.getElementById('hero-img-empty');
+    if (url) {
+        thumb.src = url;
+        thumb.classList.remove('hidden');
+        empty.classList.add('hidden');
+    } else {
+        thumb.classList.add('hidden');
+        empty.classList.remove('hidden');
+    }
+}
+
+async function loadSettings() {
+    const res = await fetch('/api/settings/home');
+    const data = await res.json();
+    fields.forEach(k => setField(k, data[k]));
+    updatePreview();
+    updateHeroThumb(data.heroBg);
+}
+
+fields.forEach(k => {
+    const el = document.getElementById('f-' + k);
+    if (el) el.addEventListener('input', () => {
+        updatePreview();
+        if (k === 'heroBg') updateHeroThumb(getField('heroBg'));
+    });
+});
+
+document.getElementById('hero-upload').addEventListener('change', async function() {
+    if (!this.files[0]) return;
+    const msg = document.getElementById('hero-upload-msg');
+    msg.textContent = 'SUBIENDO...';
+    const fd = new FormData();
+    fd.append('image', this.files[0]);
+    const res = await fetch('/api/settings/hero-image', {
+        method: 'POST',
+        credentials: 'include',
+        body: fd
+    });
+    if (res.ok) {
+        const data = await res.json();
+        setField('heroBg', data.url);
+        updateHeroThumb(data.url);
+        updatePreview();
+        msg.textContent = 'IMAGEN SUBIDA ✓';
+    } else { msg.textContent = 'ERROR AL SUBIR'; }
+    this.value = '';
+});
+
+document.getElementById('save-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('save-btn');
+    const msg = document.getElementById('save-msg');
+    btn.textContent = 'GUARDANDO...';
+    const payload = {};
+    fields.forEach(k => { payload[k] = getField(k); });
+    const res = await apiFetch('/api/settings/home', { method: 'PUT', body: JSON.stringify(payload) });
+    if (res.ok) {
+        msg.textContent = 'Cambios guardados ✓';
+        btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">save</span>GUARDAR CAMBIOS';
+        setTimeout(() => msg.textContent = '', 3000);
+    } else {
+        msg.textContent = 'Error al guardar';
+        btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">save</span>GUARDAR CAMBIOS';
+    }
+});
+
+document.getElementById('reset-btn').addEventListener('click', async () => {
+    if (!confirm('¿Restablecer todos los valores predeterminados?')) return;
+    await apiFetch('/api/settings/home', {
+        method: 'PUT',
+        body: JSON.stringify({
+            heroBadge:'ESTABLISHED MMXXIV', heroTitle:'URBAN\nSTRUCTURE',
+            heroSubtitle:'Redefining the metropolitan silhouette through architectural integrity and minimalist raw grit.',
+            heroBg:'', arrivalsTitle:'NOVEDADES', collectionsTitle:'COLLECTIONS', collectionsSubtitle:'Curated architectural staples.'
+        })
+    });
+    loadSettings();
+});
+
+document.querySelectorAll('a[data-nav]').forEach(function(a) {
+    if (a.getAttribute('data-nav') === window.location.pathname) {
+        a.classList.remove('text-secondary', 'hover:bg-surface-container');
+        a.classList.add('bg-primary', 'text-on-primary', 'font-bold', 'translate-x-1');
+    }
+});
+document.getElementById('admin-logout').addEventListener('click', async function(e) {
+    e.preventDefault();
+    await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
+    localStorage.removeItem('one-root-logged');
+    localStorage.removeItem('one-root-admin');
+    window.location.href = '/admin/login';
+});
+(function pollOrders() {
+    if (!localStorage.getItem('one-root-logged')) return;
+    fetch('/api/orders/stats', { credentials: 'include' })
+        .then(r => r.json()).then(function(d) {
+            const b = document.getElementById('orders-badge');
+            if (b) { if (d.pending > 0) { b.textContent = d.pending; b.classList.remove('hidden'); } else b.classList.add('hidden'); }
+        }).catch(function(){});
+    setTimeout(pollOrders, 30000);
+})();
+
+loadSettings();
+</script>
+</body>
+</html>
+

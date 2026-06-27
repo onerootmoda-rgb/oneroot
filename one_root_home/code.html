@@ -1,0 +1,714 @@
+﻿<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>ONE ROOT | Elevated Streetwear</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&amp;family=Hanken+Grotesk:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#1a1b1f",
+                    "outline-variant": "#cfc4c5",
+                    "surface-container-highest": "#e2e2e7",
+                    "primary-fixed": "#e2e2e2",
+                    "primary": "#000000",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#dfe0e0",
+                    "on-primary": "#ffffff",
+                    "secondary": "#5d5f5f",
+                    "inverse-primary": "#c6c6c6",
+                    "surface-bright": "#f9f9fe",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "error": "#ba1a1a",
+                    "surface-container": "#ededf2",
+                    "on-secondary-fixed-variant": "#454747",
+                    "surface": "#f9f9fe",
+                    "surface-dim": "#d9dade",
+                    "on-primary-fixed-variant": "#474747",
+                    "on-background": "#1a1c1f",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#c6c6c6",
+                    "inverse-on-surface": "#f0f0f5",
+                    "outline": "#7e7576",
+                    "on-surface-variant": "#4c4546",
+                    "on-primary-fixed": "#1b1b1b",
+                    "tertiary-fixed-dim": "#c6c6cb",
+                    "tertiary": "#000000",
+                    "surface-variant": "#e2e2e7",
+                    "surface-tint": "#5e5e5e",
+                    "on-tertiary-container": "#838388",
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#1a1c1f",
+                    "secondary-fixed-dim": "#c6c6c7",
+                    "on-tertiary-fixed": "#1a1b1f",
+                    "surface-container-low": "#f3f3f8",
+                    "secondary-fixed": "#e2e2e2",
+                    "on-secondary-container": "#616363",
+                    "on-tertiary-fixed-variant": "#46464b",
+                    "surface-container-high": "#e8e8ed",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "on-primary-container": "#848484",
+                    "inverse-surface": "#2e3034",
+                    "primary-container": "#1b1b1b",
+                    "background": "#f9f9fe",
+                    "tertiary-fixed": "#e3e2e7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "gutter": "24px",
+                    "base": "4px",
+                    "lg": "48px",
+                    "sm": "16px",
+                    "xl": "80px",
+                    "container-max": "1440px",
+                    "md": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Hanken Grotesk"],
+                    "headline-lg": ["Montserrat"],
+                    "body-md": ["Hanken Grotesk"],
+                    "display-lg": ["Montserrat"],
+                    "headline-xl": ["Montserrat"],
+                    "label-caps": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Montserrat"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "38px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["80px", {"lineHeight": "80px", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                    "headline-xl": ["48px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "32px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        
+        /* Custom Hover Underline Animation */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: currentColor;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hide scrollbar but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Dark mode */
+        html.dark,html.dark body{background:#0e0e10;color:#e4e4e7;}
+        html.dark header{background:#0e0e10!important;border-color:rgba(244,244,245,.15)!important;}
+        html.dark footer{background:#0e0e10!important;}
+        html.dark .bg-white,html.dark .bg-background,html.dark .bg-surface,html.dark .bg-surface-bright,html.dark .bg-surface-container-lowest{background-color:#0e0e10!important;}
+        html.dark .bg-surface-container-low{background-color:#18181b!important;}
+        html.dark .bg-surface-container,html.dark .bg-surface-container-high,html.dark .bg-surface-container-highest{background-color:#1e1e21!important;}
+        html.dark .bg-surface-dim{background-color:#27272a!important;}
+        html.dark .text-on-background,html.dark .text-on-surface{color:#e4e4e7!important;}
+        html.dark .text-on-surface-variant{color:#a1a1aa!important;}
+        html.dark .text-on-primary-fixed-variant{color:#c4c4c4!important;}
+        html.dark .border-outline-variant{border-color:rgba(255,255,255,.12)!important;}
+        html.dark .text-secondary{color:#a1a1aa!important;}
+        html.dark .text-primary{color:#f4f4f5!important;}
+        html.dark .bg-primary{background-color:#f4f4f5!important;}
+        html.dark .text-on-primary{color:#0e0e10!important;}
+        html.dark .border-primary{border-color:rgba(244,244,245,.6)!important;}
+        html.dark .border-outline{border-color:rgba(255,255,255,.2)!important;}
+
+        /* Reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+<style>body{opacity:0;transition:opacity .15s ease-in}</style><script>document.addEventListener('DOMContentLoaded',function(){requestAnimationFrame(function(){document.body.style.opacity='1'})});</script>
+<script>if(localStorage.getItem('one-root-theme')==='dark')document.documentElement.classList.replace('light','dark');</script>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-lowest border-b border-primary">
+<nav class="flex justify-between items-center px-gutter py-sm w-full max-w-container-max mx-auto">
+<!-- Brand Logo -->
+<div class="flex items-center">
+<img alt="ONE ROOT Logo" class="h-10 w-auto" src="/logo/screen.png" onerror="this.style.display='none'">
+<span class="ml-sm font-display-lg text-headline-lg tracking-tighter text-primary">ONE ROOT</span>
+</div>
+<!-- Navigation Links -->
+<div class="hidden md:flex items-center gap-lg font-body-md text-body-md">
+<a class="nav-link text-primary border-b-2 border-primary pb-1" href="/" data-i18n="nav.home">INICIO</a>
+<a class="nav-link text-secondary hover:text-primary transition-colors duration-200" href="/catalog" data-i18n="nav.shop">CATÁLOGO</a>
+<a class="nav-link text-secondary hover:text-primary transition-colors duration-200" href="/about" data-i18n="nav.about">NOSOTROS</a>
+<a class="nav-link text-secondary hover:text-primary transition-colors duration-200" href="/personalizar" data-i18n="nav.design">CREA TU DISEÑO</a>
+</div>
+<!-- Trailing Icons -->
+<div class="flex items-center gap-md">
+<button id="lang-toggle" class="font-label-caps text-[11px] border border-primary px-xs py-[3px] text-primary hover:bg-primary hover:text-on-primary transition-all">EN</button>
+<button id="theme-toggle" class="text-primary hover:opacity-80 transition-opacity" title="Cambiar tema">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<button id="search-btn" class="text-primary hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="text-primary hover:opacity-80 transition-opacity relative" id="cart-trigger">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+<a href="/admin/login" class="text-primary hover:opacity-80 transition-opacity md:block hidden">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</a>
+<button id="mobile-menu-btn" class="md:hidden text-primary hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</nav>
+<!-- Mobile menu dropdown -->
+<div id="mobile-menu" class="hidden md:hidden border-t border-primary bg-surface-container-lowest">
+<div class="px-gutter py-md flex flex-col">
+<a class="font-label-caps text-label-caps text-primary py-md border-b border-primary/20" href="/">INICIO</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-colors py-md border-b border-primary/20" href="/catalog">CATÁLOGO</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-colors py-md border-b border-primary/20" href="/about">NOSOTROS</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-colors py-md" href="/personalizar">CREA TU DISEÑO</a>
+</div>
+</div>
+</header>
+<main class="pt-[76px]">
+<!-- Hero Section -->
+<section class="relative h-[90vh] w-full bg-surface-container overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div id="hero-bg" class="w-full h-full bg-cover bg-center transition-all duration-700 hover:scale-105 opacity-0" style="background-color:#111"></div>
+<div class="absolute inset-0 bg-black/10"></div>
+</div>
+<div class="relative z-10 h-full flex flex-col justify-center px-gutter max-w-container-max mx-auto">
+<div class="max-w-2xl">
+<p id="hero-badge" class="font-label-caps text-label-caps text-primary mb-sm tracking-[0.2em] reveal active">ESTABLISHED MMXXIV</p>
+<h1 id="hero-title" class="font-display-lg text-display-lg text-primary reveal active" style="transition-delay: 100ms;">URBAN<br>STRUCTURE</h1>
+<p id="hero-subtitle" class="font-body-lg text-body-lg text-on-surface-variant mt-md max-w-md reveal active" style="transition-delay: 200ms;">
+                        Redefining the metropolitan silhouette through architectural integrity and minimalist raw grit.
+                    </p>
+</div>
+</div>
+<!-- Side Scroll Indicator -->
+<div class="absolute bottom-lg right-gutter hidden md:flex flex-col items-center gap-sm">
+<span class="font-label-caps text-[10px] tracking-widest rotate-90 origin-bottom-right translate-y-[-20px]">SCROLL</span>
+<div class="w-[1px] h-20 bg-primary/30 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1/2 bg-primary animate-[scroll_2s_infinite]"></div>
+</div>
+</div>
+</section>
+<!-- Featured Collections (Asymmetric Bento-like Grid) -->
+<section class="py-xl px-gutter max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-lg gap-md">
+<div class="reveal active">
+<h2 id="collections-title" class="font-headline-xl text-headline-xl text-primary">COLLECTIONS</h2>
+<p id="collections-subtitle" class="font-body-md text-body-md text-secondary mt-xs">Curated architectural staples.</p>
+</div>
+<a class="font-label-caps text-label-caps border-b border-primary pb-1 hover:opacity-60 transition-opacity reveal active" href="/catalog" data-i18n="home.view-all">VER TODA LA COLECCIÓN</a>
+</div>
+<div id="collections-grid" class="grid grid-cols-1 md:grid-cols-12 gap-md min-h-[400px] md:h-[800px]">
+<div class="md:col-span-12 flex items-center justify-center text-secondary font-label-caps py-xl">CARGANDO...</div>
+</div></section>
+<!-- Dynamic Product Carousel -->
+<section class="bg-surface-container-lowest py-xl">
+<div class="px-gutter max-w-container-max mx-auto mb-lg flex justify-between items-center">
+<h2 id="arrivals-title" class="font-label-caps text-label-caps tracking-widest text-primary reveal active">NOVEDADES</h2>
+<a href="/catalog" class="font-label-caps text-label-caps border-b border-primary pb-1 hover:opacity-60 transition-opacity">VER TODO</a>
+</div>
+<div id="new-arrivals-grid" class="flex gap-md overflow-x-auto no-scrollbar px-gutter pb-md min-h-[420px]">
+<div class="min-w-[300px] flex items-center justify-center text-secondary font-label-caps text-label-caps py-xl" data-i18n="home.loading">CARGANDO...</div>
+</div>
+</section>
+<!-- Newsletter / Community Section -->
+<section class="py-xl bg-primary text-on-primary">
+<div class="px-gutter max-w-4xl mx-auto text-center">
+<h2 class="font-headline-xl text-headline-xl mb-md reveal active">ÚNETE AL REGISTRO PERMANENTE</h2>
+<p class="font-body-lg text-body-lg text-white/70 mb-lg reveal active" style="transition-delay: 100ms;">
+                    Drops exclusivos, acceso al archivo y esencia arquitectónica. Sin ruido, solo lo esencial.
+                </p>
+<form class="flex flex-col md:flex-row gap-0 reveal active" style="transition-delay: 200ms;">
+<input class="flex-grow bg-transparent border border-white text-white font-label-caps text-label-caps px-md py-sm focus:ring-0 focus:border-white placeholder:text-white/40" placeholder="CORREO ELECTRÓNICO" type="email">
+<button class="bg-white text-primary font-label-caps text-label-caps px-lg py-sm hover:bg-surface-container-highest transition-colors" type="submit">SUSCRIBIRSE</button>
+</form>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-primary bg-surface-container-lowest">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center px-gutter py-lg w-full max-w-container-max mx-auto gap-md">
+<div>
+<span class="font-display-lg text-headline-lg-mobile text-primary">ONE ROOT</span>
+<p class="font-label-caps text-[10px] mt-xs text-secondary">EST. 2024</p>
+</div>
+<div class="flex flex-wrap gap-md font-label-caps text-label-caps">
+<a class="text-secondary hover:text-primary transition-opacity underline font-bold" href="/terminos" data-i18n="footer.terms">Términos</a>
+<a class="text-secondary hover:text-primary transition-opacity" href="/devoluciones" data-i18n="footer.shipping">Envíos</a>
+<a class="text-secondary hover:text-primary transition-opacity" href="https://www.instagram.com/onerootco/" target="_blank">Instagram</a>
+<a class="text-secondary hover:text-primary transition-opacity" href="https://wa.me/573118064799" target="_blank">WhatsApp</a>
+<a class="text-secondary hover:text-primary transition-opacity" href="/about" data-i18n="footer.about">Nosotros</a>
+<a class="text-secondary hover:text-primary transition-opacity" href="/cart" data-i18n="footer.cart">Carrito</a>
+</div>
+<div class="font-label-caps text-[10px] text-secondary">
+                © 2024 ONE ROOT. ALL RIGHTS RESERVED.
+            </div>
+</div>
+</footer>
+
+
+<!-- Cart item count badge on nav icon -->
+<style>
+    #cart-trigger { position: relative; }
+    #cart-badge { display: none; position: absolute; top: -6px; right: -8px; background: #000; color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; align-items: center; justify-content: center; }
+    #cart-badge.visible { display: flex; }
+</style>
+<span id="cart-badge"></span>
+
+<!-- Shopping Cart Drawer -->
+<div id="cart-drawer" class="fixed inset-0 z-[100] invisible transition-all duration-300">
+    <div id="cart-backdrop" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300"></div>
+    <div id="cart-content" class="absolute right-0 top-0 h-full w-full max-w-md bg-surface-container-lowest border-l border-primary translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="flex justify-between items-center p-gutter border-b border-primary">
+            <h2 class="font-headline-lg text-headline-lg-mobile text-primary" data-i18n="cart.title">TU BOLSA</h2>
+            <button id="close-cart" class="text-primary hover:opacity-60 transition-opacity">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div id="cart-items-container" class="flex-grow overflow-y-auto p-gutter flex flex-col gap-lg">
+            <p class="font-label-caps text-secondary text-center py-xl" data-i18n="cart.loading">CARGANDO...</p>
+        </div>
+        <div class="p-gutter border-t border-primary bg-surface-container-low">
+            <div class="flex justify-between mb-md">
+                <span class="font-label-caps text-secondary" data-i18n="cart.subtotal">SUBTOTAL</span>
+                <span id="cart-total" class="font-headline-lg text-headline-lg-mobile text-primary">$0.00</span>
+            </div>
+            <button id="whatsapp-checkout" onclick="openCheckout()" class="w-full bg-primary text-on-primary font-label-caps text-label-caps py-md hover:bg-white hover:text-primary border border-primary transition-all">
+                COMPLETAR PEDIDO
+            </button>
+            <p class="text-center font-label-caps text-[10px] text-secondary mt-sm" data-i18n="cart.shipping">ENVÍO SE CALCULA AL CONFIRMAR</p>
+        </div>
+    </div>
+</div>
+<script src="/i18n.js"></script>
+<script>
+    // ── Session ──────────────────────────────────────────────────
+    const WHATSAPP_NUMBER = '573118064799';
+    let sessionId = localStorage.getItem('one-root-session');
+    if (!sessionId) {
+        sessionId = 'sess-' + Math.random().toString(36).slice(2) + Date.now();
+        localStorage.setItem('one-root-session', sessionId);
+    }
+
+    function apiHeaders() {
+        return { 'Content-Type': 'application/json', 'x-session-id': sessionId };
+    }
+
+    function fmtCOP(n) { return '$ ' + Math.round(n).toLocaleString('es-CO'); }
+
+    // ── Landing settings ─────────────────────────────────────────
+    (async function applySettings() {
+        try {
+            const res = await fetch('/api/settings/home');
+            if (!res.ok) return;
+            const s = await res.json();
+            if (s.heroBadge) document.getElementById('hero-badge').textContent = s.heroBadge;
+            if (s.heroTitle) document.getElementById('hero-title').innerHTML = s.heroTitle.replace(/\n/g, '<br>');
+            if (s.heroSubtitle) document.getElementById('hero-subtitle').textContent = s.heroSubtitle;
+            const hbg = document.getElementById('hero-bg');
+            const heroUrl = s.heroBg || '';
+            if (heroUrl) {
+                const img = new Image();
+                img.onload = function() { hbg.style.backgroundImage = `url('${heroUrl}')`; hbg.classList.add('opacity-100'); hbg.classList.remove('opacity-0'); };
+                img.src = heroUrl;
+            } else { hbg.classList.add('opacity-100'); hbg.classList.remove('opacity-0'); }
+            if (s.arrivalsTitle) document.getElementById('arrivals-title').textContent = s.arrivalsTitle;
+            if (s.collectionsTitle) document.getElementById('collections-title').textContent = s.collectionsTitle;
+            if (s.collectionsSubtitle) document.getElementById('collections-subtitle').textContent = s.collectionsSubtitle;
+        } catch(e) {}
+    })();
+
+    // ── Collections grid
+    (async function loadCollections() {
+        try {
+            const res = await fetch('/api/settings/collections');
+            const data = await res.json();
+            const cols = data.collections;
+            const grid = document.getElementById('collections-grid');
+            if (!grid || !cols || !cols.length) return;
+            const featured = cols.find(c => c.featured) || cols[0];
+            const rest = cols.filter(c => c !== featured);
+            const expl = window.t ? t('home.explore') : 'EXPLORAR';
+            let html = '<a href="' + (featured.link||'/catalog') + '" class="md:col-span-7 relative group overflow-hidden bg-surface-container-high reveal active block">' +
+                '<div class="w-full h-[500px] md:h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image:url(\'' + featured.image + '\')">' +
+                '</div><div class="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-colors"></div>' +
+                '<div class="absolute bottom-lg left-lg"><h3 class="font-headline-lg text-headline-lg text-white mb-sm">' + featured.name + '</h3>' +
+                '<span class="bg-white text-primary font-label-caps text-label-caps px-md py-xs">' + expl + '</span></div></a>';
+            if (rest.length) {
+                html += '<div class="md:col-span-5 flex flex-col gap-md">';
+                rest.forEach(function(c, i) {
+                    html += '<a href="' + (c.link||'/catalog') + '" class="h-1/2 relative group overflow-hidden bg-surface-container-high block">' +
+                        '<div class="w-full h-[400px] md:h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image:url(\'' + c.image + '\')">' +
+                        '</div><div class="absolute bottom-md left-md"><h3 class="font-headline-lg text-headline-lg-mobile text-white mb-xs">' + c.name + '</h3>' +
+                        (c.label ? '<p class="font-label-caps text-label-caps text-white/80">' + c.label + '</p>' : '') +
+                        '</div></a>';
+                });
+                html += '</div>';
+            }
+            grid.innerHTML = html;
+        } catch(e) {}
+    })();
+
+    // ── Cart badge ───────────────────────────────────────────────
+    function updateBadge(count) {
+        const badge = document.getElementById('cart-badge');
+        if (!badge) return;
+        if (count > 0) { badge.textContent = count; badge.classList.add('visible'); }
+        else { badge.textContent = ''; badge.classList.remove('visible'); }
+    }
+
+    // ── Render cart ──────────────────────────────────────────────
+    function renderCart(data) {
+        const container = document.getElementById('cart-items-container');
+        const totalEl = document.getElementById('cart-total');
+        updateBadge(data.itemCount || 0);
+        if (totalEl) totalEl.textContent = fmtCOP(data.total || 0);
+
+        if (!container) return;
+        if (!data.items || data.items.length === 0) {
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-xl gap-md text-center">
+                    <span class="material-symbols-outlined text-[48px] text-secondary">shopping_bag</span>
+                    <p class="font-label-caps text-secondary">${t('cart.empty')}</p>
+                    <a href="/catalog" class="font-label-caps text-label-caps border-b border-primary pb-1 hover:opacity-60 transition-opacity">${t('cart.explore')}</a>
+                </div>`;
+            return;
+        }
+
+        container.innerHTML = data.items.map(item => {
+            const p = item.product;
+            const img = p && p.images && p.images[0] ? p.images[0] : '';
+            const imgStyle = img ? `background-image:url('${img}')` : '';
+            return `
+            <div class="flex gap-md" data-pid="${item.productId}" data-size="${item.size}">
+                <a href="/product?id=${item.productId}" class="w-24 h-32 bg-surface-container flex-shrink-0 block">
+                    ${img ? `<div class="w-full h-full bg-cover bg-center" style="${imgStyle}"></div>`
+                          : `<div class="w-full h-full bg-surface-container-high"></div>`}
+                </a>
+                <div class="flex flex-col justify-between py-xs flex-grow">
+                    <div>
+                        <a href="/product?id=${item.productId}" class="font-body-md text-primary hover:opacity-70 transition-opacity">${p ? p.name.toUpperCase() : 'PRODUCT'}</a>
+                        <p class="font-label-caps text-[10px] text-secondary mt-1">${p ? (p.color || '').toUpperCase() : ''} / ${item.size}</p>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center border border-primary">
+                            <button onclick="changeQty('${item.productId}','${item.size}',${item.quantity - 1})" class="px-2 py-1 hover:bg-primary hover:text-white transition-colors font-label-caps">−</button>
+                            <span class="px-3 font-label-caps">${item.quantity}</span>
+                            <button onclick="changeQty('${item.productId}','${item.size}',${item.quantity + 1})" class="px-2 py-1 hover:bg-primary hover:text-white transition-colors font-label-caps">+</button>
+                        </div>
+                        <div class="flex items-center gap-sm">
+                            <p class="font-label-caps text-primary">${p ? fmtCOP(p.price * item.quantity) : '—'}</p>
+                            <button onclick="removeItem('${item.productId}','${item.size}')" class="text-secondary hover:text-primary transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">close</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    async function loadCart() {
+        try {
+            const res = await fetch('/api/cart', { headers: apiHeaders() });
+            const data = await res.json();
+            renderCart(data);
+        } catch { document.getElementById('cart-items-container').innerHTML = '<p class="font-label-caps text-secondary text-center py-xl">FAILED TO LOAD CART</p>'; }
+    }
+
+    async function changeQty(productId, size, qty) {
+        try {
+            const res = await fetch(`/api/cart/${productId}`, {
+                method: 'PUT', headers: apiHeaders(),
+                body: JSON.stringify({ size, quantity: qty })
+            });
+            renderCart(await res.json());
+        } catch {}
+    }
+
+    async function removeItem(productId, size) {
+        try {
+            const res = await fetch(`/api/cart/${productId}?size=${size}`, { method: 'DELETE', headers: apiHeaders() });
+            renderCart(await res.json());
+        } catch {}
+    }
+
+    // ── Drawer open/close ────────────────────────────────────────
+    const cartDrawer = document.getElementById('cart-drawer');
+    const cartContent = document.getElementById('cart-content');
+    const cartBackdrop = document.getElementById('cart-backdrop');
+
+    function openDrawer() {
+        cartDrawer.classList.remove('invisible');
+        setTimeout(() => {
+            cartContent.classList.remove('translate-x-full');
+            cartBackdrop.classList.remove('opacity-0');
+            cartBackdrop.classList.add('opacity-100');
+        }, 10);
+        loadCart();
+    }
+
+    function closeDrawer() {
+        cartContent.classList.add('translate-x-full');
+        cartBackdrop.classList.remove('opacity-100');
+        cartBackdrop.classList.add('opacity-0');
+        setTimeout(() => cartDrawer.classList.add('invisible'), 300);
+    }
+
+    document.getElementById('cart-trigger').addEventListener('click', openDrawer);
+    document.getElementById('close-cart').addEventListener('click', closeDrawer);
+    cartBackdrop.addEventListener('click', closeDrawer);
+
+    // ── Checkout ─────────────────────────────────────────────────
+    async function openCheckout() {
+        const res = await fetch('/api/cart', { headers: apiHeaders() });
+        const data = await res.json();
+        if (!data.items || data.items.length === 0) { alert('Tu bolsa está vacía!'); return; }
+        const summary = document.getElementById('co-items');
+        summary.innerHTML = data.items.map(i => {
+            const p = i.product;
+            return `<div class="flex justify-between text-sm font-body-md"><span>${p ? p.name : i.productId} (${i.size}) ×${i.quantity}</span><span>${p ? fmtCOP(p.price * i.quantity) : ''}</span></div>`;
+        }).join('');
+        document.getElementById('co-total').textContent = fmtCOP(data.total);
+        document.getElementById('checkout-modal').classList.remove('hidden');
+    }
+    function closeCheckout() { document.getElementById('checkout-modal').classList.add('hidden'); }
+    async function submitCheckout() {
+        const name  = document.getElementById('co-name').value.trim();
+        const phone = document.getElementById('co-phone').value.trim();
+        if (!name || !phone) { alert('Nombre y teléfono son obligatorios.'); return; }
+        const btn = document.getElementById('co-submit');
+        btn.textContent = 'ENVIANDO...'; btn.disabled = true;
+        try {
+            const res = await fetch('/api/orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sessionId, customerName: name, customerPhone: phone, customerAddress: document.getElementById('co-address').value.trim(), notes: document.getElementById('co-notes').value.trim() })
+            });
+            const d = await res.json();
+            if (d.ok) {
+                if (window.oneRootTrack) window.oneRootTrack('whatsapp_click', {});
+                closeCheckout();
+                document.getElementById('co-name').value = '';
+                document.getElementById('co-phone').value = '';
+                document.getElementById('co-address').value = '';
+                document.getElementById('co-notes').value = '';
+                await loadCart();
+                alert('¡Pedido confirmado! Tu referencia es: ' + d.orderId + '\nTe contactaremos pronto.');
+            } else { alert(d.error || 'Error al procesar el pedido.'); }
+        } catch(e) { alert('Error de conexión. Intenta de nuevo.'); }
+        btn.textContent = 'CONFIRMAR PEDIDO'; btn.disabled = false;
+    }
+
+    // ── New Arrivals carousel ────────────────────────────────────
+    async function loadNewArrivals() {
+        try {
+            const res = await fetch('/api/products?status=active');
+            const data = await res.json();
+            const grid = document.getElementById('new-arrivals-grid');
+            const products = (data.products || []).slice(0, 5);
+            if (products.length === 0) { grid.innerHTML = '<p class="font-label-caps text-secondary py-xl px-gutter">NO PRODUCTS FOUND</p>'; return; }
+            grid.innerHTML = products.map((p, i) => {
+                const img = p.images && p.images[0] ? p.images[0] : '';
+                const imgStyle = img ? `background-image:url('${img}')` : '';
+                return `
+                <div class="min-w-[300px] md:min-w-[380px] group cursor-pointer" onclick="window.location.href='/product?id=${p.id}'" style="transition-delay:${i * 80}ms">
+                    <div class="aspect-[3/4] bg-surface-container relative overflow-hidden mb-sm">
+                        ${img ? `<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="${imgStyle}"></div>`
+                               : `<div class="w-full h-full bg-surface-container-high transition-transform duration-500 group-hover:scale-105 flex items-center justify-center"><span class="font-label-caps text-[10px] text-secondary">NO IMAGE</span></div>`}
+                        ${p.badge ? `<div class="absolute top-sm left-sm bg-primary text-white font-label-caps text-[10px] px-xs py-1">${p.badge}</div>` : ''}
+                        ${p.status === 'sold-out' ? `<div class="absolute inset-0 bg-white/60 flex items-center justify-center"><span class="font-label-caps text-label-caps text-primary">${t('catalog.soldout')}</span></div>` : ''}
+                        ${p.status !== 'sold-out' ? `<button class="absolute bottom-0 left-0 w-full bg-primary text-white font-label-caps text-label-caps py-sm translate-y-full group-hover:translate-y-0 transition-transform duration-300" onclick="event.stopPropagation(); addToCart('${p.id}', p)">${t('catalog.quick-add')} — ${fmtCOP(p.price)}</button>` : ''}
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-body-md text-primary">${p.name}</p>
+                            <p class="font-label-caps text-[10px] text-secondary">${(p.color || '').toUpperCase()}</p>
+                        </div>
+                        <p class="font-label-caps text-label-caps text-primary">${fmtCOP(p.price)}</p>
+                    </div>
+                </div>`;
+            }).join('');
+        } catch { document.getElementById('new-arrivals-grid').innerHTML = '<p class="font-label-caps text-secondary py-xl px-gutter">COULD NOT LOAD PRODUCTS</p>'; }
+    }
+
+    async function addToCart(productId, p) {
+        const size = (p && p.sizes && p.sizes.length > 0) ? p.sizes[0] : 'M';
+        try {
+            const res = await fetch('/api/cart/add', {
+                method: 'POST', headers: apiHeaders(),
+                body: JSON.stringify({ productId, size, quantity: 1 })
+            });
+            const data = await res.json();
+            if (data.sessionId) { sessionId = data.sessionId; localStorage.setItem('one-root-session', sessionId); }
+            updateBadge(data.itemCount || 0);
+            openDrawer();
+        } catch {}
+    }
+
+    // ── Init ─────────────────────────────────────────────────────
+    loadNewArrivals();
+    fetch('/api/cart', { headers: apiHeaders() }).then(r => r.json()).then(d => updateBadge(d.itemCount || 0)).catch(() => {});
+
+    // ── Reveal on scroll ─────────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Carousel horizontal scroll ───────────────────────────────
+    const carousel = document.querySelector('.no-scrollbar');
+    if (carousel) carousel.addEventListener('wheel', (e) => { if (e.deltaY !== 0) { e.preventDefault(); carousel.scrollLeft += e.deltaY; } });
+</script>
+<style>
+    @keyframes scroll { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
+</style>
+<script>
+// Mobile hamburger menu toggle
+(function(){
+    const btn  = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function() {
+        const open = menu.classList.toggle('hidden') === false;
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (icon) icon.textContent = open ? 'close' : 'menu';
+    });
+    document.addEventListener('click', function(e) {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.add('hidden');
+            const icon = btn.querySelector('.material-symbols-outlined');
+            if (icon) icon.textContent = 'menu';
+        }
+    });
+})();
+</script>
+<script>
+(function(){
+    const html = document.documentElement;
+    const toggle = document.getElementById('theme-toggle');
+    function applyTheme(dark) {
+        html.classList.toggle('dark', dark); html.classList.toggle('light', !dark);
+        if (toggle) toggle.querySelector('span') && (toggle.querySelector('span').textContent = dark ? 'light_mode' : 'dark_mode');
+    }
+    applyTheme(localStorage.getItem('one-root-theme') === 'dark');
+    if (toggle) toggle.addEventListener('click', function() {
+        const isDark = !html.classList.contains('dark');
+        localStorage.setItem('one-root-theme', isDark ? 'dark' : 'light');
+        applyTheme(isDark);
+    });
+})();
+</script>
+<!-- Search Overlay -->
+<div id="search-overlay" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;">
+    <div style="width:100%;max-width:640px;padding:0 24px">
+        <div style="display:flex;align-items:center;gap:16px;border-bottom:2px solid white;padding-bottom:12px">
+            <span class="material-symbols-outlined" style="color:white;font-size:32px">search</span>
+            <input id="search-input" type="text" placeholder="BUSCAR..." autocomplete="off"
+                style="flex:1;background:transparent;border:none;outline:none;color:white;font-family:'JetBrains Mono',monospace;font-size:20px;letter-spacing:0.1em;"/>
+            <button id="search-close" class="material-symbols-outlined" style="color:white;font-size:32px;cursor:pointer;background:none;border:none">close</button>
+        </div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.4);margin-top:12px">ENTER PARA BUSCAR · ESC PARA CERRAR</p>
+    </div>
+</div>
+<script>
+(function(){
+    const ov = document.getElementById('search-overlay');
+    const inp = document.getElementById('search-input');
+    const trigger = document.getElementById('search-btn');
+    if (trigger) trigger.addEventListener('click', function() { ov.style.display='flex'; inp.focus(); });
+    document.getElementById('search-close').addEventListener('click', function() { ov.style.display='none'; });
+    inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && inp.value.trim()) window.location.href = '/catalog?search=' + encodeURIComponent(inp.value.trim());
+        if (e.key === 'Escape') ov.style.display = 'none';
+    });
+    ov.addEventListener('click', function(e) { if (e.target === ov) ov.style.display = 'none'; });
+})();
+</script>
+<script src="/analytics-tracker.js" defer></script>
+
+<!-- Checkout Modal -->
+<div id="checkout-modal" class="hidden fixed inset-0 bg-black/60 z-[200] flex items-center justify-center p-4">
+  <div class="bg-surface w-full max-w-md border border-primary">
+    <div class="flex justify-between items-center px-md py-sm border-b border-primary">
+      <h2 class="font-headline-lg text-lg font-black tracking-tighter">CONFIRMAR PEDIDO</h2>
+      <button onclick="closeCheckout()" class="material-symbols-outlined text-secondary hover:text-primary">close</button>
+    </div>
+    <div class="p-md space-y-sm">
+      <div id="co-items" class="border border-primary/20 p-sm space-y-xs max-h-36 overflow-y-auto text-sm"></div>
+      <div class="flex justify-between font-headline-lg font-black pt-xs border-t border-primary/20">
+        <span class="font-label-caps text-label-caps text-secondary self-center">TOTAL</span>
+        <span id="co-total" class="text-xl"></span>
+      </div>
+      <div class="pt-sm space-y-sm">
+        <div>
+          <label class="font-label-caps text-[10px] text-secondary block mb-1">NOMBRE *</label>
+          <input id="co-name" type="text" placeholder="Tu nombre completo" class="w-full border border-primary px-sm py-xs text-sm font-body-md focus:outline-none"/>
+        </div>
+        <div>
+          <label class="font-label-caps text-[10px] text-secondary block mb-1">TELÉFONO *</label>
+          <input id="co-phone" type="tel" placeholder="Número de contacto" class="w-full border border-primary px-sm py-xs text-sm font-body-md focus:outline-none"/>
+        </div>
+        <div>
+          <label class="font-label-caps text-[10px] text-secondary block mb-1">DIRECCIÓN (opcional)</label>
+          <input id="co-address" type="text" placeholder="Ciudad, barrio..." class="w-full border border-primary px-sm py-xs text-sm font-body-md focus:outline-none"/>
+        </div>
+        <div>
+          <label class="font-label-caps text-[10px] text-secondary block mb-1">NOTAS (opcional)</label>
+          <textarea id="co-notes" rows="2" placeholder="Color preferido, instrucciones..." class="w-full border border-primary px-sm py-xs text-sm font-body-md focus:outline-none resize-none"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="px-md pb-md">
+      <button id="co-submit" onclick="submitCheckout()" class="w-full bg-primary text-on-primary font-label-caps text-label-caps py-sm hover:bg-white hover:text-primary border border-primary transition-all">CONFIRMAR PEDIDO</button>
+    </div>
+  </div>
+</div>
+<script src="/cookie-banner.js" defer></script></body></html>
+
+
+

@@ -1,0 +1,960 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONE ROOT | Diseña tu Prenda</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Hanken+Grotesk:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script id="tw-cfg">tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#000","on-primary":"#fff","secondary":"#5d5f5f","surface":"#f9f9fe","surface-container-lowest":"#fff","surface-container-low":"#f3f3f8","surface-container":"#ededf2","surface-container-high":"#e8e8ed","on-surface":"#1a1c1f","on-surface-variant":"#4c4546","outline":"#7e7576","outline-variant":"#cfc4c5","background":"#f9f9fe","on-background":"#1a1c1f","error":"#ba1a1a"},borderRadius:{DEFAULT:"0px",lg:"0px",full:"9999px"},spacing:{xs:"8px",sm:"16px",md:"24px",lg:"48px",xl:"80px",gutter:"24px"},fontFamily:{"body-md":["Hanken Grotesk"],"label-caps":["JetBrains Mono"],"display-lg":["Montserrat"]},fontSize:{"label-caps":["12px",{lineHeight:"16px",letterSpacing:"0.1em",fontWeight:"500"}],"body-md":["16px",{lineHeight:"24px"}],"headline-lg":["32px",{lineHeight:"38px",fontWeight:"700"}]}}}}</script>
+<style>
+  body{opacity:0;transition:opacity .15s ease-in}
+  html.dark,html.dark body{background:#0e0e10;color:#e4e4e7}
+  html.dark header{background:#0e0e10!important;border-color:rgba(244,244,245,.15)!important}
+  html.dark .bg-surface-container-lowest{background-color:#0e0e10!important}
+  html.dark .bg-surface-container-low{background-color:#18181b!important}
+  html.dark .bg-surface-container{background-color:#1e1e21!important}
+  html.dark .text-primary{color:#f4f4f5!important}
+  html.dark .text-secondary{color:#a1a1aa!important}
+  html.dark .bg-primary{background-color:#f4f4f5!important}
+  html.dark .text-on-primary{color:#0e0e10!important}
+  html.dark .border-primary{border-color:rgba(244,244,245,.6)!important}
+  html.dark .border-outline-variant{border-color:rgba(255,255,255,.12)!important}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+  #design-canvas{touch-action:none}
+  .tab-btn.active{background:#000;color:#fff}
+  html.dark .tab-btn.active{background:#f4f4f5;color:#0e0e10}
+  .design-thumb{cursor:pointer;border:2px solid transparent;transition:border-color .2s}
+  .design-thumb:hover,.design-thumb.selected{border-color:#000}
+  .spinner{width:26px;height:26px;border:3px solid rgba(0,0,0,.1);border-top-color:#000;border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+  html.dark .spinner{border-color:rgba(255,255,255,.1);border-top-color:#f4f4f5}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .view-btn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;padding:4px 10px;border:1px solid currentColor;transition:all .15s;cursor:pointer}
+  .view-btn.active{background:#000;color:#fff;border-color:#000}
+  html.dark .view-btn.active{background:#f4f4f5;color:#0e0e10;border-color:#f4f4f5}
+  .iBtn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid #cfc4c5;cursor:pointer;transition:all .15s;background:transparent;color:#5d5f5f}
+  .iBtn:hover{background:#000;color:#fff;border-color:#000}
+  html.dark .iBtn{border-color:rgba(255,255,255,.2)}
+  html.dark .iBtn:hover{background:#f4f4f5;color:#0e0e10}
+  /* Layer cards */
+  .layer-card{position:relative;cursor:pointer;border:2px solid transparent;transition:border-color .15s;flex-shrink:0}
+  .layer-card.active-layer{border-color:#000}
+  html.dark .layer-card.active-layer{border-color:#f4f4f5}
+  .layer-card .del{position:absolute;top:0;right:0;width:16px;height:16px;background:#ba1a1a;color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;border:none;cursor:pointer;line-height:1}
+  .layer-card:hover .del{opacity:1}
+  /* canvas scroll wrapper */
+  #canvas-outer{overflow:auto;max-height:calc(100vh - 120px)}
+  #canvas-wrap{position:relative;background:#f3f3f8;border:1px solid #cfc4c5;transition:width .2s,height .2s}
+  html.dark #canvas-wrap{background:#1e1e21;border-color:rgba(255,255,255,.12)}
+</style>
+<script>document.addEventListener('DOMContentLoaded',function(){requestAnimationFrame(function(){document.body.style.opacity='1'})});</script>
+<script>if(localStorage.getItem('one-root-theme')==='dark')document.documentElement.classList.replace('light','dark');</script>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+
+<!-- Nav -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-lowest border-b border-primary">
+<nav class="flex justify-between items-center px-gutter py-sm w-full max-w-[1440px] mx-auto">
+  <div class="flex items-center">
+    <img src="/logo/screen.png" class="h-10 w-auto" alt="ONE ROOT" onerror="this.style.display='none'">
+    <span class="ml-sm font-display-lg text-headline-lg tracking-tighter text-primary">ONE ROOT</span>
+  </div>
+  <div class="hidden md:flex items-center gap-lg font-body-md text-body-md">
+    <a class="text-secondary hover:text-primary transition-colors" href="/">INICIO</a>
+    <a class="text-secondary hover:text-primary transition-colors" href="/catalog">CATÁLOGO</a>
+    <a class="text-primary border-b-2 border-primary pb-1" href="/personalizar">CREA TU DISEÑO</a>
+  </div>
+  <div class="flex items-center gap-md">
+    <button id="theme-toggle" class="text-primary hover:opacity-80"><span class="material-symbols-outlined">dark_mode</span></button>
+    <a href="/cart" class="text-primary hover:opacity-80"><span class="material-symbols-outlined">shopping_bag</span></a>
+    <button id="mobile-menu-btn" class="md:hidden text-primary hover:opacity-80"><span class="material-symbols-outlined">menu</span></button>
+  </div>
+</nav>
+<!-- Mobile menu dropdown -->
+<div id="mobile-menu" class="hidden md:hidden border-t border-primary bg-surface-container-lowest">
+<div class="px-gutter py-md flex flex-col">
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-colors py-md border-b border-primary/20" href="/">INICIO</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-colors py-md border-b border-primary/20" href="/catalog">CATÁLOGO</a>
+<a class="font-label-caps text-label-caps text-primary py-md" href="/personalizar">CREA TU DISEÑO</a>
+</div>
+</div>
+</header>
+
+<main class="pt-[76px] min-h-screen">
+<div class="px-gutter py-md max-w-[1440px] mx-auto border-b border-outline-variant">
+  <p class="font-label-caps text-label-caps text-secondary mb-1">PERSONALIZACIÓN</p>
+  <h1 class="font-display-lg text-headline-lg text-primary">DISEÑA TU PRENDA</h1>
+  <p class="text-secondary mt-1">Añade múltiples diseños sobre la prenda — selecciona cada capa para ajustarla.</p>
+</div>
+
+<div class="max-w-[1440px] mx-auto px-gutter py-lg grid grid-cols-1 xl:grid-cols-[520px_1fr] gap-lg items-start">
+
+  <!-- ── PANEL IZQUIERDO ──────────────────────────────────────────── -->
+  <div class="space-y-md">
+
+    <!-- Selector prenda -->
+    <div>
+      <div class="flex items-center justify-between mb-xs">
+        <label class="font-label-caps text-label-caps text-secondary">PRENDA BASE</label>
+        <div id="view-toggle" class="hidden gap-1" style="display:none">
+          <button class="view-btn active" data-view="front" onclick="switchView('front',this)">FRENTE</button>
+          <button class="view-btn" data-view="back" onclick="switchView('back',this)">ESPALDA</button>
+        </div>
+      </div>
+      <div id="garment-list" class="flex gap-sm flex-wrap">
+        <div class="font-label-caps text-[11px] text-secondary py-sm">CARGANDO PRENDAS...</div>
+      </div>
+      <button id="btn-reset-garment" class="hidden mt-xs font-label-caps text-[10px] text-secondary border border-outline-variant px-sm py-xs hover:border-error hover:text-error transition-all flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[14px]">restart_alt</span>RESETEAR PRENDA
+      </button>
+    </div>
+
+    <!-- Tabs -->
+    <div>
+      <p class="font-label-caps text-[10px] text-secondary mb-xs">AÑADIR DISEÑO A LA PRENDA</p>
+      <div class="flex border border-primary mb-md">
+        <button class="tab-btn active flex-1 font-label-caps text-label-caps py-xs px-sm" data-tab="ai">
+          <span class="material-symbols-outlined text-[15px] mr-1">auto_awesome</span>IA
+        </button>
+        <button class="tab-btn flex-1 font-label-caps text-label-caps py-xs px-sm border-l border-primary" data-tab="upload">
+          <span class="material-symbols-outlined text-[15px] mr-1">upload</span>SUBIR
+        </button>
+        <button class="tab-btn flex-1 font-label-caps text-label-caps py-xs px-sm border-l border-primary" data-tab="catalog">
+          <span class="material-symbols-outlined text-[15px] mr-1">grid_view</span>CATÁLOGO
+        </button>
+      </div>
+
+      <div id="tab-ai" class="tab-content space-y-sm">
+        <textarea id="ai-prompt" rows="3" placeholder="Ej: dragon geometrico minimalista, estilo japones, blanco sobre negro, sin fondo" class="w-full border border-outline bg-transparent font-body-md px-sm py-xs focus:ring-0 focus:border-primary resize-none placeholder:text-outline-variant text-sm"></textarea>
+        <button id="btn-generate" class="w-full bg-primary text-on-primary font-label-caps text-label-caps py-sm flex items-center justify-center gap-xs hover:opacity-80">
+          <span class="material-symbols-outlined text-[16px]">auto_awesome</span>GENERAR CON IA
+        </button>
+        <div id="ai-status" class="hidden items-center gap-sm py-xs">
+          <div class="spinner"></div>
+          <span class="font-label-caps text-[11px] text-secondary">GENERANDO (30–60 seg)...</span>
+        </div>
+        <div id="ai-error" class="hidden font-label-caps text-[11px] text-error px-sm py-xs border border-error"></div>
+      </div>
+
+      <div id="tab-upload" class="tab-content hidden">
+        <label class="block border-2 border-dashed border-outline-variant hover:border-primary transition-colors cursor-pointer p-lg text-center" id="drop-zone">
+          <span class="material-symbols-outlined text-[48px] text-secondary block mb-sm">upload_file</span>
+          <p class="font-label-caps text-label-caps text-secondary mb-xs">ARRASTRA O HAZ CLICK</p>
+          <p class="font-label-caps text-[10px] text-secondary">PNG recomendado • Máx 10MB</p>
+          <input type="file" id="file-input" accept="image/*" class="hidden">
+        </label>
+      </div>
+
+      <div id="tab-catalog" class="tab-content hidden">
+        <div id="catalog-grid" class="grid grid-cols-3 gap-sm min-h-[100px]">
+          <div class="col-span-3 font-label-caps text-[10px] text-secondary text-center py-lg">CARGANDO...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Capas activas -->
+    <div id="layers-panel" class="hidden border border-outline-variant p-md space-y-sm">
+      <div class="flex items-center justify-between">
+        <p class="font-label-caps text-label-caps text-secondary">CAPAS <span id="layer-count" class="font-label-caps text-[10px] ml-xs text-secondary">(0)</span></p>
+        <button onclick="deleteAllLayers()" class="font-label-caps text-[10px] text-secondary underline hover:text-error">BORRAR TODO</button>
+      </div>
+      <div id="layers-list" class="flex gap-xs flex-wrap"></div>
+      <p class="font-label-caps text-[10px] text-secondary opacity-70">Haz click en una capa para seleccionarla y ajustarla</p>
+      <button onclick="bakeLayersToGarment()" class="w-full border border-primary font-label-caps text-label-caps py-xs px-sm hover:bg-primary hover:text-on-primary transition-all flex items-center justify-center gap-xs">
+        <span class="material-symbols-outlined text-[15px]">done_all</span>FIJAR EN PRENDA
+      </button>
+      <button id="btn-undo-bake" onclick="undoBake()" class="hidden w-full border border-outline-variant font-label-caps text-label-caps py-xs px-sm hover:bg-surface-container transition-all flex items-center justify-center gap-xs text-secondary">
+        <span class="material-symbols-outlined text-[15px]">undo</span>DESHACER FIJADO
+      </button>
+    </div>
+
+    <!-- Controles capa activa -->
+    <div id="design-controls" class="hidden border border-outline-variant p-md space-y-sm">
+      <div class="flex items-center justify-between mb-xs">
+        <p class="font-label-caps text-label-caps text-secondary">AJUSTAR CAPA <span id="active-layer-label" class="text-[10px]"></span></p>
+        <div class="flex gap-1">
+          <button class="iBtn" title="Espejo horizontal" onclick="flipLayer('h')"><span class="material-symbols-outlined text-[16px]">flip</span></button>
+          <button class="iBtn" title="Espejo vertical" onclick="flipLayer('v')" style="transform:rotate(90deg)"><span class="material-symbols-outlined text-[16px]">flip</span></button>
+          <button id="btn-remove-bg" class="iBtn" title="Quitar fondo blanco/uniforme"><span class="material-symbols-outlined text-[16px]">magic_button</span></button>
+          <button class="iBtn" title="Eliminar capa" onclick="deleteActiveLayer()"><span class="material-symbols-outlined text-[16px]">delete</span></button>
+        </div>
+      </div>
+      <div class="flex items-center gap-sm">
+        <label class="font-label-caps text-[10px] text-secondary w-16">TAMAÑO</label>
+        <input type="range" id="ctrl-scale" min="5" max="300" value="50" class="flex-1 accent-black">
+        <span id="ctrl-scale-val" class="font-label-caps text-[10px] text-secondary w-10 text-right">50%</span>
+      </div>
+      <div class="flex items-center gap-sm">
+        <label class="font-label-caps text-[10px] text-secondary w-16">ROTACIÓN</label>
+        <input type="range" id="ctrl-rotate" min="-180" max="180" value="0" class="flex-1 accent-black">
+        <span id="ctrl-rotate-val" class="font-label-caps text-[10px] text-secondary w-10 text-right">0°</span>
+      </div>
+      <div class="flex items-center gap-sm">
+        <label class="font-label-caps text-[10px] text-secondary w-16">OPACIDAD</label>
+        <input type="range" id="ctrl-opacity" min="10" max="100" value="100" class="flex-1 accent-black">
+        <span id="ctrl-opacity-val" class="font-label-caps text-[10px] text-secondary w-10 text-right">100%</span>
+      </div>
+      <div class="flex gap-sm">
+        <button id="btn-reset-pos" class="font-label-caps text-[10px] text-secondary underline hover:text-primary">CENTRAR</button>
+        <span class="text-outline-variant">|</span>
+        <button id="btn-reset-garment-zoom" class="font-label-caps text-[10px] text-secondary underline hover:text-primary">RESET ZOOM PRENDA</button>
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="flex gap-sm flex-wrap">
+      <button id="btn-download" class="border border-primary font-label-caps text-label-caps py-sm px-md hover:bg-primary hover:text-on-primary transition-all flex items-center gap-xs disabled:opacity-40" disabled>
+        <span class="material-symbols-outlined text-[16px]">download</span>DESCARGAR
+      </button>
+      <button id="btn-add-to-order" class="flex-1 bg-primary text-on-primary font-label-caps text-label-caps py-sm px-md hover:opacity-80 flex items-center justify-center gap-xs disabled:opacity-40" disabled>
+        <span class="material-symbols-outlined text-[16px]">add_shopping_cart</span>AGREGAR AL PEDIDO
+      </button>
+    </div>
+
+    <!-- Pedido -->
+    <div id="order-panel" class="hidden border border-primary p-md space-y-sm">
+      <div class="flex items-center justify-between">
+        <p class="font-label-caps text-label-caps text-primary">MI PEDIDO <span id="order-count" class="ml-xs bg-primary text-on-primary text-[10px] px-1.5 py-0.5 rounded-full">0</span></p>
+        <button onclick="clearOrder()" class="font-label-caps text-[10px] text-secondary underline hover:text-error">VACIAR</button>
+      </div>
+      <div id="order-list" class="flex gap-sm flex-wrap"></div>
+      <button id="btn-order-all" class="w-full bg-primary text-on-primary font-label-caps text-label-caps py-sm flex items-center justify-center gap-xs hover:opacity-80">
+        <span class="material-symbols-outlined text-[16px]">whatsapp</span>PEDIR TODO POR WHATSAPP
+      </button>
+    </div>
+  </div>
+
+  <!-- ── CANVAS ────────────────────────────────────────────────────── -->
+  <div class="flex flex-col gap-sm">
+    <!-- Controles canvas -->
+    <div class="flex items-center gap-md flex-wrap">
+      <p class="font-label-caps text-[10px] text-secondary">DISEÑO: arrastra · rueda=escala &nbsp;|&nbsp; PRENDA: alt+arrastra · ctrl+rueda</p>
+      <div class="flex items-center gap-xs ml-auto">
+        <span class="font-label-caps text-[10px] text-secondary">ZOOM VISTA:</span>
+        <button onclick="setZoom(-1)" class="iBtn"><span class="material-symbols-outlined text-[16px]">remove</span></button>
+        <span id="zoom-label" class="font-label-caps text-[10px] text-secondary w-10 text-center">100%</span>
+        <button onclick="setZoom(1)"  class="iBtn"><span class="material-symbols-outlined text-[16px]">add</span></button>
+      </div>
+    </div>
+    <div id="canvas-outer">
+      <div id="canvas-wrap" style="width:480px;height:640px">
+        <canvas id="design-canvas" style="position:absolute;inset:0;width:100%;height:100%;touch-action:none"></canvas>
+        <div id="canvas-placeholder" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;color:#7e7576">
+          <span class="material-symbols-outlined" style="font-size:64px;opacity:.2">checkroom</span>
+          <p class="font-label-caps text-[10px] mt-sm" style="opacity:.4">SELECCIONA UNA PRENDA Y AÑADE UN DISEÑO</p>
+        </div>
+      </div>
+    </div>
+    <p class="font-label-caps text-[10px] text-secondary opacity-50" style="max-width:480px">Imagen para previsualización. El resultado puede variar según la prenda física.</p>
+  </div>
+
+</div>
+</main>
+
+<footer class="border-t border-primary bg-surface-container-lowest mt-xl">
+<div class="flex justify-between items-center px-gutter py-lg max-w-[1440px] mx-auto">
+  <span class="font-display-lg text-headline-lg text-primary">ONE ROOT</span>
+  <div class="flex gap-md font-label-caps text-label-caps text-secondary">
+    <a href="/catalog" class="hover:text-primary">CATÁLOGO</a>
+    <a href="/about" class="hover:text-primary">NOSOTROS</a>
+  </div>
+</div>
+</footer>
+
+<script src="/i18n.js"></script>
+<script>
+// ── Mobile menu ───────────────────────────────────────────────────
+(function(){
+    const btn  = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function() {
+        const open = menu.classList.toggle('hidden') === false;
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (icon) icon.textContent = open ? 'close' : 'menu';
+    });
+    document.addEventListener('click', function(e) {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.add('hidden');
+            const icon = btn.querySelector('.material-symbols-outlined');
+            if (icon) icon.textContent = 'menu';
+        }
+    });
+})();
+
+// ── Tema ─────────────────────────────────────────────────────────
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  const html = document.documentElement;
+  const isDark = html.classList.contains('dark');
+  html.classList.replace(isDark ? 'dark' : 'light', isDark ? 'light' : 'dark');
+  localStorage.setItem('one-root-theme', isDark ? 'light' : 'dark');
+  render();
+});
+
+// ── Tabs ─────────────────────────────────────────────────────────
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
+  });
+});
+
+// ── Canvas interno (resolución fija) ─────────────────────────────
+const CW = 480, CH = 640; // resolución interna
+const canvas = document.getElementById('design-canvas');
+const ctx    = canvas.getContext('2d');
+canvas.width  = CW;
+canvas.height = CH;
+
+// ── Zoom de visualización ─────────────────────────────────────────
+const ZOOM_LEVELS = [50,75,100,125,150,175,200];
+let zoomIdx = 2; // 100% por defecto
+function setZoom(dir) {
+  zoomIdx = Math.max(0, Math.min(ZOOM_LEVELS.length-1, zoomIdx+dir));
+  const pct = ZOOM_LEVELS[zoomIdx];
+  const wrap = document.getElementById('canvas-wrap');
+  wrap.style.width  = Math.round(CW * pct / 100) + 'px';
+  wrap.style.height = Math.round(CH * pct / 100) + 'px';
+  document.getElementById('zoom-label').textContent = pct + '%';
+}
+
+// ── Estado prenda ─────────────────────────────────────────────────
+let garmentData        = { front: null, back: null };
+let garmentHistory     = { front: [], back: [] };
+let originalGarmentSrc = { front: '', back: '' };
+let currentView = 'front';
+let garment     = { x: 0, y: 0, scale: 1 };
+
+function currentGarmentImg() {
+  return (currentView === 'back' && garmentData.back) ? garmentData.back : garmentData.front;
+}
+
+// ── Sistema de capas (compartido entre vistas) ───────────────────
+let layers    = [];
+let activeIdx = -1;
+
+function getActive() { return layers[activeIdx] || null; }
+
+function addLayer(img) {
+  const sc = Math.min((CW * 0.45) / img.naturalWidth, (CH * 0.45) / img.naturalHeight, 1.5);
+  layers.push({ img, x: CW/2, y: CH/2, scale: sc, rotation: 0, opacity: 1, flipH: 1, flipV: 1 });
+  activeIdx = layers.length - 1;
+  refreshAll();
+}
+
+function selectLayer(i) {
+  activeIdx = i;
+  refreshAll();
+}
+
+function deleteLayer(i) {
+  layers.splice(i, 1);
+  activeIdx = Math.min(activeIdx, layers.length - 1);
+  refreshAll();
+}
+
+function deleteActiveLayer() {
+  if (activeIdx < 0 || !layers[activeIdx]) return;
+  deleteLayer(activeIdx);
+}
+
+function deleteAllLayers() {
+  if (!layers.length) return;
+  if (!confirm('¿Eliminar todas las capas de diseño?')) return;
+  layers = []; activeIdx = -1;
+  refreshAll();
+}
+
+// ── Actualizar visibilidad botón deshacer ─────────────────────────
+function updateUndoBtn() {
+  const btn = document.getElementById('btn-undo-bake');
+  if (btn) btn.classList.toggle('hidden', garmentHistory[currentView].length === 0);
+}
+
+// ── Deshacer último fijado (solo la vista actual) ─────────────────
+function undoBake() {
+  const hist = garmentHistory[currentView];
+  if (!hist.length) return;
+  garmentData[currentView] = hist.pop();
+  garment = { x: 0, y: 0, scale: 1 };
+  updateUndoBtn();
+  render();
+}
+
+// ── Resetear prenda al original (capas compartidas se conservan) ──
+function resetGarment() {
+  if (!confirm('¿Resetear la prenda al original? Las capas de diseño se mantendrán.')) return;
+  loadGarmentImages(originalGarmentSrc.front, originalGarmentSrc.back);
+}
+
+// ── Fijar capas en AMBAS vistas simultáneamente ───────────────────
+function bakeIntoView(view, ls) {
+  const gImg = garmentData[view];
+  if (!gImg) return null;
+  const off = document.createElement('canvas');
+  off.width = CW; off.height = CH;
+  const oc  = off.getContext('2d');
+  const aspect = gImg.naturalWidth / gImg.naturalHeight;
+  let gw = CW * garment.scale, gh = gw / aspect;
+  if (gh < CH * garment.scale) { gh = CH * garment.scale; gw = gh * aspect; }
+  oc.drawImage(gImg, garment.x + (CW-gw)/2, garment.y + (CH-gh)/2, gw, gh);
+  ls.forEach(l => {
+    const dw = l.img.naturalWidth * l.scale;
+    const dh = l.img.naturalHeight * l.scale;
+    oc.save();
+    oc.globalAlpha = l.opacity;
+    oc.translate(l.x, l.y);
+    oc.rotate(l.rotation * Math.PI / 180);
+    oc.scale(l.flipH, l.flipV);
+    oc.drawImage(l.img, -dw/2, -dh/2, dw, dh);
+    oc.restore();
+  });
+  return off.toDataURL('image/png');
+}
+
+function bakeLayersToGarment() {
+  if (!layers.length) return;
+  const snapshot = layers.map(l => ({ ...l }));
+  // Guardar solo la vista actual en historial
+  if (garmentData[currentView]) garmentHistory[currentView].push(garmentData[currentView]);
+  // Bake solo en la vista actual — las capas compartidas se conservan para la otra vista
+  const dataUrl = bakeIntoView(currentView, snapshot);
+  if (!dataUrl) return;
+  const merged = new Image();
+  merged.onload = () => {
+    garmentData[currentView] = merged;
+    garment = { x: 0, y: 0, scale: 1 };
+    updateUndoBtn();
+    refreshAll();
+  };
+  merged.src = dataUrl;
+}
+
+function syncControls() {
+  const l = getActive();
+  if (!l) return;
+  document.getElementById('ctrl-scale').value  = Math.round(l.scale * 100);
+  document.getElementById('ctrl-scale-val').textContent = Math.round(l.scale * 100) + '%';
+  document.getElementById('ctrl-rotate').value = l.rotation;
+  document.getElementById('ctrl-rotate-val').textContent = l.rotation + '°';
+  document.getElementById('ctrl-opacity').value = Math.round(l.opacity * 100);
+  document.getElementById('ctrl-opacity-val').textContent = Math.round(l.opacity * 100) + '%';
+  document.getElementById('active-layer-label').textContent = layers.length > 1 ? `#${activeIdx+1}` : '';
+}
+
+function refreshAll() {
+  const hasLayers = layers.length > 0;
+  document.getElementById('design-controls').classList.toggle('hidden', !hasLayers);
+  document.getElementById('layers-panel').classList.toggle('hidden', !hasLayers);
+  document.getElementById('btn-download').disabled     = !hasLayers && !currentGarmentImg();
+  document.getElementById('btn-add-to-order').disabled = !hasLayers && !currentGarmentImg();
+  document.getElementById('layer-count').textContent   = `(${layers.length})`;
+
+  // Thumbnails de capas
+  const list = document.getElementById('layers-list');
+  list.innerHTML = layers.map((l, i) => {
+    const tc = document.createElement('canvas');
+    tc.width = 48; tc.height = 64;
+    const tc2 = tc.getContext('2d');
+    const sc  = Math.min(48 / l.img.naturalWidth, 64 / l.img.naturalHeight);
+    const tw  = l.img.naturalWidth * sc, th = l.img.naturalHeight * sc;
+    tc2.drawImage(l.img, (48-tw)/2, (64-th)/2, tw, th);
+    const thumb = tc.toDataURL();
+    return `<div class="layer-card ${i===activeIdx?'active-layer':''}" onclick="selectLayer(${i})">
+      <img src="${thumb}" style="width:48px;height:64px;object-fit:cover;display:block">
+      <button class="del" onclick="event.stopPropagation();deleteLayer(${i})">✕</button>
+      <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.5);color:#fff;font-family:'JetBrains Mono',monospace;font-size:8px;text-align:center;padding:2px">${i+1}</div>
+    </div>`;
+  }).join('');
+
+  syncControls();
+  render();
+}
+
+// ── Render ────────────────────────────────────────────────────────
+function render() {
+  ctx.clearRect(0, 0, CW, CH);
+  const isDark = document.documentElement.classList.contains('dark');
+  ctx.fillStyle = isDark ? '#1e1e21' : '#f3f3f8';
+  ctx.fillRect(0, 0, CW, CH);
+
+  // Prenda base
+  const gImg = currentGarmentImg();
+  if (gImg) {
+    const aspect = gImg.naturalWidth / gImg.naturalHeight;
+    let gw = CW * garment.scale;
+    let gh = gw / aspect;
+    if (gh < CH * garment.scale) { gh = CH * garment.scale; gw = gh * aspect; }
+    ctx.drawImage(gImg, garment.x + (CW-gw)/2, garment.y + (CH-gh)/2, gw, gh);
+  }
+
+  // Capas (compartidas entre vistas)
+  layers.forEach((l, i) => {
+    const dw = l.img.naturalWidth  * l.scale;
+    const dh = l.img.naturalHeight * l.scale;
+    ctx.save();
+    ctx.globalAlpha = l.opacity;
+    ctx.translate(l.x, l.y);
+    ctx.rotate(l.rotation * Math.PI / 180);
+    ctx.scale(l.flipH, l.flipV);
+    ctx.drawImage(l.img, -dw/2, -dh/2, dw, dh);
+    ctx.restore();
+
+    // Borde de la capa activa
+    if (i === activeIdx) {
+      ctx.save();
+      ctx.translate(l.x, l.y);
+      ctx.rotate(l.rotation * Math.PI / 180);
+      ctx.strokeStyle = 'rgba(0,120,255,0.5)';
+      ctx.lineWidth   = 1.5;
+      ctx.setLineDash([5, 4]);
+      ctx.strokeRect(-dw/2, -dh/2, dw, dh);
+      ctx.restore();
+    }
+  });
+
+  document.getElementById('canvas-placeholder').style.display = (!gImg && !layers.length) ? 'flex' : 'none';
+}
+
+// ── Carga de imágenes ─────────────────────────────────────────────
+function loadDesign(src) {
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => addLayer(img);
+  img.onerror = () => showAiError('No se pudo cargar la imagen.');
+  img.src = src;
+}
+
+function loadGarmentImages(frontSrc, backSrc) {
+  originalGarmentSrc = { front: frontSrc || '', back: backSrc || '' };
+  garmentData    = { front: null, back: null };
+  garmentHistory = { front: [], back: [] };
+  garment        = { x: 0, y: 0, scale: 1 };
+  const load = (src, key) => {
+    if (!src) return;
+    const img = new Image(); img.crossOrigin = 'anonymous';
+    img.onload = () => { garmentData[key] = img; render(); };
+    img.src = src;
+  };
+  load(frontSrc, 'front'); load(backSrc, 'back');
+  const tgl = document.getElementById('view-toggle');
+  tgl.style.display = backSrc ? 'flex' : 'none';
+  currentView = 'front';
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view==='front'));
+  const resetBtn = document.getElementById('btn-reset-garment');
+  if (resetBtn) resetBtn.classList.toggle('hidden', !frontSrc);
+  updateUndoBtn();
+}
+
+function switchView(view, btn) {
+  currentView = view;
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateUndoBtn();
+  refreshAll();
+}
+
+// ── Drag / interacción canvas ─────────────────────────────────────
+let drag = { active: false, target: null, startX:0,startY:0, originX:0,originY:0 };
+
+function canvasPos(e) {
+  const r  = canvas.getBoundingClientRect();
+  const sx = CW / r.width, sy = CH / r.height;
+  const src = e.touches ? e.touches[0] : e;
+  return { x: (src.clientX - r.left) * sx, y: (src.clientY - r.top) * sy };
+}
+
+// Encuentra la capa superior bajo el cursor (hits desde arriba hacia abajo)
+function layerAt(px, py) {
+  for (let i = layers.length - 1; i >= 0; i--) {
+    const l = layers[i];
+    const cos = Math.cos(-l.rotation * Math.PI / 180);
+    const sin = Math.sin(-l.rotation * Math.PI / 180);
+    const dx = px - l.x, dy = py - l.y;
+    const lx = dx*cos - dy*sin, ly = dx*sin + dy*cos;
+    const hw = (l.img.naturalWidth  * l.scale) / 2;
+    const hh = (l.img.naturalHeight * l.scale) / 2;
+    if (Math.abs(lx) < hw && Math.abs(ly) < hh) return i;
+  }
+  return -1;
+}
+
+function onDown(e) {
+  const p = canvasPos(e);
+  if (e.touches) e.preventDefault();
+  if (e.altKey) {
+    // ALT: mover prenda
+    drag = { active:true, target:'garment', startX:p.x, startY:p.y, originX:garment.x, originY:garment.y };
+    return;
+  }
+  const hit = layerAt(p.x, p.y);
+  if (hit >= 0) {
+    if (hit !== activeIdx) { activeIdx = hit; refreshAll(); }
+    const l = layers[hit];
+    drag = { active:true, target:'layer', startX:p.x, startY:p.y, originX:l.x, originY:l.y };
+  } else {
+    // Click en vacío = deseleccionar (no romper drag de prenda)
+    drag = { active:true, target:'garment', startX:p.x, startY:p.y, originX:garment.x, originY:garment.y };
+  }
+}
+
+function onMove(e) {
+  if (!drag.active) return;
+  if (e.touches) e.preventDefault();
+  const p = canvasPos(e);
+  if (drag.target === 'layer' && layers[activeIdx]) {
+    layers[activeIdx].x = drag.originX + (p.x - drag.startX);
+    layers[activeIdx].y = drag.originY + (p.y - drag.startY);
+  } else if (drag.target === 'garment') {
+    garment.x = drag.originX + (p.x - drag.startX);
+    garment.y = drag.originY + (p.y - drag.startY);
+  }
+  render();
+}
+
+function onUp() { drag.active = false; }
+
+canvas.addEventListener('mousedown',  onDown);
+canvas.addEventListener('mousemove',  onMove);
+canvas.addEventListener('mouseup',    onUp);
+canvas.addEventListener('mouseleave', onUp);
+canvas.addEventListener('touchstart', onDown, { passive: false });
+canvas.addEventListener('touchmove',  onMove, { passive: false });
+canvas.addEventListener('touchend',   onUp);
+
+// Rueda: CTRL → zoom prenda | normal → escala capa activa
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  const f = e.deltaY > 0 ? 0.93 : 1.07;
+  if (e.ctrlKey) {
+    garment.scale = Math.max(0.4, Math.min(6, garment.scale * f));
+  } else {
+    const l = getActive(); if (!l) return;
+    l.scale = Math.max(0.03, Math.min(6, l.scale * f));
+    document.getElementById('ctrl-scale').value = Math.round(l.scale * 100);
+    document.getElementById('ctrl-scale-val').textContent = Math.round(l.scale * 100) + '%';
+  }
+  render();
+}, { passive: false });
+
+// ── Controles deslizadores ────────────────────────────────────────
+document.getElementById('ctrl-scale').addEventListener('input', function() {
+  const l = getActive(); if (!l) return;
+  l.scale = this.value / 100;
+  document.getElementById('ctrl-scale-val').textContent = this.value + '%';
+  render();
+});
+document.getElementById('ctrl-rotate').addEventListener('input', function() {
+  const l = getActive(); if (!l) return;
+  l.rotation = parseFloat(this.value);
+  document.getElementById('ctrl-rotate-val').textContent = this.value + '°';
+  render();
+});
+document.getElementById('ctrl-opacity').addEventListener('input', function() {
+  const l = getActive(); if (!l) return;
+  l.opacity = this.value / 100;
+  document.getElementById('ctrl-opacity-val').textContent = this.value + '%';
+  render();
+});
+document.getElementById('btn-reset-pos').addEventListener('click', () => {
+  const l = getActive(); if (!l) return;
+  l.x = CW/2; l.y = CH/2; l.rotation = 0;
+  document.getElementById('ctrl-rotate').value = 0;
+  document.getElementById('ctrl-rotate-val').textContent = '0°';
+  render();
+});
+document.getElementById('btn-reset-garment-zoom').addEventListener('click', () => {
+  garment = { x: 0, y: 0, scale: 1 }; render();
+});
+
+// ── Flip / espejo ─────────────────────────────────────────────────
+function flipLayer(axis) {
+  const l = getActive(); if (!l) return;
+  if (axis === 'h') l.flipH *= -1; else l.flipV *= -1;
+  render();
+}
+
+// ── Quitar fondo (canvas, umbral por esquinas) ────────────────────
+document.getElementById('btn-remove-bg').addEventListener('click', () => {
+  const l = getActive(); if (!l) return;
+  const btn = document.getElementById('btn-remove-bg');
+  btn.style.opacity = '.3';
+  const off  = document.createElement('canvas');
+  off.width  = l.img.naturalWidth; off.height = l.img.naturalHeight;
+  const oc   = off.getContext('2d');
+  oc.drawImage(l.img, 0, 0);
+  const id = oc.getImageData(0, 0, off.width, off.height);
+  const d  = id.data;
+  const W2 = off.width, H2 = off.height;
+  const corners = [[0,0],[W2-1,0],[0,H2-1],[W2-1,H2-1]];
+  let br=0,bg2=0,bb=0;
+  corners.forEach(([x,y])=>{ const i=(y*W2+x)*4; br+=d[i];bg2+=d[i+1];bb+=d[i+2]; });
+  br/=4; bg2/=4; bb/=4;
+  const T = 40;
+  for (let i=0;i<d.length;i+=4) {
+    if (Math.abs(d[i]-br)<T && Math.abs(d[i+1]-bg2)<T && Math.abs(d[i+2]-bb)<T) d[i+3]=0;
+  }
+  oc.putImageData(id, 0, 0);
+  const img2 = new Image();
+  img2.onload = () => { l.img = img2; btn.style.opacity='1'; refreshAll(); };
+  img2.src = off.toDataURL('image/png');
+});
+
+// ── Generación IA ─────────────────────────────────────────────────
+function showAiError(msg) {
+  const el = document.getElementById('ai-error');
+  el.textContent = msg.toUpperCase(); el.classList.remove('hidden');
+}
+function setGenerating(on) {
+  const st = document.getElementById('ai-status');
+  st.classList.toggle('hidden', !on);
+  st.style.display = on ? 'flex' : 'none';
+  document.getElementById('btn-generate').disabled = on;
+  if (!on) document.getElementById('ai-error').classList.add('hidden');
+}
+document.getElementById('btn-generate').addEventListener('click', async () => {
+  const prompt = document.getElementById('ai-prompt').value.trim();
+  if (!prompt) { showAiError('Escribe una descripción primero.'); return; }
+  setGenerating(true);
+  try {
+    const res  = await fetch('/api/design/generate', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ prompt: prompt + ', isolated graphic, white background, no shadows, t-shirt print' })
+    });
+    const data = await res.json();
+    if (!res.ok) { showAiError(data.error || 'Error'); return; }
+    loadDesign(data.url);
+  } catch { showAiError('Error de conexión.'); }
+  finally { setGenerating(false); }
+});
+
+// ── Upload ────────────────────────────────────────────────────────
+const fileInput = document.getElementById('file-input');
+const dropZone  = document.getElementById('drop-zone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('border-primary'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-primary'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('border-primary');
+  if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
+function handleFile(file) {
+  if (file.size > 10*1024*1024) { alert('Imagen muy grande (máx 10MB)'); return; }
+  loadDesign(URL.createObjectURL(file));
+}
+
+// ── Catálogo ──────────────────────────────────────────────────────
+async function loadCatalog() {
+  try {
+    const res  = await fetch('/api/design/catalog');
+    const data = await res.json();
+    const grid = document.getElementById('catalog-grid');
+    if (!data.designs || !data.designs.length) {
+      grid.innerHTML = '<div class="col-span-3 font-label-caps text-[10px] text-secondary text-center py-lg">El catálogo está vacío.</div>';
+      return;
+    }
+    grid.innerHTML = data.designs.map(d => `
+      <div class="design-thumb aspect-square bg-surface-container overflow-hidden" onclick="loadDesign('${d.imageUrl}')" title="${d.name}">
+        <img src="${d.imageUrl}" alt="${d.name}" class="w-full h-full object-cover">
+      </div>`).join('');
+  } catch {}
+}
+loadCatalog();
+
+// ── Prendas ───────────────────────────────────────────────────────
+async function loadGarments() {
+  const list = document.getElementById('garment-list');
+  try {
+    const res  = await fetch('/api/design/garments');
+    const data = await res.json();
+    const items = data.garments || [];
+    if (!items.length) {
+      list.innerHTML = '<div class="font-label-caps text-[10px] text-secondary">Sin prendas cargadas — agrégalas en <b>/admin/designs</b>.</div>';
+      return;
+    }
+    list.innerHTML = items.map((g, i) => `
+      <button onclick="selectGarment('${g.imageUrl}','${g.backImageUrl||''}',this)" title="${g.name}"
+        class="garment-btn border-2 hover:border-primary transition-colors overflow-hidden w-16 h-20 flex-shrink-0 ${i===0?'border-primary':'border-outline-variant'}">
+        <img src="${g.imageUrl}" alt="${g.name}" class="w-full h-full object-cover">
+      </button>`).join('');
+    loadGarmentImages(items[0].imageUrl, items[0].backImageUrl || '');
+  } catch {
+    list.innerHTML = '<div class="font-label-caps text-[10px] text-secondary">Error cargando prendas.</div>';
+  }
+}
+function selectGarment(frontSrc, backSrc, btn) {
+  document.querySelectorAll('.garment-btn').forEach(b => { b.classList.remove('border-primary'); b.classList.add('border-outline-variant'); });
+  btn.classList.add('border-primary'); btn.classList.remove('border-outline-variant');
+  layers = []; activeIdx = -1;
+  loadGarmentImages(frontSrc, backSrc);
+  refreshAll();
+}
+loadGarments();
+document.getElementById('btn-reset-garment').addEventListener('click', resetGarment);
+
+// ── Descargar ─────────────────────────────────────────────────────
+document.getElementById('btn-download').addEventListener('click', () => {
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    const a   = document.createElement('a');
+    a.href = url; a.download = 'oneroot-diseno.png'; a.click(); URL.revokeObjectURL(url);
+  }, 'image/png');
+});
+
+// ── Pedido multi-prenda ───────────────────────────────────────────
+let savedDesigns = [];
+function updateOrderPanel() {
+  const panel = document.getElementById('order-panel');
+  document.getElementById('order-count').textContent = savedDesigns.length;
+  panel.classList.toggle('hidden', savedDesigns.length === 0);
+  document.getElementById('order-list').innerHTML = savedDesigns.map((d, i) => `
+    <div class="relative group flex-shrink-0">
+      <img src="${d.thumb}" class="w-16 h-20 object-cover border border-outline-variant">
+      <button onclick="removeFromOrder(${i})" class="absolute top-0 right-0 bg-error text-white text-[10px] w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity" title="Quitar">✕</button>
+      ${d.layers && d.layers.length ? `<div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);color:#fff;font-family:'JetBrains Mono',monospace;font-size:8px;text-align:center;padding:2px">${d.layers.length} diseño${d.layers.length>1?'s':''}</div>` : ''}
+      ${d.backUrl ? `<div style="position:absolute;top:0;left:0;background:rgba(0,0,0,.6);color:#fff;font-family:'JetBrains Mono',monospace;font-size:7px;padding:2px 3px">F+E</div>` : ''}
+    </div>`).join('');
+}
+function removeFromOrder(i) { savedDesigns.splice(i, 1); updateOrderPanel(); }
+function clearOrder() { if(!confirm('¿Vaciar el pedido?'))return; savedDesigns=[]; updateOrderPanel(); }
+
+// ── Helper: renderiza una vista a blob (off-screen) ───────────────
+// PRINT_SCALE: el canvas interno es 480×640 (pantalla).
+// Para impresión profesional (300 DPI en camiseta ~28×35cm) se necesita ~3300×4100px.
+// Escala 4× = 1920×2560px — suficiente para impresión correcta sin degradar calidad.
+const PRINT_SCALE = 4;
+
+function renderViewToBlob(view, scale) {
+  const S    = scale || 1;
+  const gImg = garmentData[view];
+  const off  = document.createElement('canvas');
+  off.width  = CW * S; off.height = CH * S;
+  const oc   = off.getContext('2d');
+  if (S > 1) oc.scale(S, S);
+  const isDark = document.documentElement.classList.contains('dark');
+  oc.fillStyle = isDark ? '#1e1e21' : '#f3f3f8';
+  oc.fillRect(0, 0, CW, CH);
+  if (gImg) {
+    const aspect = gImg.naturalWidth / gImg.naturalHeight;
+    let gw = CW * garment.scale, gh = gw / aspect;
+    if (gh < CH * garment.scale) { gh = CH * garment.scale; gw = gh * aspect; }
+    oc.drawImage(gImg, garment.x + (CW-gw)/2, garment.y + (CH-gh)/2, gw, gh);
+  }
+  layers.forEach(l => {
+    const dw = l.img.naturalWidth * l.scale;
+    const dh = l.img.naturalHeight * l.scale;
+    oc.save(); oc.globalAlpha = l.opacity;
+    oc.translate(l.x, l.y); oc.rotate(l.rotation * Math.PI / 180);
+    oc.scale(l.flipH, l.flipV);
+    oc.drawImage(l.img, -dw/2, -dh/2, dw, dh);
+    oc.restore();
+  });
+  return new Promise(r => off.toBlob(r, 'image/png'));
+}
+
+// ── Helper: sube un blob al servidor ─────────────────────────────
+async function uploadBlob(blob, filename) {
+  const fd = new FormData();
+  fd.append('image', blob, filename);
+  const r = await fetch('/api/design/save-composite', { method: 'POST', body: fd });
+  if (!r.ok) throw new Error('Upload failed');
+  return (await r.json()).url;
+}
+
+document.getElementById('btn-add-to-order').addEventListener('click', async () => {
+  const btn = document.getElementById('btn-add-to-order');
+  btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">hourglass_top</span>GUARDANDO...';
+  btn.disabled = true;
+  try {
+    // 1. Composite frente a resolución de impresión (4× el canvas de pantalla)
+    const frontUrl = await uploadBlob(await renderViewToBlob('front', PRINT_SCALE), 'frente.png');
+
+    // 2. Composite espalda (si existe)
+    let backUrl = null;
+    if (garmentData.back) {
+      backUrl = await uploadBlob(await renderViewToBlob('back', PRINT_SCALE), 'espalda.png');
+    }
+
+    // 3. Cada capa a resolución original (para impresión de calidad)
+    const savedLayers = [];
+    for (let i = 0; i < layers.length; i++) {
+      const l   = layers[i];
+      const off = document.createElement('canvas');
+      off.width  = l.img.naturalWidth;
+      off.height = l.img.naturalHeight;
+      off.getContext('2d').drawImage(l.img, 0, 0);
+      const layerUrl = await uploadBlob(
+        await new Promise(r => off.toBlob(r, 'image/png')),
+        `diseno-${i + 1}.png`
+      );
+      savedLayers.push({
+        imageUrl: layerUrl,
+        naturalW: l.img.naturalWidth,
+        naturalH: l.img.naturalHeight,
+        x: Math.round(l.x),
+        y: Math.round(l.y),
+        scale:    Math.round(l.scale    * 1000) / 1000,
+        rotation: l.rotation,
+        opacity:  l.opacity,
+        flipH:    l.flipH,
+        flipV:    l.flipV
+      });
+    }
+
+    savedDesigns.push({
+      frontUrl,
+      backUrl,
+      thumb:   canvas.toDataURL('image/png'),
+      layers:  savedLayers,
+      canvasW: CW,
+      canvasH: CH
+    });
+    updateOrderPanel();
+
+    // Limpiar para siguiente prenda
+    layers = []; activeIdx = -1; garment = { x:0, y:0, scale:1 };
+    garmentData = { front:null, back:null };
+    garmentHistory = { front:[], back:[] };
+    refreshAll();
+    document.getElementById('ai-prompt').value = '';
+  } catch(e) {
+    console.error(e);
+    alert('Error al guardar. Intenta de nuevo.');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">add_shopping_cart</span>AGREGAR AL PEDIDO';
+  }
+});
+
+document.getElementById('btn-order-all').addEventListener('click', () => {
+  if (!savedDesigns.length) return;
+  let msg = `*PEDIDO PERSONALIZADO — ONE ROOT Co.*\n\n`;
+  savedDesigns.forEach((d, i) => {
+    msg += `━━━━━━━━━━━━━━━\n*PRENDA ${i + 1}*\n`;
+    msg += `Frente: ${location.origin}${d.frontUrl}\n`;
+    if (d.backUrl) msg += `Espalda: ${location.origin}${d.backUrl}\n`;
+    if (d.layers.length) {
+      msg += `\n*Diseños para imprimir (${d.layers.length}):*\n`;
+      d.layers.forEach((l, j) => {
+        const xPct   = Math.round(l.x / d.canvasW * 100);
+        const yPct   = Math.round(l.y / d.canvasH * 100);
+        const sizPct = Math.round(l.scale * 100);
+        msg += `  Diseño ${j + 1}: ${location.origin}${l.imageUrl}\n`;
+        msg += `  Resolución original: ${l.naturalW}×${l.naturalH}px\n`;
+        msg += `  Posición: ${xPct}% horiz, ${yPct}% vert | Tamaño: ${sizPct}%`;
+        if (l.rotation !== 0) msg += ` | Rot: ${l.rotation}°`;
+        if (l.flipH === -1)  msg += ` | EspH`;
+        if (l.flipV === -1)  msg += ` | EspV`;
+        msg += `\n`;
+      });
+    }
+    msg += '\n';
+  });
+  msg += `Total: ${savedDesigns.length} prenda(s)`;
+  window.open(`https://wa.me/573118064799?text=${encodeURIComponent(msg)}`, '_blank');
+});
+
+render();
+</script>
+</body></html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ONE ROOT | Admin Terminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Hanken+Grotesk:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e2e2e7",
+                    "outline-variant": "#cfc4c5",
+                    "tertiary-fixed-dim": "#c6c6cb",
+                    "tertiary-fixed": "#e3e2e7",
+                    "on-primary-fixed": "#1b1b1b",
+                    "background": "#f9f9fe",
+                    "on-primary-container": "#848484",
+                    "tertiary-container": "#1a1b1f",
+                    "secondary": "#5d5f5f",
+                    "primary": "#000000",
+                    "on-background": "#1a1c1f",
+                    "error": "#ba1a1a",
+                    "tertiary": "#000000",
+                    "surface-bright": "#f9f9fe",
+                    "surface-tint": "#5e5e5e",
+                    "on-surface": "#1a1c1f",
+                    "on-tertiary": "#ffffff",
+                    "inverse-surface": "#2e3034",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#e2e2e2",
+                    "primary-fixed": "#e2e2e2",
+                    "secondary-fixed-dim": "#c6c6c7",
+                    "on-tertiary-fixed-variant": "#46464b",
+                    "inverse-primary": "#c6c6c6",
+                    "surface-container-low": "#f3f3f8",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "surface-container": "#ededf2",
+                    "primary-fixed-dim": "#c6c6c6",
+                    "on-secondary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#474747",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e8e8ed",
+                    "primary-container": "#1b1b1b",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#dfe0e0",
+                    "outline": "#7e7576",
+                    "on-tertiary-container": "#838388",
+                    "surface-container-highest": "#e2e2e7",
+                    "on-surface-variant": "#4c4546",
+                    "on-secondary-fixed-variant": "#454747",
+                    "surface": "#f9f9fe",
+                    "on-tertiary-fixed": "#1a1b1f",
+                    "inverse-on-surface": "#f0f0f5",
+                    "surface-dim": "#d9dade",
+                    "on-secondary-container": "#616363"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "48px",
+                    "xs": "8px",
+                    "base": "4px",
+                    "xl": "80px",
+                    "sm": "16px",
+                    "gutter": "24px",
+                    "container-max": "1440px",
+                    "md": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Montserrat"],
+                    "label-caps": ["JetBrains Mono"],
+                    "headline-xl": ["Montserrat"],
+                    "display-lg": ["Montserrat"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "headline-lg": ["Montserrat"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["28px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "headline-xl": ["48px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "display-lg": ["80px", {"lineHeight": "80px", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "38px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Subtle Architectural Texture Overlay */
+        .bg-grid-subtle {
+            background-image: 
+                linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Focus styles for the elevated streetwear feel */
+        .terminal-input:focus {
+            outline: none;
+            border-bottom-width: 2px;
+            border-color: #000000;
+        }
+
+        .login-card {
+            box-shadow: 0 0 0 1px #000000;
+        }
+        
+        .transition-standard {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface selection:bg-primary selection:text-white overflow-hidden">
+<!-- Subtle Background Layer -->
+<div class="fixed inset-0 z-0 bg-grid-subtle pointer-events-none"></div>
+<div class="fixed inset-0 z-0 bg-gradient-to-tr from-surface via-surface-container-low to-surface-variant opacity-40 pointer-events-none"></div>
+<main class="relative z-10 min-h-screen flex flex-col items-center justify-center p-sm md:p-lg">
+<!-- Logo Header -->
+<div class="mb-xl animate-fade-in">
+<img alt="ONE ROOT Logo" class="h-16 md:h-20 w-auto opacity-90 transition-standard hover:opacity-100" src="/logo/screen.png" onerror="this.style.display='none'"/>
+</div>
+<!-- Login Container -->
+<div class="w-full max-w-[440px] bg-white dark:bg-black p-lg md:p-xl login-card relative overflow-hidden transition-standard transform hover:-translate-y-1">
+<div class="mb-xl">
+<h1 class="font-headline-lg text-headline-lg uppercase tracking-tight text-primary">Terminal Access</h1>
+<p class="font-label-caps text-label-caps text-secondary mt-xs">Authentication Required for Entry</p>
+</div>
+<form id="login-form" action="#" class="space-y-xl">
+<!-- Admin Email -->
+<div class="group">
+<label class="block font-label-caps text-label-caps mb-xs text-secondary group-focus-within:text-primary transition-standard" for="admin-email">Admin Email</label>
+<input class="w-full bg-transparent border-0 border-b border-outline py-xs px-0 terminal-input font-body-lg text-body-lg placeholder:text-outline-variant focus:ring-0 transition-standard" id="admin-email" name="admin-email" placeholder="ID@ONEROOT.SYS" required="" type="email"/>
+</div>
+<!-- Access Key -->
+<div class="group">
+<div class="flex justify-between items-center mb-xs">
+<label class="block font-label-caps text-label-caps text-secondary group-focus-within:text-primary transition-standard" for="access-key">Access Key</label>
+<a class="font-label-caps text-[10px] text-secondary hover:text-primary underline transition-standard" href="#">Forgot Access Key?</a>
+</div>
+<div class="relative">
+<input class="w-full bg-transparent border-0 border-b border-outline py-xs px-0 terminal-input font-body-lg text-body-lg placeholder:text-outline-variant focus:ring-0 transition-standard pr-xl" id="access-key" name="access-key" placeholder="••••••••••••" required="" type="password"/>
+<button class="absolute right-0 top-1/2 -translate-y-1/2 text-outline-variant hover:text-primary transition-standard" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Me & State -->
+<div class="flex items-center space-x-sm">
+<label class="flex items-center cursor-pointer group">
+<input class="hidden peer" type="checkbox"/>
+<div class="w-4 h-4 border border-primary flex items-center justify-center bg-transparent peer-checked:bg-primary transition-standard">
+<span class="material-symbols-outlined text-[12px] text-white hidden peer-checked:block">check</span>
+</div>
+<span class="font-label-caps text-label-caps text-secondary ml-xs group-hover:text-primary transition-standard">Remember Session</span>
+</label>
+</div>
+<!-- CTA -->
+<div class="pt-md">
+<button class="w-full bg-primary text-white font-label-caps text-body-md py-md tracking-widest hover:bg-white hover:text-primary border border-primary transition-all duration-300 active:scale-[0.98]" type="submit">
+                        ENTER TERMINAL
+                    </button>
+</div>
+<div id="login-error" class="hidden mt-sm font-label-caps text-[11px] text-error text-center px-sm"></div>
+</form>
+<!-- Metadata/Security Branding -->
+<div class="mt-xl flex items-center justify-between opacity-40">
+<div class="flex items-center space-x-xs">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span class="font-label-caps text-[10px]">RSA 4096 ENCRYPTED</span>
+</div>
+<div class="font-label-caps text-[10px]">ROOT_V4.0.2</div>
+</div>
+</div>
+<!-- Footer Info -->
+<footer class="mt-xl text-center">
+<p class="font-label-caps text-label-caps text-secondary opacity-60">
+                © 2024 ONE ROOT. ARCHITECTURAL STREETWEAR SYSTEM.
+            </p>
+</footer>
+</main>
+<script>
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('admin-email').value.trim();
+        const password = document.getElementById('access-key').value;
+        const errorEl = document.getElementById('login-error');
+        const btn = this.querySelector('button[type="submit"]');
+
+        errorEl.classList.add('hidden');
+        btn.textContent = 'AUTHENTICATING...';
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+
+            if (!res.ok) {
+                errorEl.textContent = (data.error || 'Authentication failed').toUpperCase();
+                errorEl.classList.remove('hidden');
+                btn.textContent = 'ENTER TERMINAL';
+                btn.disabled = false;
+                return;
+            }
+
+            localStorage.setItem('one-root-logged', '1');
+            localStorage.setItem('one-root-admin', JSON.stringify(data.admin));
+            localStorage.removeItem('one-root-token'); // limpieza de sesiones anteriores
+            window.location.href = '/admin/catalog';
+        } catch {
+            errorEl.textContent = 'CONNECTION ERROR — IS THE SERVER RUNNING?';
+            errorEl.classList.remove('hidden');
+            btn.textContent = 'ENTER TERMINAL';
+            btn.disabled = false;
+        }
+    });
+
+    // Password visibility toggle
+    const togglePass = document.querySelector('button[type="button"]');
+    const passInput = document.getElementById('access-key');
+    togglePass.addEventListener('click', () => {
+        const type = passInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passInput.setAttribute('type', type);
+        togglePass.querySelector('span').textContent = type === 'password' ? 'visibility' : 'visibility_off';
+    });
+
+    // Input focus micro-interaction
+    document.querySelectorAll('.terminal-input').forEach(input => {
+        input.addEventListener('focus', () => input.parentElement.classList.add('scale-[1.01]'));
+        input.addEventListener('blur', () => input.parentElement.classList.remove('scale-[1.01]'));
+    });
+</script>
+</body></html>

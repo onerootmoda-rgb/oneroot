@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ONE ROOT | Colecciones</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode:"class",
+  theme:{ extend:{
+    colors:{"primary":"#000","secondary":"#5d5f5f","error":"#ba1a1a","on-error":"#fff","background":"#f9f9fe","surface":"#f9f9fe","surface-container-lowest":"#fff","surface-container-low":"#f3f3f8","surface-container":"#ededf2","surface-dim":"#d9dade","on-primary":"#fff","on-background":"#1a1c1f","outline-variant":"#cfc4c5"},
+    spacing:{"xs":"8px","sm":"16px","md":"24px","lg":"48px","xl":"80px","gutter":"24px"},
+    fontFamily:{"body-md":["Hanken Grotesk"],"label-caps":["JetBrains Mono"],"headline-lg":["Montserrat"]},
+    fontSize:{"label-caps":["12px",{"lineHeight":"16px","letterSpacing":"0.1em","fontWeight":"500"}]}
+  }}
+}
+</script>
+<style>
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;}
+  html.dark,html.dark body{background:#0e0e10;color:#e4e4e7;}
+  html.dark aside{background:#0e0e10!important;border-color:rgba(244,244,245,.15)!important;}
+  html.dark .bg-surface-container-lowest{background-color:#0e0e10!important;}
+  html.dark .bg-surface-container-low{background-color:#18181b!important;}
+  html.dark .bg-surface-container{background-color:#1e1e21!important;}
+  html.dark .text-secondary{color:#a1a1aa!important;}
+  html.dark .text-primary{color:#f4f4f5!important;}
+  html.dark .border-primary{border-color:rgba(244,244,245,.4)!important;}
+  html.dark .bg-primary{background-color:#f4f4f5!important;}
+  html.dark .text-on-primary{color:#0e0e10!important;}
+  html.dark input,html.dark textarea,html.dark select{background:#1e1e21!important;color:#e4e4e7!important;border-color:rgba(244,244,245,.3)!important;}
+  .coll-card{border:1px solid #ddd;padding:16px;margin-bottom:16px;position:relative;background:#fff;}
+  html.dark .coll-card{background:#1e1e21;border-color:rgba(244,244,245,.2);}
+  .coll-preview{width:100%;height:120px;background-size:cover;background-position:center;background-color:#ededf2;}
+</style>
+<script>if(localStorage.getItem('one-root-theme')==='dark')document.documentElement.classList.replace('light','dark');</script>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md flex">
+
+<!-- Admin Sidebar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest border-r border-primary flex flex-col py-md px-sm z-40">
+<div class="mb-xl px-sm"><h1 class="font-headline-lg text-headline-lg font-black text-primary tracking-tighter">ONE ROOT</h1><p class="font-label-caps text-label-caps text-secondary mt-1">ADMIN CONSOLE</p></div>
+<nav class="flex-grow space-y-xs">
+<a href="/admin/dashboard" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+<a href="/admin/catalog" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Catalog</a>
+<a href="/admin/orders" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Pedidos</a>
+<a href="/admin/collections" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-primary bg-surface-container border-l-2 border-primary transition-all"><span class="material-symbols-outlined text-[20px]">collections</span>Colecciones</a>
+<a href="/admin/home" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">home</span>Editor Landing</a>
+<a href="/admin/analytics" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">bar_chart</span>Analytics</a>
+<a href="/admin/designs" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">style</span>Diseños & Prendas</a>
+<a href="/admin/users" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">manage_accounts</span>Usuarios & Log</a>
+<a href="/" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">storefront</span>Ver Tienda</a>
+</nav>
+<div class="mt-auto border-t border-primary/10 pt-md">
+<a id="admin-logout" href="#" class="flex items-center gap-sm px-sm py-md text-secondary hover:text-primary transition-all font-label-caps text-label-caps"><span class="material-symbols-outlined text-[20px]">logout</span>Logout</a>
+</div>
+</aside>
+
+<!-- Main -->
+<main class="ml-64 flex-1 p-md min-h-screen">
+  <div class="flex justify-between items-end mb-md border-b border-primary pb-md">
+    <div>
+      <h2 class="font-headline-lg text-2xl font-black tracking-tighter">COLECCIONES HOME</h2>
+      <p class="font-label-caps text-label-caps text-secondary mt-1">Edita las colecciones que aparecen en la página principal</p>
+    </div>
+    <div class="flex gap-sm">
+      <button onclick="addCollection()" class="border border-primary font-label-caps text-label-caps px-md py-xs hover:bg-surface-container flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[16px]">add</span>AGREGAR
+      </button>
+      <button onclick="saveCollections()" class="bg-primary text-on-primary font-label-caps text-label-caps px-md py-xs hover:opacity-80 flex items-center gap-xs">
+        <span class="material-symbols-outlined text-[16px]">save</span>GUARDAR CAMBIOS
+      </button>
+    </div>
+  </div>
+
+  <p class="font-label-caps text-label-caps text-secondary mb-md text-sm">
+    La primera colección marcada como "Destacada" aparecerá grande (columna izquierda). Las demás van apiladas a la derecha.
+  </p>
+
+  <div id="collections-list"></div>
+</main>
+
+<script>
+(async function checkSession() {
+    const r = await fetch('/api/auth/me', { credentials: 'include' }).catch(() => null);
+    if (!r || !r.ok) { localStorage.removeItem('one-root-logged'); window.location.href = '/admin/login'; }
+})();
+function authH() { return { 'Content-Type': 'application/json' }; }
+
+let collections = [];
+
+async function load() {
+    const res = await fetch('/api/settings/collections');
+    const data = await res.json();
+    collections = data.collections || [];
+    render();
+}
+
+function render() {
+    const container = document.getElementById('collections-list');
+    if (!collections.length) {
+        container.innerHTML = '<p class="font-label-caps text-secondary text-center py-xl">Sin colecciones. Haz click en AGREGAR.</p>';
+        return;
+    }
+    container.innerHTML = collections.map((c, i) => `
+        <div class="coll-card" id="card-${i}">
+            <div class="flex justify-between items-start mb-sm">
+                <div class="flex items-center gap-sm">
+                    <span class="font-label-caps text-label-caps text-secondary">#${i+1}</span>
+                    <label class="flex items-center gap-xs font-label-caps text-[11px] cursor-pointer">
+                        <input type="checkbox" onchange="setFeatured(${i})" ${c.featured?'checked':''} class="w-4 h-4"/>
+                        DESTACADA (grande)
+                    </label>
+                </div>
+                <div class="flex gap-xs">
+                    ${i>0 ? `<button onclick="moveUp(${i})" class="material-symbols-outlined text-secondary hover:text-primary text-[20px]">arrow_upward</button>` : ''}
+                    ${i<collections.length-1 ? `<button onclick="moveDown(${i})" class="material-symbols-outlined text-secondary hover:text-primary text-[20px]">arrow_downward</button>` : ''}
+                    <button onclick="removeCollection(${i})" class="material-symbols-outlined text-error hover:opacity-70 text-[20px]">delete</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
+                <div>
+                    <div class="coll-preview mb-sm" style="${c.image?'background-image:url('+JSON.stringify(c.image)+')':''}" id="preview-${i}"></div>
+                    <label class="font-label-caps text-[10px] text-secondary block mb-1">IMAGEN</label>
+                    <div class="flex gap-xs mb-xs">
+                        <input type="file" id="fileInput-${i}" accept="image/*" style="display:none" onchange="uploadFile(${i},this)"/>
+                        <button onclick="document.getElementById('fileInput-${i}').click()" id="uploadBtn-${i}"
+                            class="border border-primary font-label-caps text-[10px] px-sm py-1 hover:bg-surface-container flex items-center gap-xs flex-shrink-0">
+                            <span class="material-symbols-outlined text-[14px]">upload</span>SUBIR
+                        </button>
+                        <span class="font-label-caps text-[10px] text-secondary self-center">o pega una URL:</span>
+                    </div>
+                    <input type="text" value="${escHtml(c.image||'')}" id="urlInput-${i}" oninput="updateField(${i},'image',this.value);updatePreview(${i},this.value)"
+                        class="w-full border border-primary px-sm py-xs text-sm focus:outline-none bg-surface" placeholder="/uploads/collections/foto.jpg"/>
+                </div>
+                <div class="space-y-sm">
+                    <div>
+                        <label class="font-label-caps text-[10px] text-secondary block mb-1">NOMBRE *</label>
+                        <input type="text" value="${escHtml(c.name||'')}" oninput="updateField(${i},'name',this.value)"
+                            class="w-full border border-primary px-sm py-xs text-sm focus:outline-none bg-surface" placeholder="CORE ESSENTIALS"/>
+                    </div>
+                    <div>
+                        <label class="font-label-caps text-[10px] text-secondary block mb-1">ETIQUETA (opcional)</label>
+                        <input type="text" value="${escHtml(c.label||'')}" oninput="updateField(${i},'label',this.value)"
+                            class="w-full border border-primary px-sm py-xs text-sm focus:outline-none bg-surface" placeholder="SERIES 02"/>
+                    </div>
+                    <div>
+                        <label class="font-label-caps text-[10px] text-secondary block mb-1">LINK AL HACER CLICK</label>
+                        <input type="text" value="${escHtml(c.link||'/catalog')}" oninput="updateField(${i},'link',this.value)"
+                            class="w-full border border-primary px-sm py-xs text-sm focus:outline-none bg-surface" placeholder="/catalog?category=tops"/>
+                    </div>
+                </div>
+            </div>
+        </div>`).join('');
+}
+
+function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function updateField(i, key, val) { collections[i][key] = val; }
+function updatePreview(i, url) { const el = document.getElementById('preview-'+i); if(el) el.style.backgroundImage = url ? 'url('+JSON.stringify(url)+')' : ''; }
+
+async function uploadFile(i, input) {
+    const file = input.files[0];
+    if (!file) return;
+    const btn = document.getElementById('uploadBtn-' + i);
+    btn.innerHTML = '<span class="material-symbols-outlined text-[14px]">hourglass_top</span>SUBIENDO...';
+    btn.disabled = true;
+    try {
+        const fd = new FormData();
+        fd.append('image', file);
+        const res = await fetch('/api/settings/collection-image', {
+            method: 'POST',
+            credentials: 'include',
+            body: fd
+        });
+        const d = await res.json();
+        if (d.url) {
+            updateField(i, 'image', d.url);
+            updatePreview(i, d.url);
+            const urlInp = document.getElementById('urlInput-' + i);
+            if (urlInp) urlInp.value = d.url;
+        } else {
+            alert(d.error || 'Error al subir imagen');
+        }
+    } catch(e) { alert('Error de conexión al subir imagen'); }
+    btn.innerHTML = '<span class="material-symbols-outlined text-[14px]">upload</span>SUBIR';
+    btn.disabled = false;
+    input.value = '';
+}
+function setFeatured(i) { collections.forEach((c,j) => c.featured = (j===i)); render(); }
+function moveUp(i) { if(i===0) return; [collections[i-1],collections[i]]=[collections[i],collections[i-1]]; render(); }
+function moveDown(i) { if(i>=collections.length-1) return; [collections[i],collections[i+1]]=[collections[i+1],collections[i]]; render(); }
+function removeCollection(i) { if(!confirm('¿Eliminar esta colección?')) return; collections.splice(i,1); render(); }
+function addCollection() {
+    collections.push({ id: Date.now().toString(), name: '', label: '', image: '', link: '/catalog', featured: false });
+    render();
+    setTimeout(() => document.getElementById('card-'+(collections.length-1)).scrollIntoView({behavior:'smooth'}), 100);
+}
+
+async function saveCollections() {
+    const btn = document.querySelector('button[onclick="saveCollections()"]');
+    btn.textContent = 'GUARDANDO...'; btn.disabled = true;
+    try {
+        const res = await fetch('/api/settings/collections', {
+            method: 'PUT', headers: authH(), credentials: 'include',
+            body: JSON.stringify({ collections })
+        });
+        const d = await res.json();
+        if (d.ok) alert('Colecciones guardadas. Los cambios se verán en la home al recargar.');
+        else alert(d.error || 'Error al guardar');
+    } catch(e) { alert('Error de conexión'); }
+    btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">save</span>GUARDAR CAMBIOS'; btn.disabled = false;
+}
+
+document.getElementById('admin-logout').addEventListener('click', async function(e) {
+    e.preventDefault();
+    await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
+    localStorage.removeItem('one-root-logged');
+    localStorage.removeItem('one-root-admin');
+    window.location.href = '/admin/login';
+});
+
+load();
+</script>
+</body>
+</html>

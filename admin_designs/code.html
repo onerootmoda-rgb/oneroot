@@ -1,0 +1,278 @@
+<!DOCTYPE html><html class="light" lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ONE ROOT Admin | Catálogo de Diseños</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script>tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#000","on-primary":"#fff","secondary":"#5d5f5f","surface":"#f9f9fe","surface-container-lowest":"#fff","surface-container-low":"#f3f3f8","surface-container":"#ededf2","on-surface":"#1a1c1f","outline-variant":"#cfc4c5","background":"#f9f9fe","error":"#ba1a1a"},spacing:{xs:"8px",sm:"16px",md:"24px",lg:"48px",xl:"80px"},fontFamily:{"label-caps":["JetBrains Mono"],"display-lg":["Montserrat"],"body-md":["Hanken Grotesk"]},fontSize:{"label-caps":["12px",{lineHeight:"16px",letterSpacing:"0.1em",fontWeight:"500"}],"headline-lg":["32px",{lineHeight:"38px",fontWeight:"700"}]}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Hanken+Grotesk:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+  .design-card{position:relative;aspect-ratio:1;overflow:hidden;background:#ededf2;border:1px solid #cfc4c5}
+  .design-card img{width:100%;height:100%;object-fit:cover}
+  .design-card .overlay{position:absolute;inset:0;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;transition:.2s}
+  .design-card:hover .overlay{background:rgba(0,0,0,.5)}
+  .design-card .del-btn{color:#fff;opacity:0;transition:.2s;cursor:pointer;background:none;border:none;font-size:14px;font-family:'JetBrains Mono',monospace;padding:8px 12px;border:1px solid rgba(255,255,255,.6)}
+  .design-card:hover .del-btn{opacity:1}
+</style>
+<script>if(localStorage.getItem('one-root-theme')==='dark')document.documentElement.classList.replace('light','dark');</script>
+</head>
+<body class="flex min-h-screen">
+
+<!-- Sidebar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest border-r border-primary flex flex-col py-md px-sm z-40">
+  <div class="mb-xl px-sm"><h1 class="font-headline-lg text-headline-lg font-black text-primary tracking-tighter" style="font-family:Montserrat,sans-serif">ONE ROOT</h1><p class="font-label-caps text-label-caps text-secondary mt-1">ADMIN CONSOLE</p></div>
+  <nav class="flex-grow space-y-xs overflow-y-auto">
+    <a href="/admin/dashboard"   class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+    <a href="/admin/catalog"     class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Catalog</a>
+    <a href="/admin/orders"      class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Pedidos</a>
+    <a href="/admin/home"        class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">home</span>Editor Landing</a>
+    <a href="/admin/analytics"   class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">bar_chart</span>Analytics</a>
+    <a href="/admin/collections" class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">collections</span>Colecciones</a>
+    <a href="/admin/designs"     class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-primary bg-surface-container border-l-2 border-primary transition-all"><span class="material-symbols-outlined text-[20px]">style</span>Diseños & Prendas</a>
+    <a href="/admin/users"       class="flex items-center gap-sm px-sm py-md font-label-caps text-label-caps text-secondary hover:bg-surface-container transition-all"><span class="material-symbols-outlined text-[20px]">manage_accounts</span>Usuarios & Log</a>
+  </nav>
+  <div class="mt-auto border-t border-primary/10 pt-md">
+    <button onclick="logout()" class="flex items-center gap-sm px-sm py-md text-secondary hover:text-primary transition-all font-label-caps text-label-caps w-full"><span class="material-symbols-outlined text-[20px]">logout</span>Logout</button>
+  </div>
+</aside>
+
+<main class="ml-64 flex-1 p-8 min-h-screen">
+  <div class="max-w-4xl">
+    <div class="flex justify-between items-start mb-8">
+      <div>
+        <h1 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:24px">CATÁLOGO DE DISEÑOS</h1>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5d5f5f;margin-top:4px">
+          Diseños disponibles para los usuarios en el personalizador
+        </p>
+      </div>
+      <a href="/personalizar" target="_blank" style="font-family:'JetBrains Mono',monospace;font-size:11px;border:1px solid #000;padding:8px 16px;display:flex;align-items:center;gap:6px;text-decoration:none;color:#000;transition:.2s" onmouseover="this.style.background='#000';this.style.color='#fff'" onmouseout="this.style.background='';this.style.color='#000'">
+        <span class="material-symbols-outlined text-[16px]">open_in_new</span>VER PERSONALIZADOR
+      </a>
+    </div>
+
+    <!-- Upload -->
+    <div style="border:1px solid #e2e2e7;padding:24px;margin-bottom:32px;background:#fff">
+      <h2 style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;margin-bottom:16px">SUBIR NUEVO DISEÑO</h2>
+      <form id="upload-form" class="flex flex-col md:flex-row gap-4 items-end">
+        <div class="flex-1">
+          <label style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5d5f5f;display:block;margin-bottom:6px">NOMBRE</label>
+          <input type="text" id="design-name" placeholder="Ej: Dragon Minimal" required
+            style="width:100%;border:1px solid #cfc4c5;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px;background:transparent;outline:none">
+        </div>
+        <div class="flex-1">
+          <label style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5d5f5f;display:block;margin-bottom:6px">CATEGORÍA</label>
+          <input type="text" id="design-category" placeholder="Ej: Abstracto" value="General"
+            style="width:100%;border:1px solid #cfc4c5;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px;background:transparent;outline:none">
+        </div>
+        <div class="flex-1">
+          <label style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5d5f5f;display:block;margin-bottom:6px">IMAGEN (PNG/WEBP)</label>
+          <input type="file" id="design-file" accept="image/png,image/webp,image/jpeg" required
+            style="font-family:'JetBrains Mono',monospace;font-size:11px;width:100%">
+        </div>
+        <button type="submit" id="upload-btn"
+          style="background:#000;color:#fff;font-family:'JetBrains Mono',monospace;font-size:12px;padding:9px 24px;border:none;cursor:pointer;white-space:nowrap;transition:.2s"
+          onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+          SUBIR
+        </button>
+      </form>
+      <div id="upload-msg" style="font-family:'JetBrains Mono',monospace;font-size:11px;margin-top:12px;display:none"></div>
+    </div>
+
+    <!-- Grid diseños -->
+    <div style="margin-bottom:48px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5d5f5f;margin-bottom:16px">
+        DISEÑOS PUBLICADOS — <span id="count">0</span>
+      </div>
+      <div id="designs-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 min-h-[120px]">
+        <div style="grid-column:1/-1;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5d5f5f;text-align:center;padding:40px 0">CARGANDO...</div>
+      </div>
+    </div>
+
+    <!-- ── PRENDAS BASE ─────────────────────────────────────────── -->
+    <div style="border-top:2px solid #000;padding-top:32px">
+      <div style="margin-bottom:24px">
+        <h2 style="font-family:Montserrat,sans-serif;font-weight:800;font-size:20px">PRENDAS BASE</h2>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5d5f5f;margin-top:4px">
+          Las prendas que aparecen como base en el personalizador
+        </p>
+      </div>
+
+      <!-- Upload prenda -->
+      <form id="garment-form" class="flex flex-col gap-4" style="border:1px solid #e2e2e7;padding:24px;background:#fff;margin-bottom:24px">
+        <div class="flex flex-col md:flex-row gap-4 items-end">
+          <div class="flex-1">
+            <label style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5d5f5f;display:block;margin-bottom:6px">NOMBRE DE LA PRENDA</label>
+            <input type="text" id="garment-name" placeholder="Ej: Hoodie Negro Oversized" required
+              style="width:100%;border:1px solid #cfc4c5;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:12px;background:transparent;outline:none">
+          </div>
+          <div class="flex-1">
+            <label style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5d5f5f;display:block;margin-bottom:6px">FOTO FRONTAL ★ (requerida)</label>
+            <input type="file" id="garment-file-front" accept="image/png,image/webp,image/jpeg" required
+              style="font-family:'JetBrains Mono',monospace;font-size:11px;width:100%">
+          </div>
+          <div class="flex-1">
+            <label style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5d5f5f;display:block;margin-bottom:6px">FOTO TRASERA (opcional)</label>
+            <input type="file" id="garment-file-back" accept="image/png,image/webp,image/jpeg"
+              style="font-family:'JetBrains Mono',monospace;font-size:11px;width:100%">
+          </div>
+          <button type="submit" id="garment-btn"
+            style="background:#000;color:#fff;font-family:'JetBrains Mono',monospace;font-size:12px;padding:9px 24px;border:none;cursor:pointer;white-space:nowrap"
+            onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+            SUBIR PRENDA
+          </button>
+        </div>
+      </form>
+      <div id="garment-msg" style="font-family:'JetBrains Mono',monospace;font-size:11px;margin-bottom:16px;display:none"></div>
+
+      <!-- Grid prendas -->
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5d5f5f;margin-bottom:16px">
+        PRENDAS CARGADAS — <span id="garment-count">0</span>
+      </div>
+      <div id="garments-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 min-h-[120px]">
+        <div style="grid-column:1/-1;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5d5f5f;text-align:center;padding:40px 0">CARGANDO...</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+(async function checkSession() {
+    const r = await fetch('/api/auth/me', { credentials: 'include' }).catch(() => null);
+    if (!r || !r.ok) { localStorage.removeItem('one-root-logged'); window.location.href = '/admin/login'; }
+})();
+
+async function loadDesigns() {
+  const res  = await fetch('/api/design/catalog');
+  const data = await res.json();
+  const grid = document.getElementById('designs-grid');
+  document.getElementById('count').textContent = (data.designs || []).length;
+  if (!data.designs || !data.designs.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;font-family:\'JetBrains Mono\',monospace;font-size:11px;color:#5d5f5f;text-align:center;padding:40px 0">Sin diseños todavía. Sube el primero arriba.</div>';
+    return;
+  }
+  grid.innerHTML = data.designs.map(d => `
+    <div class="design-card">
+      <img src="${d.imageUrl}" alt="${d.name}" loading="lazy">
+      <div class="overlay">
+        <button class="del-btn" onclick="deleteDesign('${d.id}')">ELIMINAR</button>
+      </div>
+      <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);padding:6px 8px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${d.name}</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.6)">${d.category}</div>
+      </div>
+    </div>`).join('');
+}
+
+async function deleteDesign(id) {
+  if (!confirm('¿Eliminar este diseño del catálogo?')) return;
+  await fetch('/api/design/catalog/' + id, { method: 'DELETE', credentials: 'include' });
+  loadDesigns();
+}
+
+document.getElementById('upload-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('upload-btn');
+  const msg = document.getElementById('upload-msg');
+  btn.textContent = 'SUBIENDO...';
+  btn.disabled = true;
+  msg.style.display = 'none';
+
+  const fd = new FormData();
+  fd.append('name',     document.getElementById('design-name').value);
+  fd.append('category', document.getElementById('design-category').value);
+  fd.append('image',    document.getElementById('design-file').files[0]);
+
+  try {
+    const res  = await fetch('/api/design/catalog', { method: 'POST', credentials: 'include', body: fd });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Error');
+    msg.textContent = '✓ ' + data.name + ' subido correctamente';
+    msg.style.color = '#000';
+    msg.style.display = 'block';
+    this.reset();
+    loadDesigns();
+  } catch (err) {
+    msg.textContent = '✗ ' + err.message;
+    msg.style.color = '#ba1a1a';
+    msg.style.display = 'block';
+  } finally {
+    btn.textContent = 'SUBIR';
+    btn.disabled = false;
+  }
+});
+
+async function logout() {
+  await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
+  localStorage.removeItem('one-root-logged');
+  localStorage.removeItem('one-root-admin');
+  window.location.href = '/admin/login';
+}
+
+loadDesigns();
+
+// ── Prendas base ──────────────────────────────────────────────────
+async function loadGarments() {
+  const res  = await fetch('/api/design/garments');
+  const data = await res.json();
+  const grid = document.getElementById('garments-grid');
+  document.getElementById('garment-count').textContent = (data.garments || []).length;
+  if (!data.garments || !data.garments.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;font-family:\'JetBrains Mono\',monospace;font-size:11px;color:#5d5f5f;text-align:center;padding:40px 0">Sin prendas todavía. Sube la primera arriba.</div>';
+    return;
+  }
+  grid.innerHTML = data.garments.map(g => `
+    <div class="design-card">
+      <img src="${g.imageUrl}" alt="${g.name}" loading="lazy">
+      <div class="overlay">
+        <button class="del-btn" onclick="deleteGarment('${g.id}')">ELIMINAR</button>
+      </div>
+      <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);padding:6px 8px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${g.name}</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.6)">${g.backImageUrl ? '↔ FRENTE + ESPALDA' : 'SOLO FRENTE'}</div>
+      </div>
+    </div>`).join('');
+}
+
+async function deleteGarment(id) {
+  if (!confirm('¿Eliminar esta prenda base?')) return;
+  await fetch('/api/design/garments/' + id, { method: 'DELETE', credentials: 'include' });
+  loadGarments();
+}
+
+document.getElementById('garment-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('garment-btn');
+  const msg = document.getElementById('garment-msg');
+  btn.textContent = 'SUBIENDO...';
+  btn.disabled = true;
+  msg.style.display = 'none';
+
+  const fd = new FormData();
+  fd.append('name',  document.getElementById('garment-name').value);
+  fd.append('front', document.getElementById('garment-file-front').files[0]);
+  const backFile = document.getElementById('garment-file-back').files[0];
+  if (backFile) fd.append('back', backFile);
+
+  try {
+    const res  = await fetch('/api/design/garments', { method: 'POST', credentials: 'include', body: fd });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Error');
+    msg.textContent = '✓ ' + data.name + ' subida correctamente';
+    msg.style.color = '#000';
+    msg.style.display = 'block';
+    this.reset();
+    loadGarments();
+  } catch (err) {
+    msg.textContent = '✗ ' + err.message;
+    msg.style.color = '#ba1a1a';
+    msg.style.display = 'block';
+  } finally {
+    btn.textContent = 'SUBIR PRENDA';
+    btn.disabled = false;
+  }
+});
+
+loadGarments();
+</script>
+</body></html>
