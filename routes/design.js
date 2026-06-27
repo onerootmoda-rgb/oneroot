@@ -170,4 +170,18 @@ router.delete('/garments/:id', requireAdmin, (req, res) => {
     res.json({ ok: true });
 });
 
+// ── GET /api/design/list (admin) — lista composites guardados ────
+router.get('/list', requireAdmin, (req, res) => {
+    const dir = path.join(__dirname, '../uploads/composites');
+    if (!fs.existsSync(dir)) return res.json({ designs: [] });
+    const files = fs.readdirSync(dir)
+        .filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f))
+        .map(f => {
+            const stat = fs.statSync(path.join(dir, f));
+            return { id: f, imageUrl: `/uploads/composites/${f}`, createdAt: stat.mtime.toISOString() };
+        })
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    res.json({ designs: files });
+});
+
 module.exports = router;

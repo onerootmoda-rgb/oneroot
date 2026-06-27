@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Hanken+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #f9f9fe;
+  color: #1a1c1f;
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+/* Dark mode: invert todo el body y re-invert las imágenes para que se vean normales.
+   Funciona perfecto con paletas acromáticas (blanco ↔ negro). */
+html.dark body {
+  filter: invert(1);
+  background-color: #000;
+}
+html.dark img,
+html.dark video,
+html.dark canvas,
+html.dark [style*="background-image"] {
+  filter: invert(1);
+}

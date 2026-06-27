@@ -25,9 +25,8 @@ router.post('/login', (req, res) => {
     );
 
     logEvent(admin.id, admin.email, 'login', 'auth', {}, req.ip);
-    // Emitir cookie HttpOnly (segura) + devolver token para compatibilidad con clientes existentes
     res.cookie(COOKIE_NAME, token, COOKIE_OPTS);
-    res.json({ token, expiresIn: 28800, admin: { id: admin.id, email: admin.email, name: admin.name } });
+    res.json({ ok: true, expiresIn: 28800, admin: { id: admin.id, email: admin.email, name: admin.name, role: admin.role } });
 });
 
 router.post('/logout', (req, res) => {
@@ -76,8 +75,9 @@ router.patch('/admins/:id', requireAdmin, (req, res) => {
     const { active, password, name, role } = req.body;
     const target = db.prepare('SELECT * FROM admins WHERE id=?').get(req.params.id);
     if (!target) return res.status(404).json({ error: 'Admin no encontrado' });
-    // Prevent self-deactivation
-    if (req.params.id === req.admin.id && active === 0) return res.status(400).json({ error: 'No puedes desactivarte a ti mismo' });
+    // Prevent self-deactivation — compare strictly as boolean (active:false) or numeric 0
+    const deactivating = active !== undefined && !active;
+    if (req.params.id === req.admin.id && deactivating) return res.status(400).json({ error: 'No puedes desactivarte a ti mismo' });
 
     if (active !== undefined) db.prepare('UPDATE admins SET active=? WHERE id=?').run(active ? 1 : 0, req.params.id);
     if (name !== undefined) db.prepare('UPDATE admins SET name=? WHERE id=?').run(name, req.params.id);

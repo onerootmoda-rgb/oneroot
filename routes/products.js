@@ -23,6 +23,46 @@ const upload = multer({
     }
 });
 
+const csvUpload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: (req, file, cb) => {
+        const ok = file.mimetype === 'text/csv' ||
+                   file.mimetype === 'application/vnd.ms-excel' ||
+                   file.originalname.toLowerCase().endsWith('.csv');
+        cb(ok ? null : new Error('Solo archivos CSV'), ok);
+    }
+});
+
+function splitCSVLine(line) {
+    const result = [];
+    let inQuote = false, cur = '';
+    for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+            if (inQuote && line[i + 1] === '"') { cur += '"'; i++; }
+            else { inQuote = !inQuote; }
+        } else if (ch === ',' && !inQuote) { result.push(cur); cur = ''; }
+        else { cur += ch; }
+    }
+    result.push(cur);
+    return result;
+}
+
+function parseCSV(text) {
+    const lines = text.trim().split(/\r?\n/);
+    if (lines.length < 2) return [];
+    const headers = splitCSVLine(lines[0]).map(h => h.trim());
+    return lines.slice(1)
+        .map(line => {
+            const vals = splitCSVLine(line);
+            const obj = {};
+            headers.forEach((h, i) => { obj[h] = (vals[i] || '').trim(); });
+            return obj;
+        })
+        .filter(row => Object.values(row).some(v => v !== ''));
+}
+
 function parse(row) {
     if (!row) return null;
     let colors;
@@ -126,6 +166,93 @@ router.get('/export/excel', requireAdmin, async (req, res) => {
     res.end();
 });
 
+// POST /api/products/import-csv  (admin only)  — must be before /:id
+router.post('/import-csv', requireAdmin, csvUpload.single('csv'), (req, res) => {
+    if (!req.file) return res.status(400).json({ error: 'Archivo CSV requerido' });
+
+    const text = req.file.buffer.toString('utf-8').replace(/^﻿/, '');
+    const rows = parseCSV(text);
+    if (!rows.length) return res.status(400).json({ error: 'CSV vacío o sin filas de datos' });
+
+    const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+    const groups = {};
+    rows.forEach(row => {
+        const key = (row.name || '').trim();
+        if (!key) return;
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(row);
+    });
+
+    let created = 0, updated = 0, errors = 0;
+
+    for (const [productName, colorRows] of Object.entries(groups)) {
+        try {
+            const first = colorRows[0];
+            const price = parseFloat(first.price) || 0;
+            const category = (first.category || 'Otro').trim();
+            const badge = (first.badge || '').trim() || null;
+            const description = (first.description || '').trim();
+
+            const colors = colorRows
+                .filter(r => (r.color || '').trim())
+                .map(r => {
+                    const stock = {};
+                    SIZES.forEach(s => {
+                        const v = parseInt(r[s] || '0');
+                        if (!isNaN(v) && v >= 0) stock[s] = v;
+                    });
+                    return { name: r.color.trim(), hex: (r.hex || '#1a1a1a').trim(), stock, images: [] };
+                });
+
+            const aggStock = {};
+            colors.forEach(c => {
+                Object.entries(c.stock).forEach(([s, q]) => { aggStock[s] = (aggStock[s] || 0) + q; });
+            });
+            const sizeArr = SIZES.filter(s => aggStock[s] !== undefined);
+            const totalStock = Object.values(aggStock).reduce((a, b) => a + b, 0);
+
+            const existing = db.prepare('SELECT * FROM products WHERE LOWER(name) = LOWER(?)').get(productName);
+            if (existing) {
+                const existingColors = JSON.parse(existing.colors || '[]');
+                colors.forEach(nc => {
+                    const found = existingColors.find(ec => (ec.name || '').toLowerCase() === nc.name.toLowerCase());
+                    if (found) { found.stock = nc.stock; } else { existingColors.push(nc); }
+                });
+                const newAgg = {};
+                existingColors.forEach(c => {
+                    Object.entries(c.stock || {}).forEach(([s, q]) => { newAgg[s] = (newAgg[s] || 0) + q; });
+                });
+                const newTotal = Object.values(newAgg).reduce((a, b) => a + b, 0);
+                db.prepare(`UPDATE products SET price=?,category=?,badge=?,description=?,sizes=?,stock=?,totalStock=?,colors=?,status=? WHERE id=?`)
+                    .run(price, category, badge, description,
+                        JSON.stringify(SIZES.filter(s => newAgg[s] !== undefined)),
+                        JSON.stringify(newAgg), newTotal,
+                        JSON.stringify(existingColors),
+                        newTotal > 0 ? 'active' : 'sold-out',
+                        existing.id);
+                updated++;
+            } else {
+                const id = uuidv4();
+                const count = db.prepare('SELECT COUNT(*) as n FROM products').get().n;
+                const sku = `OR-${category.slice(0, 3).toUpperCase()}-${String(count + 1).padStart(3, '0')}`;
+                db.prepare(`INSERT INTO products (id,sku,name,color,price,category,sizes,stock,totalStock,status,badge,description,images,tags,colors,createdAt) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
+                    .run(id, sku, productName, colors[0]?.name || '', price, category,
+                        JSON.stringify(sizeArr), JSON.stringify(aggStock), totalStock,
+                        totalStock > 0 ? 'active' : 'sold-out',
+                        badge, description, '[]', '[]',
+                        JSON.stringify(colors), new Date().toISOString());
+                created++;
+            }
+        } catch (err) {
+            console.error('[import-csv] Error en', productName, err.message);
+            errors++;
+        }
+    }
+
+    logEvent(req.admin.id, req.admin.email, 'import_products_csv', null, { created, updated, errors }, req.ip);
+    res.json({ created, updated, errors, total: Object.keys(groups).length });
+});
+
 // GET /api/products/:id
 router.get('/:id', (req, res) => {
     const product = parse(db.prepare('SELECT * FROM products WHERE id = ? OR sku = ?').get(req.params.id, req.params.id));
@@ -135,13 +262,26 @@ router.get('/:id', (req, res) => {
 
 // POST /api/products  (admin only)
 router.post('/', requireAdmin, (req, res) => {
-    const { name, color, price, category, sizes, stock, description, badge, tags } = req.body;
+    const { name, color, price, category, sizes, stock, description, badge, tags, colors } = req.body;
     if (!name || price === undefined || !category) {
         return res.status(400).json({ error: 'name, price, and category are required' });
     }
 
-    const sizeArr = sizes || ['S', 'M', 'L', 'XL'];
-    const stockObj = stock || Object.fromEntries(sizeArr.map(s => [s, 0]));
+    let sizeArr, stockObj, colorsJson;
+    if (Array.isArray(colors) && colors.length > 0 && colors.some(c => c.stock && Object.keys(c.stock).length > 0)) {
+        const aggStock = {};
+        colors.forEach(c => {
+            Object.entries(c.stock || {}).forEach(([s, q]) => { aggStock[s] = (aggStock[s] || 0) + (parseInt(q) || 0); });
+        });
+        sizeArr = sizes || [...new Set(colors.flatMap(c => Object.keys(c.stock || {})))];
+        stockObj = aggStock;
+        colorsJson = JSON.stringify(colors);
+    } else {
+        sizeArr = sizes || ['S', 'M', 'L', 'XL'];
+        stockObj = stock || Object.fromEntries(sizeArr.map(s => [s, 0]));
+        colorsJson = JSON.stringify(colors || []);
+    }
+
     const totalStock = Object.values(stockObj).reduce((a, b) => a + Number(b), 0);
     const count = db.prepare('SELECT COUNT(*) as n FROM products').get().n;
 
@@ -149,14 +289,15 @@ router.post('/', requireAdmin, (req, res) => {
     const sku = `OR-${category.slice(0, 3).toUpperCase()}-${String(count + 1).padStart(3, '0')}`;
 
     db.prepare(`
-        INSERT INTO products (id,sku,name,color,price,category,sizes,stock,totalStock,status,badge,description,images,tags,createdAt)
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        INSERT INTO products (id,sku,name,color,price,category,sizes,stock,totalStock,status,badge,description,images,tags,colors,createdAt)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     `).run(
-        id, sku, name, color || '', parseFloat(price), category,
+        id, sku, name, color || (colors?.[0]?.name || ''), parseFloat(price), category,
         JSON.stringify(sizeArr), JSON.stringify(stockObj), totalStock,
         totalStock > 0 ? 'active' : 'sold-out',
         badge || null, description || '', '[]',
         JSON.stringify(tags || []),
+        colorsJson,
         new Date().toISOString()
     );
 
@@ -170,8 +311,22 @@ router.put('/:id', requireAdmin, (req, res) => {
     if (!existing) return res.status(404).json({ error: 'Product not found' });
 
     const { name, color, price, category, sizes, stock, status, badge, description, tags, colors } = req.body;
-    const sizeArr = sizes || JSON.parse(existing.sizes);
-    const stockObj = stock || JSON.parse(existing.stock);
+
+    let sizeArr, stockObj, colorsJson;
+    if (Array.isArray(colors) && colors.length > 0 && colors.some(c => c.stock && Object.keys(c.stock).length > 0)) {
+        const aggStock = {};
+        colors.forEach(c => {
+            Object.entries(c.stock || {}).forEach(([s, q]) => { aggStock[s] = (aggStock[s] || 0) + (parseInt(q) || 0); });
+        });
+        sizeArr = sizes || [...new Set(colors.flatMap(c => Object.keys(c.stock || {})))];
+        stockObj = aggStock;
+        colorsJson = JSON.stringify(colors);
+    } else {
+        sizeArr = sizes || JSON.parse(existing.sizes || '[]');
+        stockObj = stock || JSON.parse(existing.stock || '{}');
+        colorsJson = JSON.stringify(colors !== undefined ? colors : JSON.parse(existing.colors || '[]'));
+    }
+
     const totalStock = Object.values(stockObj).reduce((a, b) => a + Number(b), 0);
 
     db.prepare(`
@@ -188,7 +343,7 @@ router.put('/:id', requireAdmin, (req, res) => {
         badge !== undefined ? (badge || null) : existing.badge,
         description !== undefined ? description : existing.description,
         JSON.stringify(tags || JSON.parse(existing.tags || '[]')),
-        JSON.stringify(colors !== undefined ? colors : JSON.parse(existing.colors || '[]')),
+        colorsJson,
         req.params.id
     );
 

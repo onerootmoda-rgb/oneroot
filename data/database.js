@@ -114,6 +114,45 @@ try { db.exec("CREATE TABLE IF NOT EXISTS event_logs (id TEXT PRIMARY KEY, admin
 try { db.exec("CREATE TABLE IF NOT EXISTS design_catalog (id TEXT PRIMARY KEY, name TEXT NOT NULL, category TEXT DEFAULT 'General', imageUrl TEXT NOT NULL, createdAt TEXT NOT NULL)"); } catch(e) {}
 try { db.exec("CREATE TABLE IF NOT EXISTS garment_templates (id TEXT PRIMARY KEY, name TEXT NOT NULL, imageUrl TEXT NOT NULL, createdAt TEXT NOT NULL)"); } catch(e) {}
 try { db.prepare("ALTER TABLE garment_templates ADD COLUMN backImageUrl TEXT DEFAULT ''").run(); } catch(e) {}
+
+// ── Nuevas tablas v2 ──────────────────────────────────────────────
+try {
+    db.exec(`CREATE TABLE IF NOT EXISTS customers (
+        id          TEXT PRIMARY KEY,
+        name        TEXT NOT NULL,
+        phone       TEXT UNIQUE NOT NULL,
+        email       TEXT DEFAULT '',
+        address     TEXT DEFAULT '',
+        city        TEXT DEFAULT '',
+        barrio      TEXT DEFAULT '',
+        totalOrders INTEGER DEFAULT 0,
+        totalSpent  REAL DEFAULT 0,
+        firstOrderAt TEXT DEFAULT '',
+        lastOrderAt  TEXT DEFAULT '',
+        createdAt   TEXT NOT NULL
+    )`);
+} catch(e) {}
+
+try {
+    db.exec(`CREATE TABLE IF NOT EXISTS inventory (
+        id        TEXT PRIMARY KEY,
+        productId TEXT NOT NULL,
+        color     TEXT DEFAULT '',
+        colorHex  TEXT DEFAULT '#1a1a1a',
+        tela      TEXT DEFAULT '',
+        diseno    TEXT DEFAULT '',
+        talla     TEXT NOT NULL,
+        stock     INTEGER DEFAULT 0,
+        costo     REAL DEFAULT 0,
+        sku       TEXT DEFAULT '',
+        updatedAt TEXT NOT NULL
+    )`);
+    db.exec('CREATE INDEX IF NOT EXISTS idx_inventory_product ON inventory(productId)');
+    db.exec('CREATE INDEX IF NOT EXISTS idx_customers_phone   ON customers(phone)');
+    db.exec('CREATE INDEX IF NOT EXISTS idx_orders_phone      ON orders(customerPhone)');
+    db.exec('CREATE INDEX IF NOT EXISTS idx_cart_product      ON cart_items(productId)');
+} catch(e) {}
+
 // Populate colors from existing color field for products that have none
 db.prepare("UPDATE products SET colors = json_array(json_object('name', color, 'hex', '#1a1a1a')) WHERE (colors IS NULL OR colors = '[]') AND color IS NOT NULL AND color != ''").run();
 // Fix: convert any non-array colors values (objects) to arrays

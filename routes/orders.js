@@ -106,6 +106,21 @@ router.post('/', orderLimiter, (req, res) => {
 
     db.prepare('DELETE FROM cart_items WHERE sessionId = ?').run(sessionId);
 
+    // Upsert cliente — identifica por teléfono (campo obligatorio)
+    try {
+        const existing = db.prepare('SELECT id FROM customers WHERE phone=?').get(customerPhone);
+        if (existing) {
+            db.prepare(`UPDATE customers SET name=?,email=?,address=?,city=?,barrio=?,
+                totalOrders=totalOrders+1, totalSpent=totalSpent+?, lastOrderAt=? WHERE id=?`)
+                .run(customerName, customerEmail, customerAddress, customerCity, customerBarrio, total, now, existing.id);
+        } else {
+            const { v4: uuidv4c } = require('uuid');
+            db.prepare(`INSERT INTO customers (id,name,phone,email,address,city,barrio,totalOrders,totalSpent,firstOrderAt,lastOrderAt,createdAt)
+                VALUES (?,?,?,?,?,?,?,1,?,?,?,?)`)
+                .run(uuidv4c(), customerName, customerPhone, customerEmail, customerAddress, customerCity, customerBarrio, total, now, now, now);
+        }
+    } catch(e) { console.error('[orders] customer upsert failed:', e.message); }
+
     logEvent('', customerName, 'order_placed', id, { total, city: customerCity, items: items.length }, req.ip);
 
     // Emails asíncronos — no bloquean la respuesta
@@ -195,9 +210,10 @@ router.patch('/:id', requireAdmin, (req, res) => {
     const valid = ['pending', 'processing', 'completed', 'cancelled'];
     if (!valid.includes(status)) return res.status(400).json({ error: 'Status inválido' });
     const prev = db.prepare('SELECT status FROM orders WHERE id=?').get(req.params.id);
+    if (!prev) return res.status(404).json({ error: 'Orden no encontrada' });
     db.prepare('UPDATE orders SET status=?,notes=?,updatedAt=? WHERE id=?')
         .run(status, notes !== undefined ? notes : '', new Date().toISOString(), req.params.id);
-    logEvent(req.admin.id, req.admin.email, 'order_status_changed', req.params.id, { from: prev?.status, to: status }, req.ip);
+    logEvent(req.admin.id, req.admin.email, 'order_status_changed', req.params.id, { from: prev.status, to: status }, req.ip);
     res.json({ ok: true });
 });
 

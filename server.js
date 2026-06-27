@@ -9,14 +9,16 @@ const compression  = require('compression');
 const rateLimit    = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 
-const authRoutes     = require('./routes/auth');
-const productRoutes  = require('./routes/products');
-const cartRoutes     = require('./routes/cart');
-const settingsRoutes = require('./routes/settings');
+const authRoutes      = require('./routes/auth');
+const productRoutes   = require('./routes/products');
+const cartRoutes      = require('./routes/cart');
+const settingsRoutes  = require('./routes/settings');
 const analyticsRoutes = require('./routes/analytics');
-const ordersRoutes   = require('./routes/orders');
-const designRoutes   = require('./routes/design');
-const db             = require('./data/database');
+const ordersRoutes    = require('./routes/orders');
+const designRoutes    = require('./routes/design');
+const customersRoutes = require('./routes/customers');
+const inventoryRoutes = require('./routes/inventory');
+const db              = require('./data/database');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -77,37 +79,8 @@ const analyticsLimiter = rateLimit({
 });
 
 // ── Static assets ─────────────────────────────────────────────────
-app.use('/logo',    express.static(path.join(__dirname, 'Logo'),    { maxAge: '30d', etag: true }));
+// uploads/ sirve imágenes de productos, colecciones, diseños y fondos
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { maxAge: '7d',  etag: true }));
-
-// ── Public pages ──────────────────────────────────────────────────
-const pages = {
-    '/':                   'one_root_home/code.html',
-    '/home':               'one_root_home/code.html',
-    '/catalog':            'one_root_catalog/code.html',
-    '/product':            'one_root_product_detail/code.html',
-    '/cart':               'one_root_shopping_cart/code.html',
-    '/about':              'one_root_about_us/code.html',
-    '/privacidad':         'legal_privacidad/code.html',
-    '/terminos':           'legal_terminos/code.html',
-    '/devoluciones':       'legal_devoluciones/code.html',
-    '/admin/login':        'admin_login_gateway/code.html',
-    '/admin/catalog':      'admin_catalog_management/code.html',
-    '/admin/dashboard':    'admin_dashboard_overview/code.html',
-    '/admin/edit-product': 'admin_edit_product/code.html',
-    '/admin/home':         'admin_home_editor/code.html',
-    '/admin/analytics':    'admin_analytics/code.html',
-    '/admin/orders':       'admin_orders/code.html',
-    '/admin/users':        'admin_users/code.html',
-    '/admin/collections':  'admin_collections/code.html',
-    '/personalizar':       'one_root_designer/code.html',
-    '/admin/designs':      'admin_designs/code.html',
-};
-
-Object.entries(pages).forEach(([route, file]) => {
-    app.get(route, (req, res) => res.sendFile(path.join(__dirname, file)));
-    if (route !== '/') app.get(route + '/', (req, res) => res.sendFile(path.join(__dirname, file)));
-});
 
 // ── Cache-Control: no-store para rutas de API privadas ───────────
 app.use('/api/cart',    (req, res, next) => { res.setHeader('Cache-Control', 'no-store'); next(); });
@@ -125,15 +98,21 @@ app.use('/api/settings',  settingsRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/orders',    ordersRoutes);
 app.use('/api/design',    designRoutes);
-const JS_CACHE = { maxAge: '1d', etag: true };
-app.get('/analytics-tracker.js', (req, res) =>
-    res.sendFile(path.join(__dirname, 'analytics-tracker.js'), JS_CACHE));
-app.get('/i18n.js', (req, res) =>
-    res.sendFile(path.join(__dirname, 'i18n.js'), JS_CACHE));
-app.get('/cookie-banner.js', (req, res) =>
-    res.sendFile(path.join(__dirname, 'cookie-banner.js'), JS_CACHE));
-app.get('/one-root-theme.js', (req, res) =>
-    res.sendFile(path.join(__dirname, 'one-root-theme.js'), JS_CACHE));
+app.use('/api/customers', customersRoutes);
+app.use('/api/inventory', inventoryRoutes);
+// ── React SPA (producción) ────────────────────────────────────────
+// USE_REACT=true activa el modo SPA: Express sirve dist/index.html para cualquier
+// ruta no-API, permitiendo que React Router maneje la navegación del lado cliente.
+// En desarrollo (npm run dev en /client) Vite actúa como proxy y esta rama no aplica.
+const DIST = path.join(__dirname, 'dist');
+if (process.env.USE_REACT === 'true' && fs.existsSync(path.join(DIST, 'index.html'))) {
+    app.use(express.static(DIST, { maxAge: '1d', etag: true }));
+    app.get('*', (req, res, next) => {
+        if (req.path.startsWith('/api')) return next();
+        res.sendFile(path.join(DIST, 'index.html'));
+    });
+    console.log('[react] Serving React SPA from /dist');
+}
 
 // ── Global error handler ──────────────────────────────────────────
 app.use((err, req, res, next) => {

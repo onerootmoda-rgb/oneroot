@@ -9,3 +9,5 @@ uploads/
 .claude/
 *.exe
 Curso*
+dist/
+client/dist/
